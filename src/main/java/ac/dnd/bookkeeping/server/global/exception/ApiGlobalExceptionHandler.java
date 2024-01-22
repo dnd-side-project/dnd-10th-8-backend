@@ -4,6 +4,7 @@ import ac.dnd.bookkeeping.server.global.base.BaseException;
 import ac.dnd.bookkeeping.server.global.base.BaseExceptionCode;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.sentry.Sentry;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +32,7 @@ import static ac.dnd.bookkeeping.server.global.log.RequestMetadataExtractor.getR
 @RequiredArgsConstructor
 public class ApiGlobalExceptionHandler {
     private final ObjectMapper objectMapper;
+    private final SlackAlertManager slackAlertManager;
 
     @ExceptionHandler(BaseException.class)
     public ResponseEntity<ExceptionResponse> handleKoddyException(final BaseException exception) {
@@ -137,8 +139,13 @@ public class ApiGlobalExceptionHandler {
                 getRequestUriWithQueryString(request),
                 exception
         );
-        // TODO Sentry Logging
+        sendErrorAlert(request, exception);
         return createExceptionResponse(GlobalExceptionCode.UNEXPECTED_SERVER_ERROR);
+    }
+
+    private void sendErrorAlert(final HttpServletRequest request, final Exception exception) {
+        slackAlertManager.sendErrorLog(request, exception);
+        Sentry.captureException(exception);
     }
 
     private ResponseEntity<ExceptionResponse> createExceptionResponse(final BaseExceptionCode code) {

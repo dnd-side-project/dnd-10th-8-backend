@@ -56,3 +56,13 @@ decorator:
   datasource:
     p6spy:
       enable-logging: true
+
+slack:
+  webhook:
+    url: ${SLACK_WEBHOOK_URL:slack-webhook-url}
+
+sentry:
+  dsn: ${SENTRY_DSN:sentry-dsn}
+  enable-tracing: true
+  traces-sample-rate: 1.0
+  exception-resolver-order: -2147483647
