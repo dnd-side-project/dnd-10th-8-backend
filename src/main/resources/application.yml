@@ -2,6 +2,9 @@ server:
   tomcat:
     mbeanregistry:
       enabled: true
+  error:
+    whitelabel:
+      enabled: false
 
 management:
   endpoints:
@@ -33,7 +36,13 @@ spring:
     baseline-version: 1
     locations: classpath:db/migration
 
+  web:
+    resources:
+      add-mappings: false
+
 springdoc:
+  server:
+    url: http://localhost:8080
   swagger-ui:
     path: /api/swagger
     operations-sorter: alpha
@@ -47,3 +56,13 @@ decorator:
   datasource:
     p6spy:
       enable-logging: true
+
+slack:
+  webhook:
+    url: ${SLACK_WEBHOOK_URL:slack-webhook-url}
+
+sentry:
+  dsn: ${SENTRY_DSN:sentry-dsn}
+  enable-tracing: true
+  traces-sample-rate: 1.0
+  exception-resolver-order: -2147483647
