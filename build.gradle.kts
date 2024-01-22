@@ -44,7 +44,7 @@ dependencies {
     annotationProcessor("jakarta.persistence:jakarta.persistence-api")
 
     // Log & Monitoring
-    implementation("io.sentry:sentry-spring-boot-starter:${property("sentryVersion")}")
+    implementation("io.sentry:sentry-spring-boot-starter-jakarta:${property("sentryVersion")}")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     runtimeOnly("io.micrometer:micrometer-registry-prometheus")
 
@@ -64,6 +64,9 @@ dependencies {
 
     // Guava
     implementation("com.google.guava:guava:${property("guavaVersion")}-jre")
+
+    // Slack API
+    implementation("com.slack.api:slack-api-client:${property("slackApiVersion")}")
 
     // p6spy
     implementation("com.github.gavlyukovskiy:p6spy-spring-boot-starter:${property("p6spyVersion")}")
