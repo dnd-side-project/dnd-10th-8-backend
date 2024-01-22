@@ -34,6 +34,8 @@ spring:
     locations: classpath:db/migration
 
 springdoc:
+  server:
+    url: http://localhost:8080
   swagger-ui:
     path: /api/swagger
     operations-sorter: alpha
