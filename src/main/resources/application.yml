@@ -2,6 +2,9 @@ server:
   tomcat:
     mbeanregistry:
       enabled: true
+  error:
+    whitelabel:
+      enabled: false
 
 management:
   endpoints:
@@ -32,6 +35,10 @@ spring:
     baseline-on-migrate: true
     baseline-version: 1
     locations: classpath:db/migration
+
+  web:
+    resources:
+      add-mappings: false
 
 springdoc:
   server:

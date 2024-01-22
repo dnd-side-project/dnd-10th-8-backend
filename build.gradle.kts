@@ -28,6 +28,7 @@ dependencies {
     // Spring Web
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
     // Data
