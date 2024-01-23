@@ -1,0 +1,29 @@
+spring:
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        show_sql: false
+        format_sql: true
+        default_batch_fetch_size: 50
+
+springdoc:
+  server:
+    url: http://localhost:8080
+
+decorator:
+  datasource:
+    p6spy:
+      enable-logging: true
+
+slack:
+  webhook:
+    url: slack-webhook-url
+
+sentry:
+  dsn: sentry-dsn
+  enable-tracing: true
+  traces-sample-rate: 1.0
+  exception-resolver-order: -2147483647
