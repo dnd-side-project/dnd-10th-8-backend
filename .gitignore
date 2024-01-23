@@ -33,11 +33,14 @@ src/docs/asciidoc/**/*.html
 src/main/resources/static/docs
 
 ### Docker ###
+mysql_data
 redis_data
 grafana_data
 
 ### Log ###
 logs
+archive
+spy.log
 
 ### NetBeans ###
 /nbproject/private/
