@@ -1,0 +1,10 @@
+[cols="3,6,6", options=header]
+.+{{path}}+
+|===
+|URL 경로 변수|제약 조건|설명
+{{#parameters}}
+|{{#tableCellContent}}`+{{name}}+`{{/tableCellContent}}
+|{{#tableCellContent}}{{#constraints}}{{.}}{{/constraints}}{{/tableCellContent}}
+|{{#tableCellContent}}{{description}}{{/tableCellContent}}
+{{/parameters}}
+|===
