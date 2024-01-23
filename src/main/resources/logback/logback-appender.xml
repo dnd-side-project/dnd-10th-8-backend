@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<included>
+    <timestamp key="BY_DATE" datePattern="yyyy-MM-dd"/>
+    <property name="LOG_FILE_PATH" value="./logs"/>
+    <property name="ARCHIVE_FILE_PATH" value="./logs/archive"/>
+    <property name="LOG_PATTERN"
+              value="[%d{yyyy-MM-dd HH:mm:ss.SSS, ${logback.timezone:-Asia/Seoul}}] [%-5level] [%thread] [%logger{1}] [%X{REQUEST_ID:-NO REQUEST ID}] %msg %n"/>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>${LOG_PATTERN}</Pattern>
+        </layout>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_FILE_PATH}/${BY_DATE}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${ARCHIVE_FILE_PATH}/%d{yyyy-MM-dd, ${logback.timezone:-Asia/Seoul}}_%i.log
+            </fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <maxFileSize>200MB</maxFileSize>
+            <totalSizeCap>200MB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+</included>
