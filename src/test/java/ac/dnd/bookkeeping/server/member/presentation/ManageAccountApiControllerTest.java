@@ -88,4 +88,25 @@ class ManageAccountApiControllerTest extends ControllerTest {
             );
         }
     }
+
+    @Nested
+    @DisplayName("사용자 탈퇴 API [DELETE /api/v1/members/me]")
+    class Delete {
+        private static final String BASE_URL = "/api/v1/members/me";
+        private final Member member = MEMBER_1.toDomain().apply(1L);
+
+        @Test
+        @DisplayName("온보딩 후 추가 정보를 기입한다")
+        void success() {
+            // given
+            applyToken(true, member.getId());
+
+            // when - then
+            successfulExecute(
+                    deleteRequestWithAccessToken(BASE_URL),
+                    status().isNoContent(),
+                    successDocsWithAccessToken("MemberApi/Delete")
+            );
+        }
+    }
 }
