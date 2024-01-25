@@ -40,6 +40,11 @@ spring:
     resources:
       add-mappings: false
 
+jwt:
+  secret-key: 5765a2b9c7cb01f6d1225d8d597c16b35278ff621ab77353b6633b9bc2237834
+  access-token-validity-seconds: 3600
+  refresh-token-validity-seconds: 604800
+
 springdoc:
   server:
     url: http://localhost:8080
