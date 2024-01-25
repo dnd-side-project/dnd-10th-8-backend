@@ -37,9 +37,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import java.util.Map;
 
+import static ac.dnd.bookkeeping.server.auth.domain.model.AuthToken.ACCESS_TOKEN_HEADER;
+import static ac.dnd.bookkeeping.server.auth.domain.model.AuthToken.REFRESH_TOKEN_HEADER;
 import static ac.dnd.bookkeeping.server.common.utils.TokenUtils.applyAccessToken;
-import static ac.dnd.bookkeeping.server.common.utils.TokenUtils.applyRefreshToken;
-import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -95,7 +95,7 @@ public abstract class ControllerTest {
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get(url);
 
         for (final String key : params.keySet()) {
-            requestBuilder = requestBuilder.param(key, params.get(key));
+            requestBuilder = requestBuilder.queryParam(key, params.get(key));
         }
 
         return requestBuilder;
@@ -105,7 +105,43 @@ public abstract class ControllerTest {
         MockHttpServletRequestBuilder requestBuilder = RestDocumentationRequestBuilders.get(path.url, path.variables);
 
         for (final String key : params.keySet()) {
-            requestBuilder = requestBuilder.param(key, params.get(key));
+            requestBuilder = requestBuilder.queryParam(key, params.get(key));
+        }
+
+        return requestBuilder;
+    }
+
+    protected final RequestBuilder getRequest(
+            final String url,
+            final Map<String, String> params,
+            final List<MultiValueMap<String, String>> multiParams
+    ) {
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get(url);
+
+        for (final String key : params.keySet()) {
+            requestBuilder = requestBuilder.queryParam(key, params.get(key));
+        }
+
+        for (final MultiValueMap<String, String> multiValue : multiParams) {
+            requestBuilder = requestBuilder.queryParams(multiValue);
+        }
+
+        return requestBuilder;
+    }
+
+    protected final RequestBuilder getRequest(
+            final UrlWithVariables path,
+            final Map<String, String> params,
+            final List<MultiValueMap<String, String>> multiParams
+    ) {
+        MockHttpServletRequestBuilder requestBuilder = RestDocumentationRequestBuilders.get(path.url, path.variables);
+
+        for (final String key : params.keySet()) {
+            requestBuilder = requestBuilder.queryParam(key, params.get(key));
+        }
+
+        for (final MultiValueMap<String, String> multiValue : multiParams) {
+            requestBuilder = requestBuilder.queryParams(multiValue);
         }
 
         return requestBuilder;
@@ -114,33 +150,69 @@ public abstract class ControllerTest {
     protected RequestBuilder getRequestWithAccessToken(final String url) {
         return MockMvcRequestBuilders
                 .get(url)
-                .header(AUTHORIZATION, applyAccessToken());
+                .header(ACCESS_TOKEN_HEADER, applyAccessToken());
     }
 
     protected RequestBuilder getRequestWithAccessToken(final UrlWithVariables path) {
         return RestDocumentationRequestBuilders
                 .get(path.url, path.variables)
-                .header(AUTHORIZATION, applyAccessToken());
+                .header(ACCESS_TOKEN_HEADER, applyAccessToken());
     }
 
     protected final RequestBuilder getRequestWithAccessToken(final String url, final Map<String, String> params) {
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get(url);
 
         for (final String key : params.keySet()) {
-            requestBuilder = requestBuilder.param(key, params.get(key));
+            requestBuilder = requestBuilder.queryParam(key, params.get(key));
         }
 
-        return requestBuilder.header(AUTHORIZATION, applyAccessToken());
+        return requestBuilder.header(ACCESS_TOKEN_HEADER, applyAccessToken());
     }
 
     protected final RequestBuilder getRequestWithAccessToken(final UrlWithVariables path, final Map<String, String> params) {
         MockHttpServletRequestBuilder requestBuilder = RestDocumentationRequestBuilders.get(path.url, path.variables);
 
         for (final String key : params.keySet()) {
-            requestBuilder = requestBuilder.param(key, params.get(key));
+            requestBuilder = requestBuilder.queryParam(key, params.get(key));
         }
 
-        return requestBuilder.header(AUTHORIZATION, applyAccessToken());
+        return requestBuilder.header(ACCESS_TOKEN_HEADER, applyAccessToken());
+    }
+
+    protected final RequestBuilder getRequestWithAccessToken(
+            final String url,
+            final Map<String, String> params,
+            final List<MultiValueMap<String, String>> multiParams
+    ) {
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get(url);
+
+        for (final String key : params.keySet()) {
+            requestBuilder = requestBuilder.queryParam(key, params.get(key));
+        }
+
+        for (final MultiValueMap<String, String> multiValue : multiParams) {
+            requestBuilder = requestBuilder.queryParams(multiValue);
+        }
+
+        return requestBuilder.header(ACCESS_TOKEN_HEADER, applyAccessToken());
+    }
+
+    protected final RequestBuilder getRequestWithAccessToken(
+            final UrlWithVariables path,
+            final Map<String, String> params,
+            final List<MultiValueMap<String, String>> multiParams
+    ) {
+        MockHttpServletRequestBuilder requestBuilder = RestDocumentationRequestBuilders.get(path.url, path.variables);
+
+        for (final String key : params.keySet()) {
+            requestBuilder = requestBuilder.queryParam(key, params.get(key));
+        }
+
+        for (final MultiValueMap<String, String> multiValue : multiParams) {
+            requestBuilder = requestBuilder.queryParams(multiValue);
+        }
+
+        return requestBuilder.header(ACCESS_TOKEN_HEADER, applyAccessToken());
     }
 
     /**
@@ -176,21 +248,21 @@ public abstract class ControllerTest {
         return MockMvcRequestBuilders
                 .post(url)
                 .contentType(APPLICATION_JSON)
-                .header(AUTHORIZATION, applyAccessToken());
+                .header(ACCESS_TOKEN_HEADER, applyAccessToken());
     }
 
     protected RequestBuilder postRequestWithAccessToken(final UrlWithVariables path) {
         return RestDocumentationRequestBuilders
                 .post(path.url, path.variables)
                 .contentType(APPLICATION_JSON)
-                .header(AUTHORIZATION, applyAccessToken());
+                .header(ACCESS_TOKEN_HEADER, applyAccessToken());
     }
 
     protected RequestBuilder postRequestWithAccessToken(final String url, final Object data) {
         return MockMvcRequestBuilders
                 .post(url)
                 .contentType(APPLICATION_JSON)
-                .header(AUTHORIZATION, applyAccessToken())
+                .header(ACCESS_TOKEN_HEADER, applyAccessToken())
                 .content(toBody(data));
     }
 
@@ -198,20 +270,20 @@ public abstract class ControllerTest {
         return RestDocumentationRequestBuilders
                 .post(path.url, path.variables)
                 .contentType(APPLICATION_JSON)
-                .header(AUTHORIZATION, applyAccessToken())
+                .header(ACCESS_TOKEN_HEADER, applyAccessToken())
                 .content(toBody(data));
     }
 
     protected RequestBuilder postRequestWithRefreshToken(final String url) {
         return MockMvcRequestBuilders
                 .post(url)
-                .cookie(applyRefreshToken());
+                .header(REFRESH_TOKEN_HEADER, applyAccessToken());
     }
 
     protected RequestBuilder postRequestWithRefreshToken(final UrlWithVariables path) {
         return RestDocumentationRequestBuilders
                 .post(path.url, path.variables)
-                .cookie(applyRefreshToken());
+                .header(REFRESH_TOKEN_HEADER, applyAccessToken());
     }
 
     /**
@@ -286,7 +358,7 @@ public abstract class ControllerTest {
             requestBuilder = requestBuilder.file((MockMultipartFile) file);
         }
 
-        return requestBuilder.header(AUTHORIZATION, applyAccessToken());
+        return requestBuilder.header(ACCESS_TOKEN_HEADER, applyAccessToken());
     }
 
     @SafeVarargs
@@ -310,7 +382,7 @@ public abstract class ControllerTest {
             requestBuilder = (MockMultipartHttpServletRequestBuilder) requestBuilder.queryParams(multiParam);
         }
 
-        return requestBuilder.header(AUTHORIZATION, applyAccessToken());
+        return requestBuilder.header(ACCESS_TOKEN_HEADER, applyAccessToken());
     }
 
     @SafeVarargs
@@ -335,7 +407,7 @@ public abstract class ControllerTest {
             requestBuilder = (MockMultipartHttpServletRequestBuilder) requestBuilder.queryParams(multiParam);
         }
 
-        return requestBuilder.header(AUTHORIZATION, applyAccessToken());
+        return requestBuilder.header(ACCESS_TOKEN_HEADER, applyAccessToken());
     }
 
     /**
@@ -359,7 +431,7 @@ public abstract class ControllerTest {
         return MockMvcRequestBuilders
                 .patch(url)
                 .contentType(APPLICATION_JSON)
-                .header(AUTHORIZATION, applyAccessToken())
+                .header(ACCESS_TOKEN_HEADER, applyAccessToken())
                 .content(toBody(data));
     }
 
@@ -367,7 +439,7 @@ public abstract class ControllerTest {
         return RestDocumentationRequestBuilders
                 .patch(path.url, path.variables)
                 .contentType(APPLICATION_JSON)
-                .header(AUTHORIZATION, applyAccessToken())
+                .header(ACCESS_TOKEN_HEADER, applyAccessToken())
                 .content(toBody(data));
     }
 
@@ -377,13 +449,13 @@ public abstract class ControllerTest {
     protected RequestBuilder deleteRequestWithAccessToken(final String url) {
         return RestDocumentationRequestBuilders
                 .delete(url)
-                .header(AUTHORIZATION, applyAccessToken());
+                .header(ACCESS_TOKEN_HEADER, applyAccessToken());
     }
 
     protected RequestBuilder deleteRequestWithAccessToken(final UrlWithVariables path) {
         return RestDocumentationRequestBuilders
                 .delete(path.url, path.variables)
-                .header(AUTHORIZATION, applyAccessToken());
+                .header(ACCESS_TOKEN_HEADER, applyAccessToken());
     }
 
     private String toBody(final Object data) {
