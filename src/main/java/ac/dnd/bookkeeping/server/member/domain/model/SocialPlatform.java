@@ -36,8 +36,8 @@ public class SocialPlatform {
         return new SocialPlatform(KAKAO, socialId, email);
     }
 
-    public void syncEmail(final Email email) {
-        this.email = email;
+    public SocialPlatform syncEmail(final Email email) {
+        return new SocialPlatform(type, socialId, email);
     }
 
     public enum Type {
