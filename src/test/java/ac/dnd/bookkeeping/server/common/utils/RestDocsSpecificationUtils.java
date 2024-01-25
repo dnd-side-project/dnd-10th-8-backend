@@ -14,11 +14,10 @@ import org.springframework.restdocs.snippet.Snippet;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-import static ac.dnd.bookkeeping.server.common.utils.RestDocsSpecificationUtils.SnippetFactory.cookie;
+import static ac.dnd.bookkeeping.server.auth.domain.model.AuthToken.ACCESS_TOKEN_HEADER;
+import static ac.dnd.bookkeeping.server.auth.domain.model.AuthToken.REFRESH_TOKEN_HEADER;
 import static ac.dnd.bookkeeping.server.common.utils.RestDocsSpecificationUtils.SnippetFactory.header;
-import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.restdocs.cookies.CookieDocumentation.cookieWithName;
-import static org.springframework.restdocs.cookies.CookieDocumentation.requestCookies;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -101,22 +100,19 @@ public class RestDocsSpecificationUtils {
 
     private static Snippet getHeaderWithAccessToken() {
         return requestHeaders(
-                header(AUTHORIZATION, "Access Token", true)
+                header(ACCESS_TOKEN_HEADER, "Access Token", true)
         );
     }
 
-    /**
-     * TODO 안드로이드랑 회의 후 RefreshToken 핸들링 방식 정하고 결정
-     */
     private static Snippet getCookieWithRefreshToken() {
-        return requestCookies(
-                cookie("추후 RefreshToken 관련 핸들링 협의 후 정의", "Refresh Token", true)
+        return requestHeaders(
+                header(REFRESH_TOKEN_HEADER, "Refresh Token", true)
         );
     }
 
     private static Snippet getExceptionResponseFields() {
         return responseFields(
-                fieldWithPath("errorCode").description("커스텀 예외 코드"),
+                fieldWithPath("code").description("커스텀 예외 코드"),
                 fieldWithPath("message").description("예외 메시지")
         );
     }

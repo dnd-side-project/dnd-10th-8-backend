@@ -43,6 +43,9 @@ dependencies {
     annotationProcessor("jakarta.annotation:jakarta.annotation-api")
     annotationProcessor("jakarta.persistence:jakarta.persistence-api")
 
+    // Redis
+    implementation("org.springframework.boot:spring-boot-starter-data-redis")
+
     // Log & Monitoring
     implementation("io.sentry:sentry-spring-boot-starter-jakarta:${property("sentryVersion")}")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
