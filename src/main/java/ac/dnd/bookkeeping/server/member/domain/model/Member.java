@@ -25,4 +25,8 @@ public class Member extends BaseEntity<Member> {
         this.platform = platform;
         this.name = name;
     }
+
+    public void syncEmail(final Email email) {
+        platform.syncEmail(email);
+    }
 }
