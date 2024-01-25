@@ -1,5 +1,7 @@
 package ac.dnd.bookkeeping.server.common;
 
+import ac.dnd.bookkeeping.server.auth.domain.service.TokenProvider;
+import ac.dnd.bookkeeping.server.auth.exception.AuthException;
 import ac.dnd.bookkeeping.server.common.config.MockAllUseCaseBeanFactoryPostProcessor;
 import ac.dnd.bookkeeping.server.common.config.ResetMockTestExecutionListener;
 import ac.dnd.bookkeeping.server.common.config.TestAopConfig;
@@ -39,7 +41,13 @@ import java.util.Map;
 
 import static ac.dnd.bookkeeping.server.auth.domain.model.AuthToken.ACCESS_TOKEN_HEADER;
 import static ac.dnd.bookkeeping.server.auth.domain.model.AuthToken.REFRESH_TOKEN_HEADER;
+import static ac.dnd.bookkeeping.server.auth.exception.AuthExceptionCode.INVALID_TOKEN;
 import static ac.dnd.bookkeeping.server.common.utils.TokenUtils.applyAccessToken;
+import static ac.dnd.bookkeeping.server.common.utils.TokenUtils.applyRefreshToken;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doThrow;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -60,6 +68,9 @@ public abstract class ControllerTest {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    @MockBean
+    private TokenProvider tokenProvider;
 
     @MockBean
     private SlackAlertManager slackAlertManager;
@@ -277,13 +288,15 @@ public abstract class ControllerTest {
     protected RequestBuilder postRequestWithRefreshToken(final String url) {
         return MockMvcRequestBuilders
                 .post(url)
-                .header(REFRESH_TOKEN_HEADER, applyAccessToken());
+                .contentType(APPLICATION_JSON)
+                .header(REFRESH_TOKEN_HEADER, applyRefreshToken());
     }
 
     protected RequestBuilder postRequestWithRefreshToken(final UrlWithVariables path) {
         return RestDocumentationRequestBuilders
                 .post(path.url, path.variables)
-                .header(REFRESH_TOKEN_HEADER, applyAccessToken());
+                .contentType(APPLICATION_JSON)
+                .header(REFRESH_TOKEN_HEADER, applyRefreshToken());
     }
 
     /**
@@ -527,5 +540,18 @@ public abstract class ControllerTest {
                 jsonPath("$.message").exists(),
                 jsonPath("$.message").value(exceptionSpec.message)
         };
+    }
+
+    protected void applyToken(final boolean isValid, final Long payloadId) {
+        if (isValid) {
+            doNothing()
+                    .when(tokenProvider)
+                    .validateToken(anyString());
+        } else {
+            doThrow(new AuthException(INVALID_TOKEN))
+                    .when(tokenProvider)
+                    .validateToken(anyString());
+        }
+        given(tokenProvider.getId(anyString())).willReturn(payloadId);
     }
 }
