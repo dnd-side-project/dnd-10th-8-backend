@@ -1,5 +1,6 @@
 package ac.dnd.bookkeeping.server.member.application.usecase;
 
+import ac.dnd.bookkeeping.server.auth.application.adapter.TokenStore;
 import ac.dnd.bookkeeping.server.common.UnitTest;
 import ac.dnd.bookkeeping.server.member.domain.model.Member;
 import ac.dnd.bookkeeping.server.member.domain.repository.MemberRepository;
@@ -16,7 +17,8 @@ import static org.mockito.Mockito.mock;
 @DisplayName("Member -> DeleteAccountUseCase 테스트")
 class DeleteAccountUseCaseTest extends UnitTest {
     private final MemberRepository memberRepository = mock(MemberRepository.class);
-    private final DeleteAccountUseCase sut = new DeleteAccountUseCase(memberRepository);
+    private final TokenStore tokenStore = mock(TokenStore.class);
+    private final DeleteAccountUseCase sut = new DeleteAccountUseCase(memberRepository, tokenStore);
 
     @Test
     @DisplayName("서비스 탈퇴를 진행한다")

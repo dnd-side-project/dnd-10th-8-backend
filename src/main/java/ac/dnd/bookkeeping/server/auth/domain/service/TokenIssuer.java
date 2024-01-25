@@ -32,8 +32,4 @@ public class TokenIssuer {
     public boolean isMemberRefreshToken(final long memberId, final String refreshToken) {
         return tokenStore.isMemberRefreshToken(memberId, refreshToken);
     }
-
-    public void deleteRefreshToken(final long memberId) {
-        tokenStore.deleteRefreshToken(memberId);
-    }
 }
