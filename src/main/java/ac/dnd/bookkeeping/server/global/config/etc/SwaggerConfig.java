@@ -1,5 +1,6 @@
 package ac.dnd.bookkeeping.server.global.config.etc;
 
+import ac.dnd.bookkeeping.server.global.annotation.Auth;
 import ac.dnd.bookkeeping.server.global.annotation.ExtractToken;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
@@ -24,6 +25,7 @@ public class SwaggerConfig {
         SpringDocUtils
                 .getConfig()
                 .addAnnotationsToIgnore(
+                        Auth.class,
                         ExtractToken.class
                 );
     }
