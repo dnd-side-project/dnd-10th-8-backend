@@ -24,8 +24,8 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.response
 import static org.springframework.restdocs.request.RequestDocumentation.queryParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@DisplayName("Member -> ManageResourceApiController 테스트")
-class ManageResourceApiControllerTest extends ControllerTest {
+@DisplayName("Member -> ManageAccountApiController 테스트")
+class ManageAccountApiControllerTest extends ControllerTest {
     @Autowired
     private ManageResourceUseCase manageResourceUseCase;
 

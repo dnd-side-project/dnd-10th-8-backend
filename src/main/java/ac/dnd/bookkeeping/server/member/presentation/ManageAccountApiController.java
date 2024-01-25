@@ -19,11 +19,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Tag(name = "사용자 리소스 관련 API")
+@Tag(name = "사용자 계정 관리 관련 API")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
-public class ManageResourceApiController {
+public class ManageAccountApiController {
     private final ManageResourceUseCase manageResourceUseCase;
 
     @Operation(summary = "닉네임 중복 체크 Endpoint")
