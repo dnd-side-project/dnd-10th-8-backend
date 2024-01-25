@@ -17,12 +17,12 @@ import static ac.dnd.bookkeeping.server.auth.domain.model.TokenType.REFRESH;
 @Tag(name = "토큰 재발급 API")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/token/reissue")
+@RequestMapping("/api")
 public class TokenReissueApiController {
     private final ReissueTokenUseCase reissueTokenUseCase;
 
     @Operation(summary = "RefreshToken을 통한 토큰 재발급 Endpoint")
-    @PostMapping
+    @PostMapping("/v1/token/reissue")
     public ResponseEntity<AuthToken> reissueToken(
             @ExtractToken(tokenType = REFRESH) final String refreshToken
     ) {

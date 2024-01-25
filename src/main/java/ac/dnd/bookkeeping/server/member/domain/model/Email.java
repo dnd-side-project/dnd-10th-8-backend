@@ -17,7 +17,7 @@ import static lombok.AccessLevel.PROTECTED;
 public class Email {
     private static final Pattern pattern = Pattern.compile("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
 
-    @Column(name = "email", unique = true)
+    @Column(name = "email", nullable = false, unique = true)
     private String value;
 
     private Email(final String value) {
