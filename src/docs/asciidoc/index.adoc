@@ -16,3 +16,27 @@ include::{snippets}/TokenReissueApi/Success/request-headers.adoc[]
 
 include::{snippets}/TokenReissueApi/Failure/http-response.adoc[]
 include::{snippets}/TokenReissueApi/Success/http-response.adoc[]
+
+== 로그인/로그아웃 API
+
+=== 로그인
+
+==== HTTP Request
+
+include::{snippets}/AuthApi/Login/http-request.adoc[]
+include::{snippets}/AuthApi/Login/request-fields.adoc[]
+
+==== HTTP Response
+
+include::{snippets}/AuthApi/Login/http-response.adoc[]
+include::{snippets}/AuthApi/Login/response-fields.adoc[]
+
+=== 로그아웃
+
+==== HTTP Request
+
+include::{snippets}/AuthApi/Logout/http-request.adoc[]
+
+==== HTTP Response
+
+include::{snippets}/AuthApi/Logout/http-response.adoc[]
