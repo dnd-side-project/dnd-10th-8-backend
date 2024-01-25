@@ -39,4 +39,21 @@ class MemberRepositoryTest extends RepositoryTest {
                 () -> assertThat(findMember4).isEmpty()
         );
     }
+
+    @Test
+    @DisplayName("닉네임이 사용중인지 확인한다")
+    void existsByNickname() {
+        // given
+        sut.save(MEMBER_1.toDomain());
+
+        // when
+        final boolean actual1 = sut.existsByNickname(MEMBER_1.getNickname());
+        final boolean actual2 = sut.existsByNickname(MEMBER_2.getNickname());
+
+        // then
+        assertAll(
+                () -> assertThat(actual1).isTrue(),
+                () -> assertThat(actual2).isFalse()
+        );
+    }
 }

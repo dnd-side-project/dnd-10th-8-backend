@@ -4,6 +4,7 @@ import ac.dnd.bookkeeping.server.global.annotation.UseCase;
 import ac.dnd.bookkeeping.server.global.annotation.WritableTransactional;
 import ac.dnd.bookkeeping.server.member.application.usecase.command.CompleteInfoCommand;
 import ac.dnd.bookkeeping.server.member.domain.model.Member;
+import ac.dnd.bookkeeping.server.member.domain.model.Nickname;
 import ac.dnd.bookkeeping.server.member.domain.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -11,6 +12,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ManageResourceUseCase {
     private final MemberRepository memberRepository;
+
+    public boolean isUniqueNickname(final Nickname nickname) {
+        return !memberRepository.existsByNickname(nickname);
+    }
 
     @WritableTransactional
     public void completeInfo(final CompleteInfoCommand command) {
