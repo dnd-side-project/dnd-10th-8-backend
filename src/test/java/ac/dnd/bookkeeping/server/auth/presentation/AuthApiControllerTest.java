@@ -12,6 +12,8 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.LocalDate;
+
 import static ac.dnd.bookkeeping.server.common.fixture.MemberFixture.MEMBER_1;
 import static ac.dnd.bookkeeping.server.common.utils.RestDocsSpecificationUtils.SnippetFactory.body;
 import static ac.dnd.bookkeeping.server.common.utils.RestDocsSpecificationUtils.createHttpSpecSnippets;
@@ -41,9 +43,10 @@ class AuthApiControllerTest extends ControllerTest {
         private final LoginRequest request = new LoginRequest(
                 MEMBER_1.getPlatform().getSocialId(),
                 MEMBER_1.getPlatform().getEmail().getValue(),
-                MEMBER_1.getName()
+                MEMBER_1.getName(),
+                MEMBER_1.getGender().getValue(),
+                MEMBER_1.getBirth()
         );
-
 
         @Test
         @DisplayName("로그인을 진행한다")
@@ -52,7 +55,9 @@ class AuthApiControllerTest extends ControllerTest {
             given(loginUseCase.invoke(any())).willReturn(new LoginResponse(
                     true,
                     new LoginResponse.MemberInfo(
-                            "사용자 이름..."
+                            "사용자 이름...",
+                            "male",
+                            LocalDate.of(2000, 1, 1)
                     ),
                     new AuthToken(ACCESS_TOKEN, REFRESH_TOKEN)
             ));
@@ -65,11 +70,15 @@ class AuthApiControllerTest extends ControllerTest {
                             requestFields(
                                     body("socialId", "소셜 플랫폼 ID", true),
                                     body("email", "소셜 플랫폼 이메일", true),
-                                    body("name", "소셜 플랫폼 사용자 이름", true)
+                                    body("name", "소셜 플랫폼 사용자 이름", true),
+                                    body("gender", "소셜 플랫폼 사용자 성별", false),
+                                    body("birth", "사용자 생년월일", "가공해서 LocalDate 형식으로 전달", false)
                             ),
                             responseFields(
                                     body("isNew", "새로운 사용자인지 여부"),
                                     body("info.name", "사용자 이름"),
+                                    body("info.gender", "사용자 성별", "Nullable"),
+                                    body("info.birth", "사용자 생년월일", "Nullable"),
                                     body("token.accessToken", "Access Token"),
                                     body("token.refreshToken", "Refresh Token")
                             )

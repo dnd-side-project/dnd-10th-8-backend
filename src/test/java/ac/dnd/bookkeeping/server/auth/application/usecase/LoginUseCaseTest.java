@@ -29,14 +29,19 @@ class LoginUseCaseTest extends UnitTest {
     private final TokenIssuer tokenIssuer = mock(TokenIssuer.class);
     private final LoginUseCase sut = new LoginUseCase(memberRepository, tokenIssuer);
 
-    private final Member member = MEMBER_1.toDomain().apply(1L);
-    private final LoginCommand command = new LoginCommand(member.getPlatform(), member.getName());
-
     @Test
-    @DisplayName("처음 로그인하는 사용자는 회원가입 프로세스를 진행하고 로그인 처리를 한다")
-    void first() {
+    @DisplayName("처음 로그인하는 사용자는 회원가입 프로세스를 진행하고 로그인 처리를 한다 - Optional 값 미전송(Gender, Birth)")
+    void firstWithoutOptional() {
         // given
+        final LoginCommand command = new LoginCommand(
+                MEMBER_1.getPlatform(),
+                MEMBER_1.getName(),
+                null,
+                null
+        );
         given(memberRepository.findByPlatformSocialId(command.platform().getSocialId())).willReturn(Optional.empty());
+
+        final Member member = command.toDomain().apply(1L);
         given(memberRepository.save(any())).willReturn(member);
 
         final AuthToken token = new AuthToken(ACCESS_TOKEN, REFRESH_TOKEN);
@@ -50,8 +55,47 @@ class LoginUseCaseTest extends UnitTest {
                 () -> verify(memberRepository, times(1)).findByPlatformSocialId(command.platform().getSocialId()),
                 () -> verify(memberRepository, times(1)).save(any()),
                 () -> verify(tokenIssuer, times(1)).provideAuthorityToken(member.getId()),
+
                 () -> assertThat(response.isNew()).isTrue(),
                 () -> assertThat(response.info().name()).isEqualTo(member.getName()),
+                () -> assertThat(response.info().gender()).isNull(),
+                () -> assertThat(response.info().birth()).isNull(),
+                () -> assertThat(response.token().accessToken()).isEqualTo(token.accessToken()),
+                () -> assertThat(response.token().refreshToken()).isEqualTo(token.refreshToken())
+        );
+    }
+
+    @Test
+    @DisplayName("처음 로그인하는 사용자는 회원가입 프로세스를 진행하고 로그인 처리를 한다 - Optional 값 전부 전송(Gender, Birth)")
+    void firstWithOptional() {
+        // given
+        final LoginCommand command = new LoginCommand(
+                MEMBER_1.getPlatform(),
+                MEMBER_1.getName(),
+                MEMBER_1.getGender(),
+                MEMBER_1.getBirth()
+        );
+        given(memberRepository.findByPlatformSocialId(command.platform().getSocialId())).willReturn(Optional.empty());
+
+        final Member member = command.toDomain().apply(1L);
+        given(memberRepository.save(any())).willReturn(member);
+
+        final AuthToken token = new AuthToken(ACCESS_TOKEN, REFRESH_TOKEN);
+        given(tokenIssuer.provideAuthorityToken(member.getId())).willReturn(token);
+
+        // when
+        final LoginResponse response = sut.invoke(command);
+
+        // then
+        assertAll(
+                () -> verify(memberRepository, times(1)).findByPlatformSocialId(command.platform().getSocialId()),
+                () -> verify(memberRepository, times(1)).save(any()),
+                () -> verify(tokenIssuer, times(1)).provideAuthorityToken(member.getId()),
+
+                () -> assertThat(response.isNew()).isTrue(),
+                () -> assertThat(response.info().name()).isEqualTo(member.getName()),
+                () -> assertThat(response.info().gender()).isEqualTo(member.getGender().getValue()),
+                () -> assertThat(response.info().birth()).isEqualTo(member.getBirth()),
                 () -> assertThat(response.token().accessToken()).isEqualTo(token.accessToken()),
                 () -> assertThat(response.token().refreshToken()).isEqualTo(token.refreshToken())
         );
@@ -61,6 +105,14 @@ class LoginUseCaseTest extends UnitTest {
     @DisplayName("이미 가입된 사용자는 추가적인 회원가입 없이 로그인 처리를 진행한다")
     void alreadyExists() {
         // given
+        final LoginCommand command = new LoginCommand(
+                MEMBER_1.getPlatform(),
+                MEMBER_1.getName(),
+                MEMBER_1.getGender(),
+                MEMBER_1.getBirth()
+        );
+
+        final Member member = command.toDomain().apply(1L);
         given(memberRepository.findByPlatformSocialId(command.platform().getSocialId())).willReturn(Optional.of(member));
 
         final AuthToken token = new AuthToken(ACCESS_TOKEN, REFRESH_TOKEN);
@@ -74,11 +126,15 @@ class LoginUseCaseTest extends UnitTest {
                 () -> verify(memberRepository, times(1)).findByPlatformSocialId(command.platform().getSocialId()),
                 () -> verify(memberRepository, times(0)).save(any()),
                 () -> verify(tokenIssuer, times(1)).provideAuthorityToken(member.getId()),
+
+                () -> assertThat(member.getPlatform().getEmail().getValue()).isEqualTo(command.platform().getEmail().getValue()),
+
                 () -> assertThat(response.isNew()).isFalse(),
                 () -> assertThat(response.info().name()).isEqualTo(member.getName()),
+                () -> assertThat(response.info().gender()).isEqualTo(member.getGender().getValue()),
+                () -> assertThat(response.info().birth()).isEqualTo(member.getBirth()),
                 () -> assertThat(response.token().accessToken()).isEqualTo(token.accessToken()),
-                () -> assertThat(response.token().refreshToken()).isEqualTo(token.refreshToken()),
-                () -> assertThat(member.getPlatform().getEmail().getValue()).isEqualTo(command.platform().getEmail().getValue())
+                () -> assertThat(response.token().refreshToken()).isEqualTo(token.refreshToken())
         );
     }
 }
