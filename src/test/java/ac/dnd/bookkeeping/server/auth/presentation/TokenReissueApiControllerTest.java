@@ -30,9 +30,9 @@ class TokenReissueApiControllerTest extends ControllerTest {
     private final Member member = MEMBER_1.toDomain().apply(1L);
 
     @Nested
-    @DisplayName("토큰 재발급 API [POST /api/token/reissue]")
+    @DisplayName("토큰 재발급 API [POST /api/v1/token/reissue]")
     class ReissueToken {
-        private static final String BASE_URL = "/api/token/reissue";
+        private static final String BASE_URL = "/api/v1/token/reissue";
 
         @Test
         @DisplayName("유효하지 않은 RefreshToken으로 인해 토큰 재발급에 실패한다")
