@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import static ac.dnd.bookkeeping.server.common.fixture.MemberFixture.MEMBER_1;
 import static ac.dnd.bookkeeping.server.common.fixture.MemberFixture.MEMBER_2;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("Member -> 도메인 Aggregate [Member] 테스트")
 class MemberTest extends UnitTest {
@@ -21,5 +22,27 @@ class MemberTest extends UnitTest {
 
         // then
         assertThat(member.getPlatform().getEmail().getValue()).isEqualTo(MEMBER_2.getPlatform().getEmail().getValue());
+    }
+
+    @Test
+    @DisplayName("온보딩 과정에서 추가 정보들을 기입한다")
+    void complete() {
+        // given
+        final Member member = new Member(MEMBER_1.getPlatform(), MEMBER_1.getName(), null, null);
+        assertAll(
+                () -> assertThat(member.getName()).isEqualTo(MEMBER_1.getName()),
+                () -> assertThat(member.getGender()).isNull(),
+                () -> assertThat(member.getBirth()).isNull()
+        );
+
+        // when
+        member.complete(MEMBER_2.getName(), MEMBER_1.getGender(), MEMBER_1.getBirth());
+
+        // then
+        assertAll(
+                () -> assertThat(member.getName()).isEqualTo(MEMBER_2.getName()),
+                () -> assertThat(member.getGender()).isEqualTo(MEMBER_1.getGender()),
+                () -> assertThat(member.getBirth()).isEqualTo(MEMBER_1.getBirth())
+        );
     }
 }

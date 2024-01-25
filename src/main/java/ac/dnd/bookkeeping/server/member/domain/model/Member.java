@@ -52,6 +52,12 @@ public class Member extends BaseEntity<Member> {
         this.platform = platform.syncEmail(email);
     }
 
+    public void complete(final String name, final Gender gender, final LocalDate birth) {
+        this.name = name;
+        this.gender = gender;
+        this.birth = birth;
+    }
+
     @Getter
     @RequiredArgsConstructor
     public enum Gender {
