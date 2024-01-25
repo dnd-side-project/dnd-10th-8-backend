@@ -13,6 +13,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 public enum MemberExceptionCode implements BaseExceptionCode {
     MEMBER_NOT_FOUND(NOT_FOUND, "MEMBER_001", "사용자 정보가 존재하지 않습니다."),
     INVALID_EMAIL_PATTERN(BAD_REQUEST, "MEMBER_002", "이메일 형식에 맞지 않습니다."),
+    INVALID_GENDER(BAD_REQUEST, "MEMBER_003", "잘못된 성별입니다."),
     ;
 
     private final HttpStatus status;
