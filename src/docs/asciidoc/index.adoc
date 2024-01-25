@@ -17,7 +17,7 @@ include::{snippets}/TokenReissueApi/Success/request-headers.adoc[]
 include::{snippets}/TokenReissueApi/Failure/http-response.adoc[]
 include::{snippets}/TokenReissueApi/Success/http-response.adoc[]
 
-== 로그인/로그아웃 API
+== 로그인/로그아웃/탈퇴 API
 
 === 로그인
 
@@ -40,6 +40,16 @@ include::{snippets}/AuthApi/Logout/http-request.adoc[]
 ==== HTTP Response
 
 include::{snippets}/AuthApi/Logout/http-response.adoc[]
+
+=== 탈퇴 (AccessToken)
+
+==== HTTP Request
+
+include::{snippets}/MemberApi/Delete/http-request.adoc[]
+
+==== HTTP Response
+
+include::{snippets}/MemberApi/Delete/http-response.adoc[]
 
 == 온보딩 관련
 

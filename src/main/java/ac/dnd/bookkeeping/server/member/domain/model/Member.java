@@ -10,10 +10,13 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.SQLRestriction;
 
 import java.time.LocalDate;
 import java.util.Arrays;
 
+import static ac.dnd.bookkeeping.server.member.domain.model.Member.Status.ACTIVE;
+import static ac.dnd.bookkeeping.server.member.domain.model.Member.Status.INACTIVE;
 import static ac.dnd.bookkeeping.server.member.exception.MemberExceptionCode.INVALID_GENDER;
 import static jakarta.persistence.EnumType.STRING;
 import static lombok.AccessLevel.PROTECTED;
@@ -22,6 +25,7 @@ import static lombok.AccessLevel.PROTECTED;
 @NoArgsConstructor(access = PROTECTED)
 @Entity
 @Table(name = "member")
+@SQLRestriction("status = 'ACTIVE'")
 public class Member extends BaseEntity<Member> {
     @Embedded
     private SocialPlatform platform;
@@ -39,22 +43,28 @@ public class Member extends BaseEntity<Member> {
     @Column(name = "birth")
     private LocalDate birth;
 
+    @Enumerated(STRING)
+    @Column(name = "status", columnDefinition = "VARCHAR(20)")
+    private Status status;
+
     private Member(
             final SocialPlatform platform,
             final String profileImageUrl,
             final Nickname nickname,
             final Gender gender,
-            final LocalDate birth
+            final LocalDate birth,
+            final Status status
     ) {
         this.platform = platform;
         this.profileImageUrl = profileImageUrl;
         this.nickname = nickname;
         this.gender = gender;
         this.birth = birth;
+        this.status = status;
     }
 
     public static Member create(final SocialPlatform platform, final String profileImageUrl) {
-        return new Member(platform, profileImageUrl, null, null, null);
+        return new Member(platform, profileImageUrl, null, null, null, ACTIVE);
     }
 
     public void syncEmail(final Email email) {
@@ -65,6 +75,15 @@ public class Member extends BaseEntity<Member> {
         this.nickname = nickname;
         this.gender = gender;
         this.birth = birth;
+    }
+
+    public void delete() {
+        this.platform = null;
+        this.profileImageUrl = null;
+        this.nickname = null;
+        this.gender = null;
+        this.birth = null;
+        this.status = INACTIVE;
     }
 
     @Getter
@@ -82,5 +101,9 @@ public class Member extends BaseEntity<Member> {
                     .findFirst()
                     .orElseThrow(() -> new MemberException(INVALID_GENDER));
         }
+    }
+
+    public enum Status {
+        ACTIVE, INACTIVE, BAN
     }
 }
