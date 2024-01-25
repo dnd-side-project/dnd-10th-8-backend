@@ -14,14 +14,14 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-@DisplayName("Member -> CompleteInfoUseCase 테스트")
-class CompleteInfoUseCaseTest extends UnitTest {
+@DisplayName("Member -> ManageResourceUseCase 테스트")
+class ManageResourceUseCaseTest extends UnitTest {
     private final MemberRepository memberRepository = mock(MemberRepository.class);
-    private final CompleteInfoUseCase sut = new CompleteInfoUseCase(memberRepository);
+    private final ManageResourceUseCase sut = new ManageResourceUseCase(memberRepository);
 
     @Test
     @DisplayName("온보딩 과정에서 사용자 추가 정보(닉네임, 성별, 생년월일)를 기입한다")
-    void success() {
+    void completeInfo() {
         // given
         final Member member = Member.create(MEMBER_1.getPlatform(), MEMBER_1.getProfileImageUrl()).apply(1L);
 
@@ -34,7 +34,7 @@ class CompleteInfoUseCaseTest extends UnitTest {
         given(memberRepository.getById(command.memberId())).willReturn(member);
 
         // when
-        sut.invoke(command);
+        sut.completeInfo(command);
 
         // then
         assertAll(

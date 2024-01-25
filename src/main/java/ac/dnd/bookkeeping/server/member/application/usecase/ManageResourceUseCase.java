@@ -9,11 +9,11 @@ import lombok.RequiredArgsConstructor;
 
 @UseCase
 @RequiredArgsConstructor
-public class CompleteInfoUseCase {
+public class ManageResourceUseCase {
     private final MemberRepository memberRepository;
 
     @WritableTransactional
-    public void invoke(final CompleteInfoCommand command) {
+    public void completeInfo(final CompleteInfoCommand command) {
         final Member member = memberRepository.getById(command.memberId());
         member.complete(command.nickname(), command.gender(), command.birth());
     }
