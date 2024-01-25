@@ -53,7 +53,7 @@ public class RestDocsSpecificationUtils {
                 identifier,
                 getDocumentRequest(),
                 getDocumentResponse(),
-                Stream.concat(Arrays.stream(new Snippet[]{getCookieWithRefreshToken()}), Arrays.stream(snippets)).toArray(Snippet[]::new)
+                Stream.concat(Arrays.stream(new Snippet[]{getHeaderWithRefreshToken()}), Arrays.stream(snippets)).toArray(Snippet[]::new)
         );
     }
 
@@ -84,7 +84,7 @@ public class RestDocsSpecificationUtils {
                 getDocumentRequest(),
                 getDocumentResponse(),
                 Stream.concat(
-                        Arrays.stream(new Snippet[]{getCookieWithRefreshToken(), getExceptionResponseFields()}),
+                        Arrays.stream(new Snippet[]{getHeaderWithRefreshToken(), getExceptionResponseFields()}),
                         Arrays.stream(snippets)
                 ).toArray(Snippet[]::new)
         );
@@ -104,7 +104,7 @@ public class RestDocsSpecificationUtils {
         );
     }
 
-    private static Snippet getCookieWithRefreshToken() {
+    private static Snippet getHeaderWithRefreshToken() {
         return requestHeaders(
                 header(REFRESH_TOKEN_HEADER, "Refresh Token", true)
         );

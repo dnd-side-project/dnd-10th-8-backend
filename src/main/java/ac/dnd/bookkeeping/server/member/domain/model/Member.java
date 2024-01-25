@@ -1,12 +1,21 @@
 package ac.dnd.bookkeeping.server.member.domain.model;
 
 import ac.dnd.bookkeeping.server.global.base.BaseEntity;
+import ac.dnd.bookkeeping.server.member.exception.MemberException;
+import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDate;
+import java.util.Arrays;
+
+import static ac.dnd.bookkeeping.server.member.exception.MemberExceptionCode.INVALID_GENDER;
+import static jakarta.persistence.EnumType.STRING;
 import static lombok.AccessLevel.PROTECTED;
 
 @Getter
@@ -15,11 +24,63 @@ import static lombok.AccessLevel.PROTECTED;
 @Table(name = "member")
 public class Member extends BaseEntity<Member> {
     @Embedded
-    private Email email;
+    private SocialPlatform platform;
 
-    // TODO 회원가입 + 로그인 플로우에서 추가적인 필드 정의
+    @Column(name = "profile_image_url", nullable = false)
+    private String profileImageUrl;
 
-    public Member(final Email email) {
-        this.email = email;
+    @Embedded
+    private Nickname nickname;
+
+    @Enumerated(STRING)
+    @Column(name = "gender", columnDefinition = "VARCHAR(20)")
+    private Gender gender;
+
+    @Column(name = "birth")
+    private LocalDate birth;
+
+    private Member(
+            final SocialPlatform platform,
+            final String profileImageUrl,
+            final Nickname nickname,
+            final Gender gender,
+            final LocalDate birth
+    ) {
+        this.platform = platform;
+        this.profileImageUrl = profileImageUrl;
+        this.nickname = nickname;
+        this.gender = gender;
+        this.birth = birth;
+    }
+
+    public static Member create(final SocialPlatform platform, final String profileImageUrl) {
+        return new Member(platform, profileImageUrl, null, null, null);
+    }
+
+    public void syncEmail(final Email email) {
+        this.platform = platform.syncEmail(email);
+    }
+
+    public void complete(final Nickname nickname, final Gender gender, final LocalDate birth) {
+        this.nickname = nickname;
+        this.gender = gender;
+        this.birth = birth;
+    }
+
+    @Getter
+    @RequiredArgsConstructor
+    public enum Gender {
+        MAIL("male"),
+        FEMAIL("female"),
+        ;
+
+        private final String value;
+
+        public static Gender from(final String value) {
+            return Arrays.stream(values())
+                    .filter(it -> it.value.equals(value))
+                    .findFirst()
+                    .orElseThrow(() -> new MemberException(INVALID_GENDER));
+        }
     }
 }

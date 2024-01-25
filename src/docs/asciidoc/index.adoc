@@ -16,3 +16,52 @@ include::{snippets}/TokenReissueApi/Success/request-headers.adoc[]
 
 include::{snippets}/TokenReissueApi/Failure/http-response.adoc[]
 include::{snippets}/TokenReissueApi/Success/http-response.adoc[]
+
+== 로그인/로그아웃 API
+
+=== 로그인
+
+==== HTTP Request
+
+include::{snippets}/AuthApi/Login/http-request.adoc[]
+include::{snippets}/AuthApi/Login/request-fields.adoc[]
+
+==== HTTP Response
+
+include::{snippets}/AuthApi/Login/http-response.adoc[]
+include::{snippets}/AuthApi/Login/response-fields.adoc[]
+
+=== 로그아웃 (AccessToken)
+
+==== HTTP Request
+
+include::{snippets}/AuthApi/Logout/http-request.adoc[]
+
+==== HTTP Response
+
+include::{snippets}/AuthApi/Logout/http-response.adoc[]
+
+== 온보딩 관련
+
+=== 닉네임 중복체크
+
+==== HTTP Request
+
+include::{snippets}/MemberApi/Onboarding/CheckNickname/http-request.adoc[]
+include::{snippets}/MemberApi/Onboarding/CheckNickname/query-parameters.adoc[]
+
+==== HTTP Response
+
+include::{snippets}/MemberApi/Onboarding/CheckNickname/http-response.adoc[]
+include::{snippets}/MemberApi/Onboarding/CheckNickname/response-fields.adoc[]
+
+=== 추가 정보 기입 (AccessToken)
+
+==== HTTP Request
+
+include::{snippets}/MemberApi/Onboarding/CompleteInfo/http-request.adoc[]
+include::{snippets}/MemberApi/Onboarding/CompleteInfo/request-fields.adoc[]
+
+==== HTTP Response
+
+include::{snippets}/MemberApi/Onboarding/CompleteInfo/http-response.adoc[]

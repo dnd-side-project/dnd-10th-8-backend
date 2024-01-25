@@ -2,14 +2,12 @@ package ac.dnd.bookkeeping.server.global.base;
 
 import com.google.common.annotations.VisibleForTesting;
 import jakarta.persistence.Column;
-import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import lombok.Getter;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
@@ -17,19 +15,28 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Getter
 @MappedSuperclass
-@EntityListeners(AuditingEntityListener.class)
 public abstract class BaseEntity<T> {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
-    @CreatedDate
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
-    @LastModifiedDate
     @Column(name = "last_modified_at")
     private LocalDateTime lastModifiedAt;
+
+    @PrePersist
+    void prePersist() {
+        final LocalDateTime now = LocalDateTime.now();
+        createdAt = now;
+        lastModifiedAt = now;
+    }
+
+    @PreUpdate
+    void preUpdate() {
+        lastModifiedAt = LocalDateTime.now();
+    }
 
     @SuppressWarnings("unchecked")
     @VisibleForTesting
