@@ -25,7 +25,7 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.requestF
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@DisplayName("Member -> AuthApiController 테스트")
+@DisplayName("Auth -> AuthApiController 테스트")
 class AuthApiControllerTest extends ControllerTest {
     @Autowired
     private LoginUseCase loginUseCase;
