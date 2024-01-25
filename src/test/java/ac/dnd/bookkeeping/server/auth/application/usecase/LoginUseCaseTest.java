@@ -30,39 +30,8 @@ class LoginUseCaseTest extends UnitTest {
     private final LoginUseCase sut = new LoginUseCase(memberRepository, tokenIssuer);
 
     @Test
-    @DisplayName("처음 로그인하는 사용자는 회원가입 프로세스를 진행하고 로그인 처리를 한다 - Optional 값 미전송(Gender, Birth)")
-    void firstWithoutOptional() {
-        // given
-        final LoginCommand command = new LoginCommand(
-                MEMBER_1.getPlatform(),
-                MEMBER_1.getProfileImageUrl()
-        );
-        given(memberRepository.findByPlatformSocialId(command.platform().getSocialId())).willReturn(Optional.empty());
-
-        final Member member = command.toDomain().apply(1L);
-        given(memberRepository.save(any())).willReturn(member);
-
-        final AuthToken token = new AuthToken(ACCESS_TOKEN, REFRESH_TOKEN);
-        given(tokenIssuer.provideAuthorityToken(member.getId())).willReturn(token);
-
-        // when
-        final LoginResponse response = sut.invoke(command);
-
-        // then
-        assertAll(
-                () -> verify(memberRepository, times(1)).findByPlatformSocialId(command.platform().getSocialId()),
-                () -> verify(memberRepository, times(1)).save(any()),
-                () -> verify(tokenIssuer, times(1)).provideAuthorityToken(member.getId()),
-
-                () -> assertThat(response.isNew()).isTrue(),
-                () -> assertThat(response.accessToken()).isEqualTo(token.accessToken()),
-                () -> assertThat(response.refreshToken()).isEqualTo(token.refreshToken())
-        );
-    }
-
-    @Test
-    @DisplayName("처음 로그인하는 사용자는 회원가입 프로세스를 진행하고 로그인 처리를 한다 - Optional 값 전부 전송(Gender, Birth)")
-    void firstWithOptional() {
+    @DisplayName("처음 로그인하는 사용자는 회원가입 프로세스를 진행하고 로그인 처리를 한다")
+    void first() {
         // given
         final LoginCommand command = new LoginCommand(
                 MEMBER_1.getPlatform(),
