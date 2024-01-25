@@ -1,5 +1,6 @@
 package ac.dnd.bookkeeping.server.global.config.etc;
 
+import ac.dnd.bookkeeping.server.global.annotation.ExtractToken;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
@@ -7,6 +8,7 @@ import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import io.swagger.v3.oas.models.servers.Server;
+import org.springdoc.core.utils.SpringDocUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +20,14 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 @Configuration
 public class SwaggerConfig {
+    static {
+        SpringDocUtils
+                .getConfig()
+                .addAnnotationsToIgnore(
+                        ExtractToken.class
+                );
+    }
+
     @Value("${springdoc.server.url}")
     private String url;
 
