@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static ac.dnd.bookkeeping.server.common.fixture.MemberFixture.MEMBER_1;
 import static ac.dnd.bookkeeping.server.common.fixture.MemberFixture.MEMBER_2;
+import static ac.dnd.bookkeeping.server.member.domain.model.Member.Status.INACTIVE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -49,6 +50,27 @@ class MemberTest extends UnitTest {
                 () -> assertThat(member.getNickname().getValue()).isEqualTo(MEMBER_2.getNickname().getValue()),
                 () -> assertThat(member.getGender()).isEqualTo(MEMBER_1.getGender()),
                 () -> assertThat(member.getBirth()).isEqualTo(MEMBER_1.getBirth())
+        );
+    }
+
+    @Test
+    @DisplayName("탈퇴 처리를 진행한다")
+    void delete() {
+        // given
+        final Member member = MEMBER_1.toDomain().apply(1L);
+
+        // when
+        member.delete();
+
+        // then
+        assertAll(
+                () -> assertThat(member.getId()).isEqualTo(1L),
+                () -> assertThat(member.getPlatform()).isNull(),
+                () -> assertThat(member.getProfileImageUrl()).isNull(),
+                () -> assertThat(member.getNickname()).isNull(),
+                () -> assertThat(member.getGender()).isNull(),
+                () -> assertThat(member.getBirth()).isNull(),
+                () -> assertThat(member.getStatus()).isEqualTo(INACTIVE)
         );
     }
 }

@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS member
     nickname          VARCHAR(30)  NULL UNIQUE,
     gender            VARCHAR(20)  NULL,
     birth             DATE         NULL,
+    status            VARCHAR(20)  NOT NULL,
     created_at        DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
     last_modified_at  DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
