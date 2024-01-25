@@ -31,12 +31,12 @@ public class LoginUseCase {
     private LoginResponse createMemberAndIssueToken(final LoginCommand command) {
         final Member member = memberRepository.save(command.toDomain());
         final AuthToken token = tokenIssuer.provideAuthorityToken(member.getId());
-        return LoginResponse.of(true, member, token);
+        return LoginResponse.of(true, token);
     }
 
     private LoginResponse issueToken(final Member member, final SocialPlatform platform) {
         member.syncEmail(platform.getEmail());
         final AuthToken token = tokenIssuer.provideAuthorityToken(member.getId());
-        return LoginResponse.of(false, member, token);
+        return LoginResponse.of(false, token);
     }
 }

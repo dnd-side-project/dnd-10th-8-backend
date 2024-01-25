@@ -20,14 +20,14 @@ class CompleteInfoUseCaseTest extends UnitTest {
     private final CompleteInfoUseCase sut = new CompleteInfoUseCase(memberRepository);
 
     @Test
-    @DisplayName("온보딩 과정에서 사용자 추가 정보를 기입한다")
+    @DisplayName("온보딩 과정에서 사용자 추가 정보(닉네임, 성별, 생년월일)를 기입한다")
     void success() {
         // given
-        final Member member = new Member(MEMBER_1.getPlatform(), MEMBER_1.getName(), null, null).apply(1L);
+        final Member member = Member.create(MEMBER_1.getPlatform(), MEMBER_1.getProfileImageUrl()).apply(1L);
 
         final CompleteInfoCommand command = new CompleteInfoCommand(
                 member.getId(),
-                MEMBER_2.getName(),
+                MEMBER_2.getNickname(),
                 MEMBER_1.getGender(),
                 MEMBER_1.getBirth()
         );
@@ -38,7 +38,10 @@ class CompleteInfoUseCaseTest extends UnitTest {
 
         // then
         assertAll(
-                () -> assertThat(member.getName()).isEqualTo(command.name()),
+                () -> assertThat(member.getPlatform().getSocialId()).isEqualTo(MEMBER_1.getPlatform().getSocialId()),
+                () -> assertThat(member.getPlatform().getEmail().getValue()).isEqualTo(MEMBER_1.getPlatform().getEmail().getValue()),
+                () -> assertThat(member.getProfileImageUrl()).isEqualTo(MEMBER_1.getProfileImageUrl()),
+                () -> assertThat(member.getNickname().getValue()).isEqualTo(command.nickname().getValue()),
                 () -> assertThat(member.getGender()).isEqualTo(command.gender()),
                 () -> assertThat(member.getBirth()).isEqualTo(command.birth())
         );

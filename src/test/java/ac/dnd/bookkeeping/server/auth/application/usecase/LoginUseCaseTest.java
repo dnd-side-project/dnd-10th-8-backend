@@ -35,9 +35,7 @@ class LoginUseCaseTest extends UnitTest {
         // given
         final LoginCommand command = new LoginCommand(
                 MEMBER_1.getPlatform(),
-                MEMBER_1.getName(),
-                null,
-                null
+                MEMBER_1.getProfileImageUrl()
         );
         given(memberRepository.findByPlatformSocialId(command.platform().getSocialId())).willReturn(Optional.empty());
 
@@ -57,11 +55,8 @@ class LoginUseCaseTest extends UnitTest {
                 () -> verify(tokenIssuer, times(1)).provideAuthorityToken(member.getId()),
 
                 () -> assertThat(response.isNew()).isTrue(),
-                () -> assertThat(response.info().name()).isEqualTo(member.getName()),
-                () -> assertThat(response.info().gender()).isNull(),
-                () -> assertThat(response.info().birth()).isNull(),
-                () -> assertThat(response.token().accessToken()).isEqualTo(token.accessToken()),
-                () -> assertThat(response.token().refreshToken()).isEqualTo(token.refreshToken())
+                () -> assertThat(response.accessToken()).isEqualTo(token.accessToken()),
+                () -> assertThat(response.refreshToken()).isEqualTo(token.refreshToken())
         );
     }
 
@@ -71,9 +66,7 @@ class LoginUseCaseTest extends UnitTest {
         // given
         final LoginCommand command = new LoginCommand(
                 MEMBER_1.getPlatform(),
-                MEMBER_1.getName(),
-                MEMBER_1.getGender(),
-                MEMBER_1.getBirth()
+                MEMBER_1.getProfileImageUrl()
         );
         given(memberRepository.findByPlatformSocialId(command.platform().getSocialId())).willReturn(Optional.empty());
 
@@ -93,11 +86,8 @@ class LoginUseCaseTest extends UnitTest {
                 () -> verify(tokenIssuer, times(1)).provideAuthorityToken(member.getId()),
 
                 () -> assertThat(response.isNew()).isTrue(),
-                () -> assertThat(response.info().name()).isEqualTo(member.getName()),
-                () -> assertThat(response.info().gender()).isEqualTo(member.getGender().getValue()),
-                () -> assertThat(response.info().birth()).isEqualTo(member.getBirth()),
-                () -> assertThat(response.token().accessToken()).isEqualTo(token.accessToken()),
-                () -> assertThat(response.token().refreshToken()).isEqualTo(token.refreshToken())
+                () -> assertThat(response.accessToken()).isEqualTo(token.accessToken()),
+                () -> assertThat(response.refreshToken()).isEqualTo(token.refreshToken())
         );
     }
 
@@ -107,9 +97,7 @@ class LoginUseCaseTest extends UnitTest {
         // given
         final LoginCommand command = new LoginCommand(
                 MEMBER_1.getPlatform(),
-                MEMBER_1.getName(),
-                MEMBER_1.getGender(),
-                MEMBER_1.getBirth()
+                MEMBER_1.getProfileImageUrl()
         );
 
         final Member member = command.toDomain().apply(1L);
@@ -130,11 +118,8 @@ class LoginUseCaseTest extends UnitTest {
                 () -> assertThat(member.getPlatform().getEmail().getValue()).isEqualTo(command.platform().getEmail().getValue()),
 
                 () -> assertThat(response.isNew()).isFalse(),
-                () -> assertThat(response.info().name()).isEqualTo(member.getName()),
-                () -> assertThat(response.info().gender()).isEqualTo(member.getGender().getValue()),
-                () -> assertThat(response.info().birth()).isEqualTo(member.getBirth()),
-                () -> assertThat(response.token().accessToken()).isEqualTo(token.accessToken()),
-                () -> assertThat(response.token().refreshToken()).isEqualTo(token.refreshToken())
+                () -> assertThat(response.accessToken()).isEqualTo(token.accessToken()),
+                () -> assertThat(response.refreshToken()).isEqualTo(token.refreshToken())
         );
     }
 }

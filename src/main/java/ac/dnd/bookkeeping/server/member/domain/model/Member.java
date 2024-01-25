@@ -26,8 +26,11 @@ public class Member extends BaseEntity<Member> {
     @Embedded
     private SocialPlatform platform;
 
-    @Column(name = "name", nullable = false)
-    private String name;
+    @Column(name = "profile_image_url", nullable = false)
+    private String profileImageUrl;
+
+    @Embedded
+    private Nickname nickname;
 
     @Enumerated(STRING)
     @Column(name = "gender", columnDefinition = "VARCHAR(20)")
@@ -36,24 +39,30 @@ public class Member extends BaseEntity<Member> {
     @Column(name = "birth")
     private LocalDate birth;
 
-    public Member(
+    private Member(
             final SocialPlatform platform,
-            final String name,
+            final String profileImageUrl,
+            final Nickname nickname,
             final Gender gender,
             final LocalDate birth
     ) {
         this.platform = platform;
-        this.name = name;
+        this.profileImageUrl = profileImageUrl;
+        this.nickname = nickname;
         this.gender = gender;
         this.birth = birth;
+    }
+
+    public static Member create(final SocialPlatform platform, final String profileImageUrl) {
+        return new Member(platform, profileImageUrl, null, null, null);
     }
 
     public void syncEmail(final Email email) {
         this.platform = platform.syncEmail(email);
     }
 
-    public void complete(final String name, final Gender gender, final LocalDate birth) {
-        this.name = name;
+    public void complete(final Nickname nickname, final Gender gender, final LocalDate birth) {
+        this.nickname = nickname;
         this.gender = gender;
         this.birth = birth;
     }

@@ -33,9 +33,7 @@ public class AuthApiController {
     ) {
         final LoginResponse response = loginUseCase.invoke(new LoginCommand(
                 request.toSocialPlatform(),
-                request.name(),
-                request.toGender(),
-                request.birth()
+                request.profileImageUrl()
         ));
         return ResponseEntity.ok(response);
     }

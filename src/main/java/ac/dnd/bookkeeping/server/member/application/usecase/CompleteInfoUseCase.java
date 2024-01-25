@@ -15,6 +15,6 @@ public class CompleteInfoUseCase {
     @WritableTransactional
     public void invoke(final CompleteInfoCommand command) {
         final Member member = memberRepository.getById(command.memberId());
-        member.complete(command.name(), command.gender(), command.birth());
+        member.complete(command.nickname(), command.gender(), command.birth());
     }
 }
