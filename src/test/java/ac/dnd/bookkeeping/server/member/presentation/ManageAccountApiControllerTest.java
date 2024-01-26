@@ -33,9 +33,9 @@ class ManageAccountApiControllerTest extends ControllerTest {
     private ManageAccountUseCase manageAccountUseCase;
 
     @Nested
-    @DisplayName("닉네임 중복 체크 API [GET /api/v1/check-nickname]")
+    @DisplayName("닉네임 중복 체크 API [GET /api/v1/members/check-nickname]")
     class CheckNickname {
-        private static final String BASE_URL = "/api/v1/check-nickname";
+        private static final String BASE_URL = "/api/v1/members/check-nickname";
 
         @Test
         @DisplayName("닉네임 사용 가능 여부를 조회한다")

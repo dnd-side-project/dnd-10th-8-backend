@@ -31,7 +31,7 @@ public class ManageAccountApiController {
     private final DeleteAccountUseCase deleteAccountUseCase;
 
     @Operation(summary = "닉네임 중복 체크 Endpoint")
-    @GetMapping("/v1/check-nickname")
+    @GetMapping("/v1/members/check-nickname")
     public ResponseEntity<ResponseWrapper<Boolean>> checkNickname(
             @ModelAttribute @Valid final CheckNicknameRequest request
     ) {
