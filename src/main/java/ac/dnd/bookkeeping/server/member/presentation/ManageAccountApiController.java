@@ -5,7 +5,10 @@ import ac.dnd.bookkeeping.server.global.annotation.Auth;
 import ac.dnd.bookkeeping.server.global.dto.ResponseWrapper;
 import ac.dnd.bookkeeping.server.member.application.usecase.DeleteAccountUseCase;
 import ac.dnd.bookkeeping.server.member.application.usecase.ManageAccountUseCase;
+import ac.dnd.bookkeeping.server.member.application.usecase.command.RegisterMemberCommand;
 import ac.dnd.bookkeeping.server.member.presentation.dto.request.CheckNicknameRequest;
+import ac.dnd.bookkeeping.server.member.presentation.dto.request.RegisterMemberRequest;
+import ac.dnd.bookkeeping.server.member.presentation.dto.response.RegisterMemberResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -14,6 +17,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,6 +37,21 @@ public class ManageAccountApiController {
     ) {
         final boolean result = manageAccountUseCase.isUniqueNickname(request.toNickname());
         return ResponseEntity.ok(ResponseWrapper.from(result));
+    }
+
+    @Operation(summary = "회원가입 Endpoint")
+    @PostMapping("/v1/members/register")
+    public ResponseEntity<RegisterMemberResponse> register(
+            @RequestBody @Valid final RegisterMemberRequest request
+    ) {
+        final long memberId = manageAccountUseCase.register(new RegisterMemberCommand(
+                request.toSocialPlatform(),
+                request.profileImageUrl(),
+                request.toNickname(),
+                request.toGender(),
+                request.birth()
+        ));
+        return ResponseEntity.ok(new RegisterMemberResponse(memberId));
     }
 
     @Operation(summary = "사용자 탙퇴 처리 Endpoint")

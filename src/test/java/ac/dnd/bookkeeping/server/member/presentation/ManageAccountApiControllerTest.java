@@ -3,6 +3,7 @@ package ac.dnd.bookkeeping.server.member.presentation;
 import ac.dnd.bookkeeping.server.common.ControllerTest;
 import ac.dnd.bookkeeping.server.member.application.usecase.ManageAccountUseCase;
 import ac.dnd.bookkeeping.server.member.domain.model.Member;
+import ac.dnd.bookkeeping.server.member.presentation.dto.request.RegisterMemberRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -18,6 +19,7 @@ import static ac.dnd.bookkeeping.server.common.utils.RestDocsSpecificationUtils.
 import static ac.dnd.bookkeeping.server.common.utils.RestDocsSpecificationUtils.successDocsWithAccessToken;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.queryParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -48,6 +50,46 @@ class ManageAccountApiControllerTest extends ControllerTest {
                             ),
                             responseFields(
                                     body("result", "닉네임 사용 가능 여부")
+                            )
+                    ))
+            );
+        }
+    }
+
+    @Nested
+    @DisplayName("회원가입 API [GET /api/v1/members/register]")
+    class Register {
+        private static final String BASE_URL = "/api/v1/members/register";
+        private final RegisterMemberRequest request = new RegisterMemberRequest(
+                MEMBER_1.getPlatform().getSocialId(),
+                MEMBER_1.getPlatform().getEmail().getValue(),
+                MEMBER_1.getProfileImageUrl(),
+                MEMBER_1.getNickname().getValue(),
+                MEMBER_1.getGender().getValue(),
+                MEMBER_1.getBirth()
+        );
+
+        @Test
+        @DisplayName("회원가입을 진행한다")
+        void success() {
+            // given
+            given(manageAccountUseCase.register(any())).willReturn(1L);
+
+            // when - then
+            successfulExecute(
+                    postRequest(BASE_URL, request),
+                    status().isOk(),
+                    successDocs("MemberApi/Register/Process", createHttpSpecSnippets(
+                            requestFields(
+                                    body("socialId", "소셜 플랫폼 ID", true),
+                                    body("email", "소셜 플랫폼 이메일", true),
+                                    body("profileImageUrl", "프로필 이미지 URL", true),
+                                    body("nickname", "닉네임", true),
+                                    body("gender", "성별", "male / female", true),
+                                    body("birth", "생년월일", "yyyy-MM-dd", true)
+                            ),
+                            responseFields(
+                                    body("id", "사용자 ID (PK)")
                             )
                     ))
             );
