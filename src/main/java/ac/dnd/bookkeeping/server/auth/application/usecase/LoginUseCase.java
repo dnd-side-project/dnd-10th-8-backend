@@ -5,6 +5,7 @@ import ac.dnd.bookkeeping.server.auth.domain.model.AuthMember;
 import ac.dnd.bookkeeping.server.auth.domain.model.AuthToken;
 import ac.dnd.bookkeeping.server.auth.domain.service.TokenIssuer;
 import ac.dnd.bookkeeping.server.global.annotation.UseCase;
+import ac.dnd.bookkeeping.server.global.annotation.WritableTransactional;
 import ac.dnd.bookkeeping.server.member.domain.model.Member;
 import ac.dnd.bookkeeping.server.member.domain.repository.MemberRepository;
 import ac.dnd.bookkeeping.server.member.exception.MemberException;
@@ -18,10 +19,17 @@ public class LoginUseCase {
     private final MemberRepository memberRepository;
     private final TokenIssuer tokenIssuer;
 
+    @WritableTransactional
     public AuthMember invoke(final LoginCommand command) {
-        final Member member = memberRepository.findByPlatformSocialId(command.socialId())
-                .orElseThrow(() -> new MemberException(MEMBER_NOT_FOUND));
+        final Member member = getMemberBySocialId(command);
         final AuthToken token = tokenIssuer.provideAuthorityToken(member.getId());
         return AuthMember.of(member, token);
+    }
+
+    private Member getMemberBySocialId(final LoginCommand command) {
+        final Member member = memberRepository.findByPlatformSocialId(command.socialId())
+                .orElseThrow(() -> new MemberException(MEMBER_NOT_FOUND));
+        member.syncEmail(command.email());
+        return member;
     }
 }

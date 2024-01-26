@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Optional;
 
 import static ac.dnd.bookkeeping.server.common.fixture.MemberFixture.MEMBER_1;
+import static ac.dnd.bookkeeping.server.common.fixture.MemberFixture.MEMBER_2;
 import static ac.dnd.bookkeeping.server.common.utils.TokenUtils.ACCESS_TOKEN;
 import static ac.dnd.bookkeeping.server.common.utils.TokenUtils.REFRESH_TOKEN;
 import static ac.dnd.bookkeeping.server.member.exception.MemberExceptionCode.MEMBER_NOT_FOUND;
@@ -54,7 +55,7 @@ class LoginUseCaseTest extends UnitTest {
     @DisplayName("DB에 존재하는 사용자면 로그인 처리를 진행하고 토큰을 발급한다")
     void success() {
         // given
-        final LoginCommand command = new LoginCommand(MEMBER_1.getPlatform().getSocialId(), MEMBER_1.getPlatform().getEmail());
+        final LoginCommand command = new LoginCommand(MEMBER_1.getPlatform().getSocialId(), MEMBER_2.getPlatform().getEmail());
         given(memberRepository.findByPlatformSocialId(command.socialId())).willReturn(Optional.of(member));
 
         final AuthToken token = new AuthToken(ACCESS_TOKEN, REFRESH_TOKEN);
@@ -67,6 +68,7 @@ class LoginUseCaseTest extends UnitTest {
         assertAll(
                 () -> verify(memberRepository, times(1)).findByPlatformSocialId(command.socialId()),
                 () -> verify(tokenIssuer, times(1)).provideAuthorityToken(member.getId()),
+                () -> assertThat(member.getPlatform().getEmail().getValue()).isEqualTo(command.email().getValue()),
                 () -> assertThat(response.id()).isEqualTo(member.getId()),
                 () -> assertThat(response.accessToken()).isEqualTo(token.accessToken()),
                 () -> assertThat(response.refreshToken()).isEqualTo(token.refreshToken())
