@@ -1,13 +1,9 @@
 package ac.dnd.bookkeeping.server.auth.application.usecase.command;
 
-import ac.dnd.bookkeeping.server.member.domain.model.Member;
-import ac.dnd.bookkeeping.server.member.domain.model.SocialPlatform;
+import ac.dnd.bookkeeping.server.member.domain.model.Email;
 
 public record LoginCommand(
-        SocialPlatform platform,
-        String profileImageUrl
+        String socialId,
+        Email email
 ) {
-    public Member toDomain() {
-        return Member.create(platform, profileImageUrl);
-    }
 }

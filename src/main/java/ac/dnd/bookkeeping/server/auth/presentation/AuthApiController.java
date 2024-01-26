@@ -4,7 +4,7 @@ import ac.dnd.bookkeeping.server.auth.application.usecase.LoginUseCase;
 import ac.dnd.bookkeeping.server.auth.application.usecase.LogoutUseCase;
 import ac.dnd.bookkeeping.server.auth.application.usecase.command.LoginCommand;
 import ac.dnd.bookkeeping.server.auth.application.usecase.command.LogoutCommand;
-import ac.dnd.bookkeeping.server.auth.application.usecase.command.response.LoginResponse;
+import ac.dnd.bookkeeping.server.auth.domain.model.AuthToken;
 import ac.dnd.bookkeeping.server.auth.domain.model.Authenticated;
 import ac.dnd.bookkeeping.server.auth.presentation.dto.request.LoginRequest;
 import ac.dnd.bookkeeping.server.global.annotation.Auth;
@@ -28,19 +28,21 @@ public class AuthApiController {
 
     @Operation(summary = "로그인 Endpoint")
     @PostMapping("/v1/auth/login")
-    public ResponseEntity<LoginResponse> login(
+    public ResponseEntity<AuthToken> login(
             @RequestBody @Valid final LoginRequest request
     ) {
-        final LoginResponse response = loginUseCase.invoke(new LoginCommand(
-                request.toSocialPlatform(),
-                request.profileImageUrl()
+        final AuthToken response = loginUseCase.invoke(new LoginCommand(
+                request.socialId(),
+                request.toEmail()
         ));
         return ResponseEntity.ok(response);
     }
 
     @Operation(summary = "로그아웃 EndPoint")
     @PostMapping("/v1/auth/logout")
-    public ResponseEntity<Void> logout(@Auth final Authenticated authenticated) {
+    public ResponseEntity<Void> logout(
+            @Auth final Authenticated authenticated
+    ) {
         logoutUseCase.invoke(new LogoutCommand(authenticated.id()));
         return ResponseEntity.noContent().build();
     }

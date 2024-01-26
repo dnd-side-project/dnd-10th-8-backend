@@ -13,6 +13,7 @@ public class DeleteAccountUseCase {
     private final MemberRepository memberRepository;
     private final TokenStore tokenStore;
 
+    // TODO Member 이외 다른 도메인이 확장되고 Member간의 결합이 존재할 경우 Event 처리를 통해서 다른 도메인 Repo와의 결합도 낮추기
     @WritableTransactional
     public void invoke(final long memberId) {
         final Member member = memberRepository.getById(memberId);
