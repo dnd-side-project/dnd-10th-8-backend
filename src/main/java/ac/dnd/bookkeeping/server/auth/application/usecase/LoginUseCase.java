@@ -1,6 +1,7 @@
 package ac.dnd.bookkeeping.server.auth.application.usecase;
 
 import ac.dnd.bookkeeping.server.auth.application.usecase.command.LoginCommand;
+import ac.dnd.bookkeeping.server.auth.domain.model.AuthMember;
 import ac.dnd.bookkeeping.server.auth.domain.model.AuthToken;
 import ac.dnd.bookkeeping.server.auth.domain.service.TokenIssuer;
 import ac.dnd.bookkeeping.server.global.annotation.UseCase;
@@ -17,9 +18,10 @@ public class LoginUseCase {
     private final MemberRepository memberRepository;
     private final TokenIssuer tokenIssuer;
 
-    public AuthToken invoke(final LoginCommand command) {
+    public AuthMember invoke(final LoginCommand command) {
         final Member member = memberRepository.findByPlatformSocialId(command.socialId())
                 .orElseThrow(() -> new MemberException(MEMBER_NOT_FOUND));
-        return tokenIssuer.provideAuthorityToken(member.getId());
+        final AuthToken token = tokenIssuer.provideAuthorityToken(member.getId());
+        return AuthMember.of(member, token);
     }
 }

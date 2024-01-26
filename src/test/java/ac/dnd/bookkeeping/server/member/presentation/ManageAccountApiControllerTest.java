@@ -1,8 +1,8 @@
 package ac.dnd.bookkeeping.server.member.presentation;
 
+import ac.dnd.bookkeeping.server.auth.domain.model.AuthMember;
 import ac.dnd.bookkeeping.server.common.ControllerTest;
 import ac.dnd.bookkeeping.server.member.application.usecase.ManageAccountUseCase;
-import ac.dnd.bookkeeping.server.member.application.usecase.command.response.RegisterMemberResponse;
 import ac.dnd.bookkeeping.server.member.domain.model.Member;
 import ac.dnd.bookkeeping.server.member.presentation.dto.request.RegisterMemberRequest;
 import org.junit.jupiter.api.DisplayName;
@@ -76,7 +76,7 @@ class ManageAccountApiControllerTest extends ControllerTest {
         @DisplayName("회원가입 + 로그인 처리를 진행한다")
         void success() {
             // given
-            given(manageAccountUseCase.register(any())).willReturn(new RegisterMemberResponse(1L, ACCESS_TOKEN, REFRESH_TOKEN));
+            given(manageAccountUseCase.register(any())).willReturn(new AuthMember(1L, ACCESS_TOKEN, REFRESH_TOKEN));
 
             // when - then
             successfulExecute(

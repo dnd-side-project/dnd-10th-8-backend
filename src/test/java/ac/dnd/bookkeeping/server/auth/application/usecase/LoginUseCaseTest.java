@@ -1,6 +1,7 @@
 package ac.dnd.bookkeeping.server.auth.application.usecase;
 
 import ac.dnd.bookkeeping.server.auth.application.usecase.command.LoginCommand;
+import ac.dnd.bookkeeping.server.auth.domain.model.AuthMember;
 import ac.dnd.bookkeeping.server.auth.domain.model.AuthToken;
 import ac.dnd.bookkeeping.server.auth.domain.service.TokenIssuer;
 import ac.dnd.bookkeeping.server.common.UnitTest;
@@ -60,12 +61,13 @@ class LoginUseCaseTest extends UnitTest {
         given(tokenIssuer.provideAuthorityToken(member.getId())).willReturn(token);
 
         // when
-        final AuthToken response = sut.invoke(command);
+        final AuthMember response = sut.invoke(command);
 
         // then
         assertAll(
                 () -> verify(memberRepository, times(1)).findByPlatformSocialId(command.socialId()),
                 () -> verify(tokenIssuer, times(1)).provideAuthorityToken(member.getId()),
+                () -> assertThat(response.id()).isEqualTo(member.getId()),
                 () -> assertThat(response.accessToken()).isEqualTo(token.accessToken()),
                 () -> assertThat(response.refreshToken()).isEqualTo(token.refreshToken())
         );
