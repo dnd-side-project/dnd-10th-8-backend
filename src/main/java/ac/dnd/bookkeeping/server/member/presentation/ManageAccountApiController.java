@@ -5,7 +5,7 @@ import ac.dnd.bookkeeping.server.auth.domain.model.Authenticated;
 import ac.dnd.bookkeeping.server.global.annotation.Auth;
 import ac.dnd.bookkeeping.server.global.dto.ResponseWrapper;
 import ac.dnd.bookkeeping.server.member.application.usecase.DeleteAccountUseCase;
-import ac.dnd.bookkeeping.server.member.application.usecase.ManageAccountUseCase;
+import ac.dnd.bookkeeping.server.member.application.usecase.RegisterAccountUseCase;
 import ac.dnd.bookkeeping.server.member.application.usecase.command.RegisterMemberCommand;
 import ac.dnd.bookkeeping.server.member.presentation.dto.request.CheckNicknameRequest;
 import ac.dnd.bookkeeping.server.member.presentation.dto.request.RegisterMemberRequest;
@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/api")
 public class ManageAccountApiController {
-    private final ManageAccountUseCase manageAccountUseCase;
+    private final RegisterAccountUseCase registerAccountUseCase;
     private final DeleteAccountUseCase deleteAccountUseCase;
 
     @Operation(summary = "닉네임 중복 체크 Endpoint")
@@ -35,7 +35,7 @@ public class ManageAccountApiController {
     public ResponseEntity<ResponseWrapper<Boolean>> checkNickname(
             @ModelAttribute @Valid final CheckNicknameRequest request
     ) {
-        final boolean result = manageAccountUseCase.isUniqueNickname(request.toNickname());
+        final boolean result = registerAccountUseCase.isUniqueNickname(request.toNickname());
         return ResponseEntity.ok(ResponseWrapper.from(result));
     }
 
@@ -44,7 +44,7 @@ public class ManageAccountApiController {
     public ResponseEntity<AuthMember> register(
             @RequestBody @Valid final RegisterMemberRequest request
     ) {
-        final AuthMember response = manageAccountUseCase.register(new RegisterMemberCommand(
+        final AuthMember response = registerAccountUseCase.register(new RegisterMemberCommand(
                 request.toSocialPlatform(),
                 request.profileImageUrl(),
                 request.toNickname(),
