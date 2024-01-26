@@ -1,7 +1,6 @@
 package ac.dnd.bookkeeping.server.auth.presentation.dto.request;
 
 import ac.dnd.bookkeeping.server.member.domain.model.Email;
-import ac.dnd.bookkeeping.server.member.domain.model.SocialPlatform;
 import jakarta.validation.constraints.NotBlank;
 
 public record LoginRequest(
@@ -9,12 +8,9 @@ public record LoginRequest(
         String socialId,
 
         @NotBlank(message = "소셜 플랫폼 이메일은 필수입니다.")
-        String email,
-
-        @NotBlank(message = "소셜 플랫폼 사용자 이미지 URL은 필수입니다.")
-        String profileImageUrl
+        String email
 ) {
-    public SocialPlatform toSocialPlatform() {
-        return SocialPlatform.of(socialId, Email.from(email));
+    public Email toEmail() {
+        return Email.from(email);
     }
 }
