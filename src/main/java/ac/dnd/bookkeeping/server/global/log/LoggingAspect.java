@@ -25,6 +25,7 @@ public class LoggingAspect {
             && !execution(* ac.dnd.bookkeeping.server.global.dto..*(..))
             && !execution(* ac.dnd.bookkeeping.server.global.filter..*(..))
             && !execution(* ac.dnd.bookkeeping.server.global.log..*(..))
+            && !execution(* ac.dnd.bookkeeping.server..*AnonymousRequestExceptionHandler.*(..))
             && !execution(* ac.dnd.bookkeeping.server..*Config.*(..))
             && !execution(* ac.dnd.bookkeeping.server..*Formatter.*(..))
             && !execution(* ac.dnd.bookkeeping.server..*Properties.*(..))
