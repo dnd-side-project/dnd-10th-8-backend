@@ -23,13 +23,14 @@ include::{snippets}/TokenReissueApi/Success/http-response.adoc[]
 
 ==== HTTP Request
 
-include::{snippets}/AuthApi/Login/http-request.adoc[]
-include::{snippets}/AuthApi/Login/request-fields.adoc[]
+include::{snippets}/AuthApi/Login/Success/http-request.adoc[]
+include::{snippets}/AuthApi/Login/Success/request-fields.adoc[]
 
 ==== HTTP Response
 
-include::{snippets}/AuthApi/Login/http-response.adoc[]
-include::{snippets}/AuthApi/Login/response-fields.adoc[]
+include::{snippets}/AuthApi/Login/Failure/http-response.adoc[]
+include::{snippets}/AuthApi/Login/Success/http-response.adoc[]
+include::{snippets}/AuthApi/Login/Success/response-fields.adoc[]
 
 === 로그아웃 (AccessToken)
 
