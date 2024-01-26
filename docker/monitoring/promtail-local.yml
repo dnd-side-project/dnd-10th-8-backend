@@ -2,7 +2,7 @@ positions:
   filename: /tmp/positions.yaml
 
 clients:
-  - url: http://localhost:3100/loki/api/v1/push # 로그를 Push할 Loki 서버 (Monitoring)
+  - url: http://host.docker.internal:3100/loki/api/v1/push # 로그를 Push할 Loki 서버 (Monitoring)
 
 scrape_configs:
   - job_name: application-logging
@@ -11,4 +11,4 @@ scrape_configs:
           - localhost # 로그를 Scrapping할 타켓 주소 (localhost)
         labels:
           job: logs
-          __path__: /logs/*.log # WAS 로그파일 (Host - Docker Volume)
+          __path__: ./logs/*.log # WAS 로그파일 (Host - Docker Volume)

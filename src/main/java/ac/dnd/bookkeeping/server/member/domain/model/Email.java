@@ -38,9 +38,4 @@ public class Email {
     private static boolean isNotValidPattern(final String value) {
         return !pattern.matcher(value).matches();
     }
-
-    @Override
-    public String toString() {
-        return value;
-    }
 }
