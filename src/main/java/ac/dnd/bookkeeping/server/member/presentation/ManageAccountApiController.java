@@ -40,7 +40,7 @@ public class ManageAccountApiController {
     }
 
     @Operation(summary = "회원가입 + 로그인 처리 Endpoint")
-    @PostMapping("/v1/members/register")
+    @PostMapping("/v1/members")
     public ResponseEntity<RegisterMemberResponse> register(
             @RequestBody @Valid final RegisterMemberRequest request
     ) {

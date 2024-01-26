@@ -60,9 +60,9 @@ class ManageAccountApiControllerTest extends ControllerTest {
     }
 
     @Nested
-    @DisplayName("회원가입 API [GET /api/v1/members/register]")
+    @DisplayName("회원가입 + 로그인 처리 API [GET /api/v1/members]")
     class Register {
-        private static final String BASE_URL = "/api/v1/members/register";
+        private static final String BASE_URL = "/api/v1/members";
         private final RegisterMemberRequest request = new RegisterMemberRequest(
                 MEMBER_1.getPlatform().getSocialId(),
                 MEMBER_1.getPlatform().getEmail().getValue(),
@@ -73,7 +73,7 @@ class ManageAccountApiControllerTest extends ControllerTest {
         );
 
         @Test
-        @DisplayName("회원가입을 진행한다")
+        @DisplayName("회원가입 + 로그인 처리를 진행한다")
         void success() {
             // given
             given(manageAccountUseCase.register(any())).willReturn(new RegisterMemberResponse(1L, ACCESS_TOKEN, REFRESH_TOKEN));
