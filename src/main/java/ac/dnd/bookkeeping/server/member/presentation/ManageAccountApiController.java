@@ -6,9 +6,9 @@ import ac.dnd.bookkeeping.server.global.dto.ResponseWrapper;
 import ac.dnd.bookkeeping.server.member.application.usecase.DeleteAccountUseCase;
 import ac.dnd.bookkeeping.server.member.application.usecase.ManageAccountUseCase;
 import ac.dnd.bookkeeping.server.member.application.usecase.command.RegisterMemberCommand;
+import ac.dnd.bookkeeping.server.member.application.usecase.command.response.RegisterMemberResponse;
 import ac.dnd.bookkeeping.server.member.presentation.dto.request.CheckNicknameRequest;
 import ac.dnd.bookkeeping.server.member.presentation.dto.request.RegisterMemberRequest;
-import ac.dnd.bookkeeping.server.member.presentation.dto.response.RegisterMemberResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -39,19 +39,19 @@ public class ManageAccountApiController {
         return ResponseEntity.ok(ResponseWrapper.from(result));
     }
 
-    @Operation(summary = "회원가입 Endpoint")
+    @Operation(summary = "회원가입 + 로그인 처리 Endpoint")
     @PostMapping("/v1/members/register")
     public ResponseEntity<RegisterMemberResponse> register(
             @RequestBody @Valid final RegisterMemberRequest request
     ) {
-        final long memberId = manageAccountUseCase.register(new RegisterMemberCommand(
+        final RegisterMemberResponse response = manageAccountUseCase.register(new RegisterMemberCommand(
                 request.toSocialPlatform(),
                 request.profileImageUrl(),
                 request.toNickname(),
                 request.toGender(),
                 request.birth()
         ));
-        return ResponseEntity.ok(new RegisterMemberResponse(memberId));
+        return ResponseEntity.ok(response);
     }
 
     @Operation(summary = "사용자 탙퇴 처리 Endpoint")

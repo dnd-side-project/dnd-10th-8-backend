@@ -2,6 +2,7 @@ package ac.dnd.bookkeeping.server.member.presentation;
 
 import ac.dnd.bookkeeping.server.common.ControllerTest;
 import ac.dnd.bookkeeping.server.member.application.usecase.ManageAccountUseCase;
+import ac.dnd.bookkeeping.server.member.application.usecase.command.response.RegisterMemberResponse;
 import ac.dnd.bookkeeping.server.member.domain.model.Member;
 import ac.dnd.bookkeeping.server.member.presentation.dto.request.RegisterMemberRequest;
 import org.junit.jupiter.api.DisplayName;
@@ -17,6 +18,8 @@ import static ac.dnd.bookkeeping.server.common.utils.RestDocsSpecificationUtils.
 import static ac.dnd.bookkeeping.server.common.utils.RestDocsSpecificationUtils.createHttpSpecSnippets;
 import static ac.dnd.bookkeeping.server.common.utils.RestDocsSpecificationUtils.successDocs;
 import static ac.dnd.bookkeeping.server.common.utils.RestDocsSpecificationUtils.successDocsWithAccessToken;
+import static ac.dnd.bookkeeping.server.common.utils.TokenUtils.ACCESS_TOKEN;
+import static ac.dnd.bookkeeping.server.common.utils.TokenUtils.REFRESH_TOKEN;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
@@ -73,7 +76,7 @@ class ManageAccountApiControllerTest extends ControllerTest {
         @DisplayName("회원가입을 진행한다")
         void success() {
             // given
-            given(manageAccountUseCase.register(any())).willReturn(1L);
+            given(manageAccountUseCase.register(any())).willReturn(new RegisterMemberResponse(1L, ACCESS_TOKEN, REFRESH_TOKEN));
 
             // when - then
             successfulExecute(
@@ -89,7 +92,9 @@ class ManageAccountApiControllerTest extends ControllerTest {
                                     body("birth", "생년월일", "yyyy-MM-dd", true)
                             ),
                             responseFields(
-                                    body("id", "사용자 ID (PK)")
+                                    body("id", "사용자 ID (PK)"),
+                                    body("accessToken", "Access Token"),
+                                    body("refreshToken", "Refresh Token")
                             )
                     ))
             );

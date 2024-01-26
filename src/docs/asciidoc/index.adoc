@@ -66,7 +66,7 @@ include::{snippets}/MemberApi/Register/CheckNickname/query-parameters.adoc[]
 include::{snippets}/MemberApi/Register/CheckNickname/http-response.adoc[]
 include::{snippets}/MemberApi/Register/CheckNickname/response-fields.adoc[]
 
-=== 회원가입
+=== 회원가입 + 로그인 처리
 
 ==== HTTP Request
 
