@@ -2,7 +2,7 @@ package ac.dnd.bookkeeping.server.member.presentation;
 
 import ac.dnd.bookkeeping.server.auth.domain.model.AuthMember;
 import ac.dnd.bookkeeping.server.common.ControllerTest;
-import ac.dnd.bookkeeping.server.member.application.usecase.ManageAccountUseCase;
+import ac.dnd.bookkeeping.server.member.application.usecase.RegisterAccountUseCase;
 import ac.dnd.bookkeeping.server.member.domain.model.Member;
 import ac.dnd.bookkeeping.server.member.presentation.dto.request.RegisterMemberRequest;
 import org.junit.jupiter.api.DisplayName;
@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("Member -> ManageAccountApiController 테스트")
 class ManageAccountApiControllerTest extends ControllerTest {
     @Autowired
-    private ManageAccountUseCase manageAccountUseCase;
+    private RegisterAccountUseCase registerAccountUseCase;
 
     @Nested
     @DisplayName("닉네임 중복 체크 API [GET /api/v1/members/check-nickname]")
@@ -41,7 +41,7 @@ class ManageAccountApiControllerTest extends ControllerTest {
         @DisplayName("닉네임 사용 가능 여부를 조회한다")
         void success() {
             // given
-            given(manageAccountUseCase.isUniqueNickname(any())).willReturn(true);
+            given(registerAccountUseCase.isUniqueNickname(any())).willReturn(true);
 
             // when - then
             successfulExecute(
@@ -76,7 +76,7 @@ class ManageAccountApiControllerTest extends ControllerTest {
         @DisplayName("회원가입 + 로그인 처리를 진행한다")
         void success() {
             // given
-            given(manageAccountUseCase.register(any())).willReturn(new AuthMember(1L, ACCESS_TOKEN, REFRESH_TOKEN));
+            given(registerAccountUseCase.register(any())).willReturn(new AuthMember(1L, ACCESS_TOKEN, REFRESH_TOKEN));
 
             // when - then
             successfulExecute(

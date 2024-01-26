@@ -15,7 +15,7 @@ import static ac.dnd.bookkeeping.server.member.exception.MemberExceptionCode.DUP
 
 @UseCase
 @RequiredArgsConstructor
-public class ManageAccountUseCase {
+public class RegisterAccountUseCase {
     private final MemberRepository memberRepository;
     private final TokenIssuer tokenIssuer;
 
