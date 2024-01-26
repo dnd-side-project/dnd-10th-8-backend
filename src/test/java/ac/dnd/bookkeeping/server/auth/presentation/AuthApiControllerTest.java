@@ -43,8 +43,7 @@ class AuthApiControllerTest extends ControllerTest {
         private static final String BASE_URL = "/api/v1/auth/login";
         private final LoginRequest request = new LoginRequest(
                 MEMBER_1.getPlatform().getSocialId(),
-                MEMBER_1.getPlatform().getEmail().getValue(),
-                MEMBER_1.getProfileImageUrl()
+                MEMBER_1.getPlatform().getEmail().getValue()
         );
 
         @Test
@@ -63,8 +62,7 @@ class AuthApiControllerTest extends ControllerTest {
                     failureDocs("AuthApi/Login/Failure", createHttpSpecSnippets(
                             requestFields(
                                     body("socialId", "소셜 플랫폼 ID", true),
-                                    body("email", "소셜 플랫폼 이메일", true),
-                                    body("profileImageUrl", "소셜 플랫폼 사용자 이미지 URL", true)
+                                    body("email", "소셜 플랫폼 이메일", true)
                             )
                     ))
             );
@@ -83,8 +81,7 @@ class AuthApiControllerTest extends ControllerTest {
                     successDocs("AuthApi/Login/Success", createHttpSpecSnippets(
                             requestFields(
                                     body("socialId", "소셜 플랫폼 ID", true),
-                                    body("email", "소셜 플랫폼 이메일", true),
-                                    body("profileImageUrl", "소셜 플랫폼 사용자 이미지 URL", true)
+                                    body("email", "소셜 플랫폼 이메일", true)
                             ),
                             responseFields(
                                     body("accessToken", "Access Token"),

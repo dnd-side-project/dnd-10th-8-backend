@@ -36,18 +36,15 @@ class LoginUseCaseTest extends UnitTest {
     @DisplayName("DB에 존재하지 않는 사용자라면 예외가 발생하고 회원가입 플로우로 이동한다")
     void throwExceptionByMemberNotFound() {
         // given
-        final LoginCommand command = new LoginCommand(
-                MEMBER_1.getPlatform(),
-                MEMBER_1.getProfileImageUrl()
-        );
-        given(memberRepository.findByPlatformSocialId(command.platform().getSocialId())).willReturn(Optional.empty());
+        final LoginCommand command = new LoginCommand(MEMBER_1.getPlatform().getSocialId(), MEMBER_1.getPlatform().getEmail());
+        given(memberRepository.findByPlatformSocialId(command.socialId())).willReturn(Optional.empty());
 
         // when - then
         assertAll(
                 () -> assertThatThrownBy(() -> sut.invoke(command))
                         .isInstanceOf(MemberException.class)
                         .hasMessage(MEMBER_NOT_FOUND.getMessage()),
-                () -> verify(memberRepository, times(1)).findByPlatformSocialId(command.platform().getSocialId()),
+                () -> verify(memberRepository, times(1)).findByPlatformSocialId(command.socialId()),
                 () -> verify(tokenIssuer, times(0)).provideAuthorityToken(member.getId())
         );
     }
@@ -56,11 +53,8 @@ class LoginUseCaseTest extends UnitTest {
     @DisplayName("DB에 존재하는 사용자면 로그인 처리를 진행하고 토큰을 발급한다")
     void success() {
         // given
-        final LoginCommand command = new LoginCommand(
-                MEMBER_1.getPlatform(),
-                MEMBER_1.getProfileImageUrl()
-        );
-        given(memberRepository.findByPlatformSocialId(command.platform().getSocialId())).willReturn(Optional.of(member));
+        final LoginCommand command = new LoginCommand(MEMBER_1.getPlatform().getSocialId(), MEMBER_1.getPlatform().getEmail());
+        given(memberRepository.findByPlatformSocialId(command.socialId())).willReturn(Optional.of(member));
 
         final AuthToken token = new AuthToken(ACCESS_TOKEN, REFRESH_TOKEN);
         given(tokenIssuer.provideAuthorityToken(member.getId())).willReturn(token);
@@ -70,7 +64,7 @@ class LoginUseCaseTest extends UnitTest {
 
         // then
         assertAll(
-                () -> verify(memberRepository, times(1)).findByPlatformSocialId(command.platform().getSocialId()),
+                () -> verify(memberRepository, times(1)).findByPlatformSocialId(command.socialId()),
                 () -> verify(tokenIssuer, times(1)).provideAuthorityToken(member.getId()),
                 () -> assertThat(response.accessToken()).isEqualTo(token.accessToken()),
                 () -> assertThat(response.refreshToken()).isEqualTo(token.refreshToken())

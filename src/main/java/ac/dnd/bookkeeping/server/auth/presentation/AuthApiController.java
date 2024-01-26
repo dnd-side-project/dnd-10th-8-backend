@@ -32,8 +32,8 @@ public class AuthApiController {
             @RequestBody @Valid final LoginRequest request
     ) {
         final AuthToken response = loginUseCase.invoke(new LoginCommand(
-                request.toSocialPlatform(),
-                request.profileImageUrl()
+                request.socialId(),
+                request.toEmail()
         ));
         return ResponseEntity.ok(response);
     }

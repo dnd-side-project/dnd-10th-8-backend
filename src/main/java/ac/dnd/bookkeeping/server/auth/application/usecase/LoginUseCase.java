@@ -18,7 +18,7 @@ public class LoginUseCase {
     private final TokenIssuer tokenIssuer;
 
     public AuthToken invoke(final LoginCommand command) {
-        final Member member = memberRepository.findByPlatformSocialId(command.platform().getSocialId())
+        final Member member = memberRepository.findByPlatformSocialId(command.socialId())
                 .orElseThrow(() -> new MemberException(MEMBER_NOT_FOUND));
         return tokenIssuer.provideAuthorityToken(member.getId());
     }
