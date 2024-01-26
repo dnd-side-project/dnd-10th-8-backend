@@ -1,12 +1,12 @@
 package ac.dnd.bookkeeping.server.member.presentation;
 
+import ac.dnd.bookkeeping.server.auth.domain.model.AuthMember;
 import ac.dnd.bookkeeping.server.auth.domain.model.Authenticated;
 import ac.dnd.bookkeeping.server.global.annotation.Auth;
 import ac.dnd.bookkeeping.server.global.dto.ResponseWrapper;
 import ac.dnd.bookkeeping.server.member.application.usecase.DeleteAccountUseCase;
 import ac.dnd.bookkeeping.server.member.application.usecase.ManageAccountUseCase;
 import ac.dnd.bookkeeping.server.member.application.usecase.command.RegisterMemberCommand;
-import ac.dnd.bookkeeping.server.member.application.usecase.command.response.RegisterMemberResponse;
 import ac.dnd.bookkeeping.server.member.presentation.dto.request.CheckNicknameRequest;
 import ac.dnd.bookkeeping.server.member.presentation.dto.request.RegisterMemberRequest;
 import io.swagger.v3.oas.annotations.Operation;
@@ -41,10 +41,10 @@ public class ManageAccountApiController {
 
     @Operation(summary = "회원가입 + 로그인 처리 Endpoint")
     @PostMapping("/v1/members")
-    public ResponseEntity<RegisterMemberResponse> register(
+    public ResponseEntity<AuthMember> register(
             @RequestBody @Valid final RegisterMemberRequest request
     ) {
-        final RegisterMemberResponse response = manageAccountUseCase.register(new RegisterMemberCommand(
+        final AuthMember response = manageAccountUseCase.register(new RegisterMemberCommand(
                 request.toSocialPlatform(),
                 request.profileImageUrl(),
                 request.toNickname(),

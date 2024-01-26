@@ -2,7 +2,7 @@ package ac.dnd.bookkeeping.server.auth.presentation;
 
 import ac.dnd.bookkeeping.server.auth.application.usecase.LoginUseCase;
 import ac.dnd.bookkeeping.server.auth.application.usecase.LogoutUseCase;
-import ac.dnd.bookkeeping.server.auth.domain.model.AuthToken;
+import ac.dnd.bookkeeping.server.auth.domain.model.AuthMember;
 import ac.dnd.bookkeeping.server.auth.presentation.dto.request.LoginRequest;
 import ac.dnd.bookkeeping.server.common.ControllerTest;
 import ac.dnd.bookkeeping.server.member.domain.model.Member;
@@ -72,7 +72,7 @@ class AuthApiControllerTest extends ControllerTest {
         @DisplayName("DB에 존재하는 사용자면 로그인 처리를 진행하고 토큰을 발급한다")
         void success() {
             // given
-            given(loginUseCase.invoke(any())).willReturn(new AuthToken(ACCESS_TOKEN, REFRESH_TOKEN));
+            given(loginUseCase.invoke(any())).willReturn(new AuthMember(1L, ACCESS_TOKEN, REFRESH_TOKEN));
 
             // when - then
             successfulExecute(
@@ -84,6 +84,7 @@ class AuthApiControllerTest extends ControllerTest {
                                     body("email", "소셜 플랫폼 이메일", true)
                             ),
                             responseFields(
+                                    body("id", "사용자 ID (PK)"),
                                     body("accessToken", "Access Token"),
                                     body("refreshToken", "Refresh Token")
                             )

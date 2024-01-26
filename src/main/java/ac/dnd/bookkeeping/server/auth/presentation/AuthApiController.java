@@ -4,7 +4,7 @@ import ac.dnd.bookkeeping.server.auth.application.usecase.LoginUseCase;
 import ac.dnd.bookkeeping.server.auth.application.usecase.LogoutUseCase;
 import ac.dnd.bookkeeping.server.auth.application.usecase.command.LoginCommand;
 import ac.dnd.bookkeeping.server.auth.application.usecase.command.LogoutCommand;
-import ac.dnd.bookkeeping.server.auth.domain.model.AuthToken;
+import ac.dnd.bookkeeping.server.auth.domain.model.AuthMember;
 import ac.dnd.bookkeeping.server.auth.domain.model.Authenticated;
 import ac.dnd.bookkeeping.server.auth.presentation.dto.request.LoginRequest;
 import ac.dnd.bookkeeping.server.global.annotation.Auth;
@@ -28,10 +28,10 @@ public class AuthApiController {
 
     @Operation(summary = "로그인 Endpoint")
     @PostMapping("/v1/auth/login")
-    public ResponseEntity<AuthToken> login(
+    public ResponseEntity<AuthMember> login(
             @RequestBody @Valid final LoginRequest request
     ) {
-        final AuthToken response = loginUseCase.invoke(new LoginCommand(
+        final AuthMember response = loginUseCase.invoke(new LoginCommand(
                 request.socialId(),
                 request.toEmail()
         ));
