@@ -27,6 +27,7 @@ import static ac.dnd.bookkeeping.server.global.log.MdcKey.REQUEST_METHOD;
 import static ac.dnd.bookkeeping.server.global.log.MdcKey.REQUEST_PARAMS;
 import static ac.dnd.bookkeeping.server.global.log.MdcKey.REQUEST_TIME;
 import static ac.dnd.bookkeeping.server.global.log.MdcKey.REQUEST_URI;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 @Slf4j
 public class RequestLoggingFilter implements Filter {
@@ -84,10 +85,10 @@ public class RequestLoggingFilter implements Filter {
                 MDC.get(REQUEST_PARAMS.name()),
                 MDC.get(REQUEST_TIME.name())
         );
-        log.info("Request Body = {}", readRequestBodyViaCachingRequestWrapper(httpRequest));
+        log.info("Request Body = {}", readRequestData(httpRequest));
     }
 
-    private String readRequestBodyViaCachingRequestWrapper(final HttpServletRequest request) {
+    private String readRequestData(final HttpServletRequest request) {
         if (request instanceof final ReadableRequestWrapper requestWrapper) {
             final byte[] bodyContents = requestWrapper.getContentAsByteArray();
 
@@ -100,7 +101,7 @@ public class RequestLoggingFilter implements Filter {
     }
 
     private void loggingResponseInfo(final HttpServletResponse httpResponse, final StopWatch stopWatch) {
-        log.info("Response Body = {}", readResponseBodyViaCachingRequestWrapper(httpResponse));
+        log.info("Response Body = {}", readResponseData(httpResponse));
         log.info(
                 "[Request END] = [Task ID = {}, IP = {}, HTTP Method = {}, Uri = {}, HTTP Status = {}, 요청 처리 시간 = {}ms]",
                 MDC.get(REQUEST_ID.name()),
@@ -112,15 +113,23 @@ public class RequestLoggingFilter implements Filter {
         );
     }
 
-    private Object readResponseBodyViaCachingRequestWrapper(final HttpServletResponse response) {
+    private Object readResponseData(final HttpServletResponse response) {
         if (response instanceof final ContentCachingResponseWrapper responseWrapper) {
             final byte[] bodyContents = responseWrapper.getContentAsByteArray();
 
             if (bodyContents.length == 0) {
                 return EMPTY_RESULT;
             }
-            return new String(bodyContents, StandardCharsets.UTF_8);
+            return createResponse(bodyContents);
         }
         return EMPTY_RESULT;
+    }
+
+    private String createResponse(final byte[] bodyContents) {
+        final String result = new String(bodyContents, UTF_8);
+        if (result.contains("</html>")) {
+            return EMPTY_RESULT;
+        }
+        return result;
     }
 }
