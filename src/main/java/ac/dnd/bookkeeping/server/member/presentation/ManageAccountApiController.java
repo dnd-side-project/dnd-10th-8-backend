@@ -47,6 +47,7 @@ public class ManageAccountApiController {
         final AuthMember response = registerAccountUseCase.register(new RegisterMemberCommand(
                 request.toSocialPlatform(),
                 request.profileImageUrl(),
+                request.name(),
                 request.toNickname(),
                 request.toGender(),
                 request.birth()

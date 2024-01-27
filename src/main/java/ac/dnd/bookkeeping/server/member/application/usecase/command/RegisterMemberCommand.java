@@ -10,11 +10,12 @@ import java.time.LocalDate;
 public record RegisterMemberCommand(
         SocialPlatform platform,
         String profileImageUrl,
+        String name,
         Nickname nickname,
         Gender gender,
         LocalDate birth
 ) {
     public Member toDomain() {
-        return Member.create(platform, profileImageUrl, nickname, gender, birth);
+        return Member.create(platform, profileImageUrl, name, nickname, gender, birth);
     }
 }

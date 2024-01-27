@@ -67,6 +67,7 @@ class ManageAccountApiControllerTest extends ControllerTest {
                 MEMBER_1.getPlatform().getSocialId(),
                 MEMBER_1.getPlatform().getEmail().getValue(),
                 MEMBER_1.getProfileImageUrl(),
+                MEMBER_1.getName(),
                 MEMBER_1.getNickname().getValue(),
                 MEMBER_1.getGender().getValue(),
                 MEMBER_1.getBirth()
@@ -86,7 +87,8 @@ class ManageAccountApiControllerTest extends ControllerTest {
                             requestFields(
                                     body("socialId", "소셜 플랫폼 ID", true),
                                     body("email", "소셜 플랫폼 이메일", true),
-                                    body("profileImageUrl", "프로필 이미지 URL", true),
+                                    body("profileImageUrl", "소셜 플랫폼 프로필 이미지 URL", true),
+                                    body("name", "소셜 플랫폼 사용자 이름", true),
                                     body("nickname", "닉네임", true),
                                     body("gender", "성별", "male / female", true),
                                     body("birth", "생년월일", "yyyy-MM-dd", true)
@@ -108,7 +110,7 @@ class ManageAccountApiControllerTest extends ControllerTest {
         private final Member member = MEMBER_1.toDomain().apply(1L);
 
         @Test
-        @DisplayName("온보딩 후 추가 정보를 기입한다")
+        @DisplayName("탈퇴 처리를 진행한다")
         void success() {
             // given
             applyToken(true, member.getId());
