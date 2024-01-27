@@ -39,6 +39,7 @@ class MemberTest extends UnitTest {
                 () -> assertThat(member.getId()).isEqualTo(1L),
                 () -> assertThat(member.getPlatform()).isNull(),
                 () -> assertThat(member.getProfileImageUrl()).isEqualTo(MEMBER_1.getProfileImageUrl()),
+                () -> assertThat(member.getName()).isEqualTo(MEMBER_1.getName()),
                 () -> assertThat(member.getNickname()).isNull(),
                 () -> assertThat(member.getGender()).isEqualTo(MEMBER_1.getGender()),
                 () -> assertThat(member.getBirth()).isEqualTo(MEMBER_1.getBirth()),

@@ -16,8 +16,11 @@ public record RegisterMemberRequest(
         @NotBlank(message = "소셜 플랫폼 이메일은 필수입니다.")
         String email,
 
-        @NotBlank(message = "프로필 이미지 URL은 필수입니다.")
+        @NotBlank(message = "소셜 플랫폼 프로필 이미지 URL은 필수입니다.")
         String profileImageUrl,
+
+        @NotBlank(message = "소셜 플랫폼 사용자 이름은 필수입니다.")
+        String name,
 
         @NotBlank(message = "닉네임은 필수입니다.")
         String nickname,
