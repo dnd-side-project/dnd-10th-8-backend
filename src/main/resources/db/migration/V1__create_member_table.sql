@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS member
     social_id         VARCHAR(200) NULL UNIQUE,
     email             VARCHAR(200) NULL UNIQUE,
     profile_image_url VARCHAR(200) NOT NULL,
+    name              VARCHAR(100) NOT NULL,
     nickname          VARCHAR(30)  NULL UNIQUE,
     gender            VARCHAR(20)  NOT NULL,
     birth             DATE         NOT NULL,

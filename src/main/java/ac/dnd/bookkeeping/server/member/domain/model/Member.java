@@ -29,6 +29,9 @@ public class Member extends BaseEntity<Member> {
     @Column(name = "profile_image_url", nullable = false)
     private String profileImageUrl;
 
+    @Column(name = "name", nullable = false)
+    private String name;
+
     @Embedded
     private Nickname nickname;
 
@@ -46,6 +49,7 @@ public class Member extends BaseEntity<Member> {
     private Member(
             final SocialPlatform platform,
             final String profileImageUrl,
+            final String name,
             final Nickname nickname,
             final Gender gender,
             final LocalDate birth,
@@ -53,6 +57,7 @@ public class Member extends BaseEntity<Member> {
     ) {
         this.platform = platform;
         this.profileImageUrl = profileImageUrl;
+        this.name = name;
         this.nickname = nickname;
         this.gender = gender;
         this.birth = birth;
@@ -62,11 +67,12 @@ public class Member extends BaseEntity<Member> {
     public static Member create(
             final SocialPlatform platform,
             final String profileImageUrl,
+            final String name,
             final Nickname nickname,
             final Gender gender,
             final LocalDate birth
     ) {
-        return new Member(platform, profileImageUrl, nickname, gender, birth, ACTIVE);
+        return new Member(platform, profileImageUrl, name, nickname, gender, birth, ACTIVE);
     }
 
     public void syncEmail(final Email email) {
