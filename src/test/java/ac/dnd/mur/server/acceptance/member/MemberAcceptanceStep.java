@@ -5,9 +5,9 @@ import ac.dnd.mur.server.member.presentation.dto.request.RegisterMemberRequest;
 import io.restassured.response.ValidatableResponse;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import static ac.dnd.mur.server.acceptance.CommonRequestFixture.deleteRequestWithAccessToken;
 import static ac.dnd.mur.server.acceptance.CommonRequestFixture.getRequest;
 import static ac.dnd.mur.server.acceptance.CommonRequestFixture.postRequest;
-import static ac.dnd.mur.server.acceptance.CommonRequestFixture.postRequestWithAccessToken;
 
 public class MemberAcceptanceStep {
     public static ValidatableResponse 닉네임_중복_체크를_진행한다(final String nickname) {
@@ -56,6 +56,6 @@ public class MemberAcceptanceStep {
                 .toUri()
                 .getPath();
 
-        return postRequestWithAccessToken(uri, accessToken);
+        return deleteRequestWithAccessToken(uri, accessToken);
     }
 }
