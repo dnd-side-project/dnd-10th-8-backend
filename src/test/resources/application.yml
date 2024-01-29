@@ -15,6 +15,16 @@ spring:
       port: 6379
       password:
 
+  cloud:
+    aws:
+      region:
+        static: ap-northeast-2
+      credentials:
+        access-key: access-key
+        secret-key: secret-key
+      s3:
+        bucket: mur-upload
+
 jwt:
   secret-key: 0aad1b3d890f6f4fb89555708462aa50b1a4f5808fe453602beec25ecadf297f
   access-token-validity-seconds: 1234

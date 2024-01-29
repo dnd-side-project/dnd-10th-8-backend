@@ -42,6 +42,14 @@ spring:
       port: 6379
       password: mur
 
+  cloud:
+    aws:
+      region:
+        static: ap-northeast-2
+        profile: dnd
+      s3:
+        bucket: mur-upload
+
   web:
     resources:
       add-mappings: false
