@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 import static ac.dnd.mur.server.auth.domain.model.AuthToken.REFRESH_TOKEN_HEADER;
+import static ac.dnd.mur.server.auth.domain.model.AuthToken.TOKEN_TYPE;
 import static io.restassured.http.ContentType.JSON;
 import static io.restassured.http.ContentType.MULTIPART;
 
@@ -63,7 +64,7 @@ public class CommonRequestFixture {
     public static ValidatableResponse postRequestWithRefreshToken(final String uri, final String refreshToken) {
         return request(given -> given
                 .contentType(JSON)
-                .header(REFRESH_TOKEN_HEADER, refreshToken)
+                .header(REFRESH_TOKEN_HEADER, String.join(" ", TOKEN_TYPE, refreshToken))
                 .when()
                 .post(uri)
         );
