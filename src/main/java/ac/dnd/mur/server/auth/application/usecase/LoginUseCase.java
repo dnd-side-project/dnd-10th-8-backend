@@ -4,8 +4,8 @@ import ac.dnd.mur.server.auth.application.usecase.command.LoginCommand;
 import ac.dnd.mur.server.auth.domain.model.AuthMember;
 import ac.dnd.mur.server.auth.domain.model.AuthToken;
 import ac.dnd.mur.server.auth.domain.service.TokenIssuer;
+import ac.dnd.mur.server.global.annotation.MurWritableTransactional;
 import ac.dnd.mur.server.global.annotation.UseCase;
-import ac.dnd.mur.server.global.annotation.WritableTransactional;
 import ac.dnd.mur.server.member.domain.model.Member;
 import ac.dnd.mur.server.member.domain.repository.MemberRepository;
 import ac.dnd.mur.server.member.exception.MemberException;
@@ -19,7 +19,7 @@ public class LoginUseCase {
     private final MemberRepository memberRepository;
     private final TokenIssuer tokenIssuer;
 
-    @WritableTransactional
+    @MurWritableTransactional
     public AuthMember invoke(final LoginCommand command) {
         final Member member = getMemberBySocialId(command);
         final AuthToken token = tokenIssuer.provideAuthorityToken(member.getId());

@@ -9,6 +9,6 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
-@Transactional(readOnly = true)
-public @interface ReadOnlyTransactional {
+@Transactional
+public @interface MurWritableTransactional {
 }
