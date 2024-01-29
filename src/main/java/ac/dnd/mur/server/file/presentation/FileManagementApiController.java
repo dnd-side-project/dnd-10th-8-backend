@@ -18,13 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "파일 관련 API")
 @RestController
-@RequestMapping("/api/files")
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class FileManagementApiController {
     private final CreatePresignedUrlUseCase createPresignedUrlUseCase;
 
     @Operation(summary = "이미지 업로드에 대한 Presigned Url 응답 Endpoint")
-    @GetMapping("/presigned/image")
+    @GetMapping("/v1/files/presigned/image")
     public ResponseEntity<PresignedUrlDetails> getImagePresignedUrl(
             @Auth final Authenticated authenticated,
             @ModelAttribute @Valid final GetImagePresignedUrlRequest request

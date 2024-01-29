@@ -34,9 +34,9 @@ class FileManagementApiControllerTest extends ControllerTest {
     private final Member member = MEMBER_1.toDomain().apply(1L);
 
     @Nested
-    @DisplayName("이미지 업로드에 대한 Presigned Url 응답 API -> [POST /api/files/presigned/image]")
+    @DisplayName("이미지 업로드에 대한 Presigned Url 응답 API -> [POST /api/v1/files/presigned/image]")
     class GetImagePresignedUrl {
-        private static final String BASE_URL = "/api/files/presigned/image";
+        private static final String BASE_URL = "/api/v1/files/presigned/image";
 
         @Test
         @DisplayName("이미지 파일[JPG, JPEG, PNG]이 아니면 Presigned Url을 얻을 수 없다")
