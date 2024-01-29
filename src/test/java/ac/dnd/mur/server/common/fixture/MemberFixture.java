@@ -1,14 +1,21 @@
 package ac.dnd.mur.server.common.fixture;
 
+import ac.dnd.mur.server.acceptance.member.MemberAcceptanceStep;
+import ac.dnd.mur.server.auth.domain.model.AuthMember;
 import ac.dnd.mur.server.member.domain.model.Email;
 import ac.dnd.mur.server.member.domain.model.Gender;
 import ac.dnd.mur.server.member.domain.model.Member;
 import ac.dnd.mur.server.member.domain.model.Nickname;
 import ac.dnd.mur.server.member.domain.model.SocialPlatform;
+import io.restassured.response.ExtractableResponse;
+import io.restassured.response.Response;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
+
+import static ac.dnd.mur.server.auth.domain.model.AuthToken.ACCESS_TOKEN_HEADER;
+import static ac.dnd.mur.server.auth.domain.model.AuthToken.REFRESH_TOKEN_HEADER;
 
 @Getter
 @RequiredArgsConstructor
@@ -74,5 +81,18 @@ public enum MemberFixture {
 
     public Member toDomain() {
         return Member.create(platform, profileImageUrl, name, nickname, gender, birth);
+    }
+
+    public AuthMember 회원가입과_로그인을_진행한다() {
+        final ExtractableResponse<Response> result = MemberAcceptanceStep.회원가입을_진행한다(this).extract();
+        final long memberId = result.jsonPath().getLong("id");
+        final String accessToken = result.header(ACCESS_TOKEN_HEADER).split(" ")[1];
+        final String refreshToken = result.header(REFRESH_TOKEN_HEADER).split(" ")[1];
+
+        return new AuthMember(
+                memberId,
+                accessToken,
+                refreshToken
+        );
     }
 }
