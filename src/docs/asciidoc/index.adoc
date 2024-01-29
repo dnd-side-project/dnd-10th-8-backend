@@ -1,4 +1,4 @@
-= DND 10th-8 BE API 문서
+= DND 10th-8 Mur BE API 문서
 :doctype: book
 :icons: font
 :source-highlighter: highlightjs
@@ -7,12 +7,12 @@
 
 == 토큰 재발급 API (RefreshToken)
 
-=== HTTP Request
+> HTTP Request
 
 include::{snippets}/TokenReissueApi/Success/http-request.adoc[]
 include::{snippets}/TokenReissueApi/Success/request-headers.adoc[]
 
-=== HTTP Response
+> HTTP Response
 
 include::{snippets}/TokenReissueApi/Failure/http-response.adoc[]
 include::{snippets}/TokenReissueApi/Success/http-response.adoc[]
@@ -21,12 +21,12 @@ include::{snippets}/TokenReissueApi/Success/http-response.adoc[]
 
 === 로그인
 
-==== HTTP Request
+> HTTP Request
 
 include::{snippets}/AuthApi/Login/Success/http-request.adoc[]
 include::{snippets}/AuthApi/Login/Success/request-fields.adoc[]
 
-==== HTTP Response
+> HTTP Response
 
 include::{snippets}/AuthApi/Login/Failure/http-response.adoc[]
 include::{snippets}/AuthApi/Login/Success/http-response.adoc[]
@@ -34,21 +34,21 @@ include::{snippets}/AuthApi/Login/Success/response-fields.adoc[]
 
 === 로그아웃 (AccessToken)
 
-==== HTTP Request
+> HTTP Request
 
 include::{snippets}/AuthApi/Logout/http-request.adoc[]
 
-==== HTTP Response
+> HTTP Response
 
 include::{snippets}/AuthApi/Logout/http-response.adoc[]
 
 === 탈퇴 (AccessToken)
 
-==== HTTP Request
+> HTTP Request
 
 include::{snippets}/MemberApi/Delete/http-request.adoc[]
 
-==== HTTP Response
+> HTTP Response
 
 include::{snippets}/MemberApi/Delete/http-response.adoc[]
 
@@ -56,24 +56,24 @@ include::{snippets}/MemberApi/Delete/http-response.adoc[]
 
 === 닉네임 중복체크
 
-==== HTTP Request
+> HTTP Request
 
 include::{snippets}/MemberApi/Register/CheckNickname/http-request.adoc[]
 include::{snippets}/MemberApi/Register/CheckNickname/query-parameters.adoc[]
 
-==== HTTP Response
+> HTTP Response
 
 include::{snippets}/MemberApi/Register/CheckNickname/http-response.adoc[]
 include::{snippets}/MemberApi/Register/CheckNickname/response-fields.adoc[]
 
 === 회원가입 + 로그인 처리
 
-==== HTTP Request
+> HTTP Request
 
 include::{snippets}/MemberApi/Register/Process/http-request.adoc[]
 include::{snippets}/MemberApi/Register/Process/request-fields.adoc[]
 
-==== HTTP Response
+> HTTP Response
 
 include::{snippets}/MemberApi/Register/Process/http-response.adoc[]
 include::{snippets}/MemberApi/Register/Process/response-fields.adoc[]

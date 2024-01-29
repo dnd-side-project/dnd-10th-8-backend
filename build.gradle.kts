@@ -154,6 +154,6 @@ tasks.named<Jar>("jar") {
 }
 
 tasks.named<BootJar>("bootJar") {
-    archiveBaseName = "Bookkeeping"
-    archiveFileName = "Bookkeeping.jar"
+    archiveBaseName = "Mur"
+    archiveFileName = "Mur.jar"
 }
