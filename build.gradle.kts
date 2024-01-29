@@ -46,6 +46,10 @@ dependencies {
     // Redis
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
 
+    // Cloud Infra
+    implementation("io.awspring.cloud:spring-cloud-aws-starter:${property("awspringVersion")}")
+    implementation("io.awspring.cloud:spring-cloud-aws-starter-s3:${property("awspringVersion")}")
+
     // Log & Monitoring
     implementation("io.sentry:sentry-spring-boot-starter-jakarta:${property("sentryVersion")}")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
@@ -90,6 +94,9 @@ dependencies {
     // TestContainers + Flyway(MySQL)
     testImplementation("org.testcontainers:mysql")
     testImplementation("org.flywaydb.flyway-test-extensions:flyway-spring-test:${property("flywayTestExtensionVersion")}")
+
+    // TestContainers + LocalStack
+    testImplementation("org.testcontainers:localstack:${property("localStackVersion")}")
 }
 
 tasks.withType<Test> {

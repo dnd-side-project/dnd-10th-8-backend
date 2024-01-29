@@ -17,6 +17,21 @@ include::{snippets}/TokenReissueApi/Success/request-headers.adoc[]
 include::{snippets}/TokenReissueApi/Failure/http-response.adoc[]
 include::{snippets}/TokenReissueApi/Success/http-response.adoc[]
 
+== 파일 관련 API (AccessToken)
+
+=== PresignedUrl 응답
+
+> HTTP Request
+
+include::{snippets}/FileApi/GetPresignedUrl/Image/Success/http-request.adoc[]
+include::{snippets}/FileApi/GetPresignedUrl/Image/Success/query-parameters.adoc[]
+
+> HTTP Response
+
+include::{snippets}/FileApi/GetPresignedUrl/Image/Failure/http-response.adoc[]
+include::{snippets}/FileApi/GetPresignedUrl/Image/Success/http-response.adoc[]
+include::{snippets}/FileApi/GetPresignedUrl/Image/Success/response-fields.adoc[]
+
 == 로그인/로그아웃/탈퇴 API
 
 === 로그인
