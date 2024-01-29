@@ -11,7 +11,7 @@ public class FileAcceptanceStep {
             final String accessToken
     ) {
         final String uri = UriComponentsBuilder
-                .fromPath("/api/files/presigned/image?fileName={fileName}")
+                .fromPath("/api/v1/files/presigned/image?fileName={fileName}")
                 .build(fileName)
                 .getPath();
 
