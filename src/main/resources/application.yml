@@ -46,9 +46,11 @@ spring:
     aws:
       region:
         static: ap-northeast-2
-        profile: dnd
       s3:
         bucket: mur-upload
+      credentials:
+        profile:
+          name: dnd
 
   web:
     resources:
