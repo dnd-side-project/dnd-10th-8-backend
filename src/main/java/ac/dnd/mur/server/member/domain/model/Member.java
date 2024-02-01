@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLRestriction;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static ac.dnd.mur.server.member.domain.model.Member.Status.ACTIVE;
 import static ac.dnd.mur.server.member.domain.model.Member.Status.INACTIVE;
@@ -42,6 +43,9 @@ public class Member extends BaseEntity<Member> {
     @Column(name = "birth")
     private LocalDate birth;
 
+    @Embedded
+    private Groups groups;
+
     @Enumerated(STRING)
     @Column(name = "status", columnDefinition = "VARCHAR(20)")
     private Status status;
@@ -61,6 +65,7 @@ public class Member extends BaseEntity<Member> {
         this.nickname = nickname;
         this.gender = gender;
         this.birth = birth;
+        this.groups = Groups.init(this);
         this.status = status;
     }
 
@@ -83,6 +88,14 @@ public class Member extends BaseEntity<Member> {
         this.status = INACTIVE;
         this.platform = null;
         this.nickname = null;
+    }
+
+    public void addGroup(final String name) {
+        this.groups.add(this, name);
+    }
+
+    public List<Group> getGroups() {
+        return groups.getGroups();
     }
 
     public enum Status {
