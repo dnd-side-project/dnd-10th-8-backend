@@ -75,3 +75,14 @@ include::{snippets}/MemberApi/Register/Process/request-fields.adoc[]
 
 include::{snippets}/MemberApi/Register/Process/http-response.adoc[]
 include::{snippets}/MemberApi/Register/Process/response-fields.adoc[]
+
+== 마이페이지 내 정보 조회 (AccessToken)
+
+> HTTP Request
+
+include::{snippets}/MemberApi/Profile/Private/http-request.adoc[]
+
+> HTTP Response
+
+include::{snippets}/MemberApi/Profile/Private/http-response.adoc[]
+include::{snippets}/MemberApi/Profile/Private/response-fields.adoc[]

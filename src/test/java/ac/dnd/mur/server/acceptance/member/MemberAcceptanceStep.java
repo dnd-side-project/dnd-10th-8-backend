@@ -7,6 +7,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import static ac.dnd.mur.server.acceptance.CommonRequestFixture.deleteRequestWithAccessToken;
 import static ac.dnd.mur.server.acceptance.CommonRequestFixture.getRequest;
+import static ac.dnd.mur.server.acceptance.CommonRequestFixture.getRequestWithAccessToken;
 import static ac.dnd.mur.server.acceptance.CommonRequestFixture.postRequest;
 
 public class MemberAcceptanceStep {
@@ -57,5 +58,15 @@ public class MemberAcceptanceStep {
                 .getPath();
 
         return deleteRequestWithAccessToken(uri, accessToken);
+    }
+
+    public static ValidatableResponse 마이페이지_내_정보를_조회한다(final String accessToken) {
+        final String uri = UriComponentsBuilder
+                .fromPath("/api/v1/members/me")
+                .build()
+                .toUri()
+                .getPath();
+
+        return getRequestWithAccessToken(uri, accessToken);
     }
 }
