@@ -20,6 +20,11 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
 
     @MurWritableTransactional
     @Modifying(flushAutomatically = true, clearAutomatically = true)
+    @Query("DELETE FROM Group g WHERE g.id = :id")
+    void deleteGroup(@Param("id") final long id);
+
+    @MurWritableTransactional
+    @Modifying(flushAutomatically = true, clearAutomatically = true)
     @Query("DELETE FROM Group g WHERE g.memberId = :memberId")
     void deleteMemberGroups(@Param("memberId") final Long memberId);
 
