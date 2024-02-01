@@ -6,9 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static ac.dnd.mur.server.common.fixture.MemberFixture.MEMBER_1;
 import static ac.dnd.mur.server.common.fixture.MemberFixture.MEMBER_2;
-import static ac.dnd.mur.server.member.domain.model.Member.Status.INACTIVE;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("Member -> 도메인 Aggregate [Member] 테스트")
 class MemberTest extends UnitTest {
@@ -23,27 +21,5 @@ class MemberTest extends UnitTest {
 
         // then
         assertThat(member.getPlatform().getEmail().getValue()).isEqualTo(MEMBER_2.getPlatform().getEmail().getValue());
-    }
-
-    @Test
-    @DisplayName("탈퇴 처리를 진행한다")
-    void delete() {
-        // given
-        final Member member = MEMBER_1.toDomain().apply(1L);
-
-        // when
-        member.delete();
-
-        // then
-        assertAll(
-                () -> assertThat(member.getId()).isEqualTo(1L),
-                () -> assertThat(member.getPlatform()).isNull(),
-                () -> assertThat(member.getProfileImageUrl()).isEqualTo(MEMBER_1.getProfileImageUrl()),
-                () -> assertThat(member.getName()).isEqualTo(MEMBER_1.getName()),
-                () -> assertThat(member.getNickname()).isNull(),
-                () -> assertThat(member.getGender()).isEqualTo(MEMBER_1.getGender()),
-                () -> assertThat(member.getBirth()).isEqualTo(MEMBER_1.getBirth()),
-                () -> assertThat(member.getStatus()).isEqualTo(INACTIVE)
-        );
     }
 }

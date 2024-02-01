@@ -1,23 +1,22 @@
 package ac.dnd.mur.server.member.application.usecase;
 
-import ac.dnd.mur.server.auth.application.adapter.TokenStore;
 import ac.dnd.mur.server.global.annotation.MurWritableTransactional;
 import ac.dnd.mur.server.global.annotation.UseCase;
 import ac.dnd.mur.server.member.domain.model.Member;
 import ac.dnd.mur.server.member.domain.repository.MemberRepository;
+import ac.dnd.mur.server.member.domain.service.DeleteMemberRelatedResourceProcessor;
 import lombok.RequiredArgsConstructor;
 
 @UseCase
 @RequiredArgsConstructor
 public class DeleteAccountUseCase {
     private final MemberRepository memberRepository;
-    private final TokenStore tokenStore;
+    private final DeleteMemberRelatedResourceProcessor deleteMemberRelatedResourceProcessor;
 
-    // TODO Member 이외 다른 도메인이 확장되고 Member간의 결합이 존재할 경우 Event 처리를 통해서 다른 도메인 Repo와의 결합도 낮추기
     @MurWritableTransactional
     public void invoke(final long memberId) {
         final Member member = memberRepository.getById(memberId);
-        tokenStore.deleteRefreshToken(member.getId());
-        member.delete();
+        deleteMemberRelatedResourceProcessor.invoke(member.getId());
+        memberRepository.delete(memberId);
     }
 }
