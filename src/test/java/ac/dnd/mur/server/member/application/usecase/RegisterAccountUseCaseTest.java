@@ -4,14 +4,13 @@ import ac.dnd.mur.server.auth.domain.model.AuthMember;
 import ac.dnd.mur.server.auth.domain.model.AuthToken;
 import ac.dnd.mur.server.auth.domain.service.TokenIssuer;
 import ac.dnd.mur.server.common.UnitTest;
+import ac.dnd.mur.server.group.domain.repository.GroupRepository;
 import ac.dnd.mur.server.member.application.usecase.command.RegisterMemberCommand;
-import ac.dnd.mur.server.member.domain.event.MemberRegisteredEvent;
 import ac.dnd.mur.server.member.domain.model.Member;
 import ac.dnd.mur.server.member.domain.repository.MemberRepository;
 import ac.dnd.mur.server.member.exception.MemberException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.context.ApplicationEventPublisher;
 
 import static ac.dnd.mur.server.common.fixture.MemberFixture.MEMBER_1;
 import static ac.dnd.mur.server.common.utils.TokenUtils.ACCESS_TOKEN;
@@ -29,12 +28,12 @@ import static org.mockito.Mockito.verify;
 @DisplayName("Member -> RegisterAccountUseCase 테스트")
 class RegisterAccountUseCaseTest extends UnitTest {
     private final MemberRepository memberRepository = mock(MemberRepository.class);
+    private final GroupRepository groupRepository = mock(GroupRepository.class);
     private final TokenIssuer tokenIssuer = mock(TokenIssuer.class);
-    private final ApplicationEventPublisher eventPublisher = mock(ApplicationEventPublisher.class);
     private final RegisterAccountUseCase sut = new RegisterAccountUseCase(
             memberRepository,
-            tokenIssuer,
-            eventPublisher
+            groupRepository,
+            tokenIssuer
     );
 
     private final RegisterMemberCommand command = new RegisterMemberCommand(
@@ -60,7 +59,7 @@ class RegisterAccountUseCaseTest extends UnitTest {
                         .hasMessage(DUPLICATE_NICKNAME.getMessage()),
                 () -> verify(memberRepository, times(1)).existsByNickname(command.nickname()),
                 () -> verify(memberRepository, times(0)).save(any()),
-                () -> verify(eventPublisher, times(0)).publishEvent(any(MemberRegisteredEvent.class)),
+                () -> verify(groupRepository, times(0)).saveAll(any()),
                 () -> verify(tokenIssuer, times(0)).provideAuthorityToken(member.getId())
         );
     }
@@ -82,7 +81,7 @@ class RegisterAccountUseCaseTest extends UnitTest {
         assertAll(
                 () -> verify(memberRepository, times(1)).existsByNickname(command.nickname()),
                 () -> verify(memberRepository, times(1)).save(any()),
-                () -> verify(eventPublisher, times(1)).publishEvent(any(MemberRegisteredEvent.class)),
+                () -> verify(groupRepository, times(1)).saveAll(any()),
                 () -> verify(tokenIssuer, times(1)).provideAuthorityToken(member.getId()),
                 () -> assertThat(result.id()).isEqualTo(member.getId()),
                 () -> assertThat(result.accessToken()).isEqualTo(token.accessToken()),

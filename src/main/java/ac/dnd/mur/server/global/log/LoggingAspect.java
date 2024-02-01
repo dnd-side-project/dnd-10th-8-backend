@@ -29,7 +29,8 @@ public class LoggingAspect {
             && !execution(* ac.dnd.mur.server..*Config.*(..))
             && !execution(* ac.dnd.mur.server..*Formatter.*(..))
             && !execution(* ac.dnd.mur.server..*Properties.*(..))
-            && !execution(* ac.dnd.mur.server..*RequestTokenExtractor.*(..))
+            && !execution(* ac.dnd.mur.server..*TokenProvider.*(..))
+            && !execution(* ac.dnd.mur.server..*TokenExtractor.*(..))
             """)
     private void excludeComponent() {
     }
