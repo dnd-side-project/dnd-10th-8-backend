@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 import static ac.dnd.mur.server.group.exception.GroupExceptionCode.GROUP_NOT_FOUND;
 
@@ -20,8 +21,8 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
 
     @MurWritableTransactional
     @Modifying(flushAutomatically = true, clearAutomatically = true)
-    @Query("DELETE FROM Group g WHERE g.id = :id AND g.memberId = :memberId")
-    void deleteGroup(@Param("id") final long id, @Param("memberId") final long memberId);
+    @Query("DELETE FROM Group g WHERE g.id = :id")
+    void deleteGroup(@Param("id") final long id);
 
     @MurWritableTransactional
     @Modifying(flushAutomatically = true, clearAutomatically = true)
@@ -31,4 +32,11 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
     boolean existsByMemberIdAndName(final long memberId, String name);
 
     List<Group> findByMemberId(final long memberId);
+
+    Optional<Group> findByIdAndMemberId(final long id, final long memberId);
+
+    default Group getMemberGroup(final long id, final long memberId) {
+        return findByIdAndMemberId(id, memberId)
+                .orElseThrow(() -> new GroupException(GROUP_NOT_FOUND));
+    }
 }
