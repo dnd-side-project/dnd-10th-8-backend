@@ -1,7 +1,6 @@
 package ac.dnd.mur.server.member.domain.model;
 
 import ac.dnd.mur.server.common.UnitTest;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -9,6 +8,7 @@ import static ac.dnd.mur.server.common.fixture.MemberFixture.MEMBER_1;
 import static ac.dnd.mur.server.common.fixture.MemberFixture.MEMBER_2;
 import static ac.dnd.mur.server.member.domain.model.Member.Status.ACTIVE;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("Member -> 도메인 Aggregate [Member] 테스트")
 class MemberTest extends UnitTest {
@@ -40,7 +40,7 @@ class MemberTest extends UnitTest {
         );
 
         // then
-        Assertions.assertAll(
+        assertAll(
                 () -> assertThat(member.getPlatform().getType()).isEqualTo(MEMBER_1.getPlatform().getType()),
                 () -> assertThat(member.getPlatform().getSocialId()).isEqualTo(MEMBER_1.getPlatform().getSocialId()),
                 () -> assertThat(member.getPlatform().getEmail().getValue()).isEqualTo(MEMBER_1.getPlatform().getEmail().getValue()),
