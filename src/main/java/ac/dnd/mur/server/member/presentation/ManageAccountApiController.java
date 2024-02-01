@@ -46,7 +46,7 @@ public class ManageAccountApiController {
     public ResponseEntity<AuthMember> register(
             @RequestBody @Valid final RegisterMemberRequest request
     ) {
-        final AuthMember response = registerAccountUseCase.register(new RegisterMemberCommand(
+        final AuthMember response = registerAccountUseCase.invoke(new RegisterMemberCommand(
                 request.toSocialPlatform(),
                 request.profileImageUrl(),
                 request.name(),

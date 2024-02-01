@@ -87,7 +87,7 @@ class ManageAccountApiControllerTest extends ControllerTest {
         @DisplayName("회원가입 + 로그인 처리를 진행한다")
         void success() {
             // given
-            given(registerAccountUseCase.register(any())).willReturn(new AuthMember(1L, ACCESS_TOKEN, REFRESH_TOKEN));
+            given(registerAccountUseCase.invoke(any())).willReturn(new AuthMember(1L, ACCESS_TOKEN, REFRESH_TOKEN));
 
             // when - then
             successfulExecute(
