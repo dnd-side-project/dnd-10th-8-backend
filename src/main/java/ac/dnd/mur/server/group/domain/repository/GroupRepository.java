@@ -20,4 +20,6 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
     @Modifying(flushAutomatically = true, clearAutomatically = true)
     @Query("DELETE FROM Group g WHERE g.memberId = :memberId")
     void deleteMemberGroups(@Param("memberId") final Long memberId);
+
+    boolean existsByMemberIdAndName(final long memberId, String name);
 }
