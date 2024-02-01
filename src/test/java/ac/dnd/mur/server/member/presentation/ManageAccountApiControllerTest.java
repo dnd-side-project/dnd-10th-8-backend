@@ -2,6 +2,8 @@ package ac.dnd.mur.server.member.presentation;
 
 import ac.dnd.mur.server.auth.domain.model.AuthMember;
 import ac.dnd.mur.server.common.ControllerTest;
+import ac.dnd.mur.server.member.application.usecase.DeleteAccountUseCase;
+import ac.dnd.mur.server.member.application.usecase.ManageResourceUseCase;
 import ac.dnd.mur.server.member.application.usecase.RegisterAccountUseCase;
 import ac.dnd.mur.server.member.domain.model.Member;
 import ac.dnd.mur.server.member.presentation.dto.request.RegisterMemberRequest;
@@ -21,7 +23,9 @@ import static ac.dnd.mur.server.common.utils.RestDocsSpecificationUtils.successD
 import static ac.dnd.mur.server.common.utils.TokenUtils.ACCESS_TOKEN;
 import static ac.dnd.mur.server.common.utils.TokenUtils.REFRESH_TOKEN;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doNothing;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.queryParameters;
@@ -30,7 +34,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("Member -> ManageAccountApiController 테스트")
 class ManageAccountApiControllerTest extends ControllerTest {
     @Autowired
+    private ManageResourceUseCase manageResourceUseCase;
+
+    @Autowired
     private RegisterAccountUseCase registerAccountUseCase;
+
+    @Autowired
+    private DeleteAccountUseCase deleteAccountUseCase;
 
     @Nested
     @DisplayName("닉네임 중복 체크 API [GET /api/v1/members/check-nickname]")
@@ -41,7 +51,7 @@ class ManageAccountApiControllerTest extends ControllerTest {
         @DisplayName("닉네임 사용 가능 여부를 조회한다")
         void success() {
             // given
-            given(registerAccountUseCase.isUniqueNickname(any())).willReturn(true);
+            given(manageResourceUseCase.isUniqueNickname(any())).willReturn(true);
 
             // when - then
             successfulExecute(
@@ -77,7 +87,7 @@ class ManageAccountApiControllerTest extends ControllerTest {
         @DisplayName("회원가입 + 로그인 처리를 진행한다")
         void success() {
             // given
-            given(registerAccountUseCase.register(any())).willReturn(new AuthMember(1L, ACCESS_TOKEN, REFRESH_TOKEN));
+            given(registerAccountUseCase.invoke(any())).willReturn(new AuthMember(1L, ACCESS_TOKEN, REFRESH_TOKEN));
 
             // when - then
             successfulExecute(
@@ -114,6 +124,9 @@ class ManageAccountApiControllerTest extends ControllerTest {
         void success() {
             // given
             applyToken(true, member.getId());
+            doNothing()
+                    .when(deleteAccountUseCase)
+                    .invoke(anyLong());
 
             // when - then
             successfulExecute(

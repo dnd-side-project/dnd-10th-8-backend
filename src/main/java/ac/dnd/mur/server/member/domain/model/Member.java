@@ -13,7 +13,6 @@ import org.hibernate.annotations.SQLRestriction;
 import java.time.LocalDate;
 
 import static ac.dnd.mur.server.member.domain.model.Member.Status.ACTIVE;
-import static ac.dnd.mur.server.member.domain.model.Member.Status.INACTIVE;
 import static jakarta.persistence.EnumType.STRING;
 import static lombok.AccessLevel.PROTECTED;
 
@@ -77,12 +76,6 @@ public class Member extends BaseEntity<Member> {
 
     public void syncEmail(final Email email) {
         this.platform = platform.syncEmail(email);
-    }
-
-    public void delete() {
-        this.status = INACTIVE;
-        this.platform = null;
-        this.nickname = null;
     }
 
     public enum Status {
