@@ -18,6 +18,8 @@ public enum MemberExceptionCode implements BaseExceptionCode {
     INVALID_NICKNAME_PATTERN(BAD_REQUEST, "MEMBER_004", "닉네임 형식에 맞지 않습니다."),
     DUPLICATE_NICKNAME(CONFLICT, "MEMBER_005", "이미 사용중인 닉네임입니다."),
     MEMBER_GROUP_NAME_TOO_LONG(BAD_REQUEST, "MEMBER_OO6", "그룹 이름은 최대 8자까지 가능합니다."),
+    MEMBER_GROUP_ALREADY_EXISTS(CONFLICT, "MEMBER_007", "동일한 그룹을 중복해서 추가할 수 없습니다."),
+    MEMBER_GROUP_NOT_FOUND(NOT_FOUND, "MEMBER_008", "존재하지 않는 그룹을 삭제할 수 없습니다."),
     ;
 
     private final HttpStatus status;
