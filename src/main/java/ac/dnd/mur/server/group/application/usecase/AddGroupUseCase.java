@@ -1,6 +1,7 @@
 package ac.dnd.mur.server.group.application.usecase;
 
 import ac.dnd.mur.server.global.annotation.UseCase;
+import ac.dnd.mur.server.group.application.usecase.command.AddGroupCommand;
 import ac.dnd.mur.server.group.domain.model.Group;
 import ac.dnd.mur.server.group.domain.repository.GroupRepository;
 import ac.dnd.mur.server.group.exception.GroupException;

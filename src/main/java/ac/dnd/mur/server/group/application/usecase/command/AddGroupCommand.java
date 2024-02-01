@@ -1,4 +1,4 @@
-package ac.dnd.mur.server.group.application.usecase;
+package ac.dnd.mur.server.group.application.usecase.command;
 
 public record AddGroupCommand(
         long memberId,
