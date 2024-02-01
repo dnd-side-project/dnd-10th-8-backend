@@ -5,8 +5,10 @@ import ac.dnd.mur.server.common.ControllerTest;
 import ac.dnd.mur.server.member.application.usecase.DeleteAccountUseCase;
 import ac.dnd.mur.server.member.application.usecase.ManageResourceUseCase;
 import ac.dnd.mur.server.member.application.usecase.RegisterAccountUseCase;
+import ac.dnd.mur.server.member.application.usecase.UpdateMemberUseCase;
 import ac.dnd.mur.server.member.domain.model.Member;
 import ac.dnd.mur.server.member.presentation.dto.request.RegisterMemberRequest;
+import ac.dnd.mur.server.member.presentation.dto.request.UpdateMemberRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -38,6 +40,9 @@ class ManageAccountApiControllerTest extends ControllerTest {
 
     @Autowired
     private RegisterAccountUseCase registerAccountUseCase;
+
+    @Autowired
+    private UpdateMemberUseCase updateMemberUseCase;
 
     @Autowired
     private DeleteAccountUseCase deleteAccountUseCase;
@@ -107,6 +112,41 @@ class ManageAccountApiControllerTest extends ControllerTest {
                                     body("id", "사용자 ID (PK)"),
                                     body("accessToken", "Access Token"),
                                     body("refreshToken", "Refresh Token")
+                            )
+                    ))
+            );
+        }
+    }
+
+    @Nested
+    @DisplayName("마이페이지 정보 수정 API [GET /api/v1/members/me]")
+    class Update {
+        private static final String BASE_URL = "/api/v1/members/me";
+        private final UpdateMemberRequest request = new UpdateMemberRequest(
+                MEMBER_1.getProfileImageUrl(),
+                MEMBER_1.getNickname().getValue(),
+                MEMBER_1.getGender().getValue(),
+                MEMBER_1.getBirth()
+        );
+
+        @Test
+        @DisplayName("마이페이지에서 내 정보를 수정한다")
+        void success() {
+            // given
+            doNothing()
+                    .when(updateMemberUseCase)
+                    .invoke(any());
+
+            // when - then
+            successfulExecute(
+                    patchRequestWithAccessToken(BASE_URL, request),
+                    status().isNoContent(),
+                    successDocs("MemberApi/Update", createHttpSpecSnippets(
+                            requestFields(
+                                    body("profileImageUrl", "프로필 이미지 URL", true),
+                                    body("nickname", "닉네임", true),
+                                    body("gender", "성별", "male / female", true),
+                                    body("birth", "생년월일", "yyyy-MM-dd", true)
                             )
                     ))
             );
