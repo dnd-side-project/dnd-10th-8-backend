@@ -1,6 +1,6 @@
 package ac.dnd.mur.server.common.fixture;
 
-import ac.dnd.mur.server.member.domain.model.Group;
+import ac.dnd.mur.server.group.domain.model.Group;
 import ac.dnd.mur.server.member.domain.model.Member;
 import ac.dnd.mur.server.relation.domain.model.Relation;
 import lombok.Getter;

@@ -1,7 +1,7 @@
 package ac.dnd.mur.server.relation.domain.model;
 
 import ac.dnd.mur.server.global.base.BaseEntity;
-import ac.dnd.mur.server.member.domain.model.Group;
+import ac.dnd.mur.server.group.domain.model.Group;
 import ac.dnd.mur.server.member.domain.model.Member;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

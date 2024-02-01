@@ -1,6 +1,7 @@
-package ac.dnd.mur.server.member.domain.model;
+package ac.dnd.mur.server.group.domain.model;
 
 import ac.dnd.mur.server.common.UnitTest;
+import ac.dnd.mur.server.member.domain.model.Member;
 import ac.dnd.mur.server.member.exception.MemberException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,7 +11,7 @@ import static ac.dnd.mur.server.member.exception.MemberExceptionCode.MEMBER_GROU
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-@DisplayName("Member -> 도메인 [Group] 테스트")
+@DisplayName("Group -> 도메인 [Group] 테스트")
 class GroupTest extends UnitTest {
     private final Member member = MEMBER_1.toDomain().apply(1L);
 

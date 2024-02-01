@@ -46,19 +46,4 @@ class MemberTest extends UnitTest {
                 () -> assertThat(member.getStatus()).isEqualTo(INACTIVE)
         );
     }
-
-    @Test
-    @DisplayName("사용자에 대한 그룹을 추가한다")
-    void addGroup() {
-        // given
-        final Member member = MEMBER_1.toDomain().apply(1L);
-
-        // when
-        member.addGroup("거래처");
-
-        // then
-        assertThat(member.getGroups())
-                .map(Group::getName)
-                .containsExactlyInAnyOrder("친구", "가족", "지인", "직장", "거래처");
-    }
 }

@@ -1,5 +1,7 @@
 package ac.dnd.mur.server.common.fixture;
 
+import ac.dnd.mur.server.group.domain.model.Group;
+import ac.dnd.mur.server.member.domain.model.Member;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -14,4 +16,8 @@ public enum GroupFixture {
     ;
 
     private final String name;
+
+    public Group toDomain(final Member member) {
+        return Group.of(member, name);
+    }
 }
