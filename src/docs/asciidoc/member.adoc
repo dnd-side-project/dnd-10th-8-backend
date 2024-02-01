@@ -75,3 +75,16 @@ include::{snippets}/MemberApi/Register/Process/request-fields.adoc[]
 
 include::{snippets}/MemberApi/Register/Process/http-response.adoc[]
 include::{snippets}/MemberApi/Register/Process/response-fields.adoc[]
+
+== 마이페이지
+
+=== 내 정보 수정 (AccessToken)
+
+> HTTP Request
+
+include::{snippets}/MemberApi/Update/http-request.adoc[]
+include::{snippets}/MemberApi/Update/request-fields.adoc[]
+
+> HTTP Response
+
+include::{snippets}/MemberApi/Update/http-response.adoc[]

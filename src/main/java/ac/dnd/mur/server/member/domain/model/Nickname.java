@@ -36,11 +36,6 @@ public class Nickname {
         return new Nickname(value);
     }
 
-    public Nickname update(final String value) {
-        validateNicknamePattern(value);
-        return new Nickname(value);
-    }
-
     private static void validateNicknamePattern(final String value) {
         if (isInvalidPattern(value)) {
             throw new MemberException(INVALID_NICKNAME_PATTERN);

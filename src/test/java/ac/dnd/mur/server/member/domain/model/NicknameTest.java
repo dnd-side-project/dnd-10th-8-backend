@@ -4,12 +4,10 @@ import ac.dnd.mur.server.common.UnitTest;
 import ac.dnd.mur.server.member.exception.MemberException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static ac.dnd.mur.server.member.exception.MemberExceptionCode.INVALID_NICKNAME_PATTERN;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
@@ -33,18 +31,5 @@ class NicknameTest extends UnitTest {
         void construct(final String value) {
             assertDoesNotThrow(() -> Nickname.from(value));
         }
-    }
-
-    @Test
-    @DisplayName("닉네임을 수정한다")
-    void success() {
-        // given
-        final Nickname nickname = Nickname.from("Hello");
-
-        // when
-        final Nickname updateNickname = nickname.update("하이");
-
-        // then
-        assertThat(updateNickname.getValue()).isEqualTo("하이");
     }
 }
