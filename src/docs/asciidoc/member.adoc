@@ -75,3 +75,39 @@ include::{snippets}/MemberApi/Register/Process/request-fields.adoc[]
 
 include::{snippets}/MemberApi/Register/Process/http-response.adoc[]
 include::{snippets}/MemberApi/Register/Process/response-fields.adoc[]
+
+== 사용자별 그룹 관리
+
+=== 추가
+
+> HTTP Request
+
+include::{snippets}/GroupApi/Add/Success/http-request.adoc[]
+include::{snippets}/GroupApi/Add/Success/request-fields.adoc[]
+
+> HTTP Response
+
+include::{snippets}/GroupApi/Add/Failure/http-response.adoc[]
+include::{snippets}/GroupApi/Add/Success/http-response.adoc[]
+
+=== 삭제
+
+> HTTP Request
+
+include::{snippets}/GroupApi/Remove/http-request.adoc[]
+include::{snippets}/GroupApi/Remove/path-parameters.adoc[]
+
+> HTTP Response
+
+include::{snippets}/GroupApi/Remove/http-response.adoc[]
+
+=== 관리하고 있는 그룹 조회
+
+> HTTP Request
+
+include::{snippets}/GroupApi/GetMembers/http-request.adoc[]
+
+> HTTP Response
+
+include::{snippets}/GroupApi/GetMembers/http-response.adoc[]
+include::{snippets}/GroupApi/GetMembers/response-fields.adoc[]
