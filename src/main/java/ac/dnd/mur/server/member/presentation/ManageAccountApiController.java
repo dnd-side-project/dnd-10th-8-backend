@@ -5,6 +5,7 @@ import ac.dnd.mur.server.auth.domain.model.Authenticated;
 import ac.dnd.mur.server.global.annotation.Auth;
 import ac.dnd.mur.server.global.dto.ResponseWrapper;
 import ac.dnd.mur.server.member.application.usecase.DeleteAccountUseCase;
+import ac.dnd.mur.server.member.application.usecase.ManageResourceUseCase;
 import ac.dnd.mur.server.member.application.usecase.RegisterAccountUseCase;
 import ac.dnd.mur.server.member.application.usecase.command.RegisterMemberCommand;
 import ac.dnd.mur.server.member.presentation.dto.request.CheckNicknameRequest;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/api")
 public class ManageAccountApiController {
+    private final ManageResourceUseCase manageResourceUseCase;
     private final RegisterAccountUseCase registerAccountUseCase;
     private final DeleteAccountUseCase deleteAccountUseCase;
 
@@ -35,7 +37,7 @@ public class ManageAccountApiController {
     public ResponseEntity<ResponseWrapper<Boolean>> checkNickname(
             @ModelAttribute @Valid final CheckNicknameRequest request
     ) {
-        final boolean result = registerAccountUseCase.isUniqueNickname(request.toNickname());
+        final boolean result = manageResourceUseCase.isUniqueNickname(request.toNickname());
         return ResponseEntity.ok(ResponseWrapper.from(result));
     }
 
