@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 import static ac.dnd.mur.server.group.exception.GroupExceptionCode.GROUP_NOT_FOUND;
 
 public interface GroupRepository extends JpaRepository<Group, Long> {
@@ -22,4 +24,6 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
     void deleteMemberGroups(@Param("memberId") final Long memberId);
 
     boolean existsByMemberIdAndName(final long memberId, String name);
+
+    List<Group> findByMemberId(final long memberId);
 }
