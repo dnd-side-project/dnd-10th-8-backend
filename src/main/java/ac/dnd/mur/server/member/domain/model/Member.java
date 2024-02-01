@@ -78,6 +78,18 @@ public class Member extends BaseEntity<Member> {
         this.platform = platform.syncEmail(email);
     }
 
+    public void update(
+            final String profileImageUrl,
+            final Nickname nickname,
+            final Gender gender,
+            final LocalDate birth
+    ) {
+        this.profileImageUrl = profileImageUrl;
+        this.nickname = nickname;
+        this.gender = gender;
+        this.birth = birth;
+    }
+
     public enum Status {
         ACTIVE, INACTIVE, BAN
     }
