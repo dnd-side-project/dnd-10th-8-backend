@@ -24,16 +24,6 @@ public enum ScheduleFixture {
     private final String memo;
 
     public Schedule toDomain(final Member member, final Relation relation) {
-        return new Schedule(
-                member,
-                relation,
-                day,
-                event,
-                alarm,
-                time,
-                link,
-                location,
-                memo
-        );
+        return new Schedule(member, relation, day, event, alarm, time, link, location, memo);
     }
 }

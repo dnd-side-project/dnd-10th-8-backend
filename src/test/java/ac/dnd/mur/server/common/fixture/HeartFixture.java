@@ -22,15 +22,6 @@ public enum HeartFixture {
     private final List<String> tags;
 
     public Heart toDomain(final Member member, final Relation relation) {
-        return new Heart(
-                member,
-                relation,
-                give,
-                money,
-                day,
-                event,
-                memo,
-                tags
-        );
+        return new Heart(member, relation, give, money, day, event, memo, tags);
     }
 }
