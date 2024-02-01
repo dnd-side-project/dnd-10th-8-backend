@@ -1,11 +1,13 @@
 package ac.dnd.mur.server.member.domain.model;
 
 import ac.dnd.mur.server.common.UnitTest;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static ac.dnd.mur.server.common.fixture.MemberFixture.MEMBER_1;
 import static ac.dnd.mur.server.common.fixture.MemberFixture.MEMBER_2;
+import static ac.dnd.mur.server.member.domain.model.Member.Status.ACTIVE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("Member -> 도메인 Aggregate [Member] 테스트")
@@ -21,5 +23,33 @@ class MemberTest extends UnitTest {
 
         // then
         assertThat(member.getPlatform().getEmail().getValue()).isEqualTo(MEMBER_2.getPlatform().getEmail().getValue());
+    }
+
+    @Test
+    @DisplayName("정보를 수정한다")
+    void update() {
+        // given
+        final Member member = MEMBER_1.toDomain();
+
+        // when
+        member.update(
+                MEMBER_2.getProfileImageUrl(),
+                MEMBER_2.getNickname(),
+                MEMBER_2.getGender(),
+                MEMBER_2.getBirth()
+        );
+
+        // then
+        Assertions.assertAll(
+                () -> assertThat(member.getPlatform().getType()).isEqualTo(MEMBER_1.getPlatform().getType()),
+                () -> assertThat(member.getPlatform().getSocialId()).isEqualTo(MEMBER_1.getPlatform().getSocialId()),
+                () -> assertThat(member.getPlatform().getEmail().getValue()).isEqualTo(MEMBER_1.getPlatform().getEmail().getValue()),
+                () -> assertThat(member.getProfileImageUrl()).isEqualTo(MEMBER_2.getProfileImageUrl()),
+                () -> assertThat(member.getName()).isEqualTo(MEMBER_1.getName()),
+                () -> assertThat(member.getNickname().getValue()).isEqualTo(MEMBER_2.getNickname().getValue()),
+                () -> assertThat(member.getGender()).isEqualTo(MEMBER_2.getGender()),
+                () -> assertThat(member.getBirth()).isEqualTo(MEMBER_2.getBirth()),
+                () -> assertThat(member.getStatus()).isEqualTo(ACTIVE)
+        );
     }
 }
