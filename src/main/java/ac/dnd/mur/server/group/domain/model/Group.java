@@ -10,6 +10,8 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 import static ac.dnd.mur.server.member.exception.MemberExceptionCode.MEMBER_GROUP_NAME_TOO_LONG;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
@@ -19,6 +21,7 @@ import static lombok.AccessLevel.PROTECTED;
 @Entity
 @Table(name = "member_group")
 public class Group {
+    private static final List<String> defaultGroups = List.of("친구", "가족", "지인", "직장");
     private static final int NAME_MAX_LENGTH = 8;
 
     @Id
@@ -39,6 +42,12 @@ public class Group {
     public static Group of(final Member member, final String name) {
         validateName(name);
         return new Group(member, name);
+    }
+
+    public static List<Group> init(final Member member) {
+        return defaultGroups.stream()
+                .map(it -> new Group(member, it))
+                .toList();
     }
 
     private static void validateName(final String name) {

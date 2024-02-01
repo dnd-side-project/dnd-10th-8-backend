@@ -6,8 +6,11 @@ import ac.dnd.mur.server.member.exception.MemberException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static ac.dnd.mur.server.common.fixture.MemberFixture.MEMBER_1;
 import static ac.dnd.mur.server.member.exception.MemberExceptionCode.MEMBER_GROUP_NAME_TOO_LONG;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
@@ -27,5 +30,17 @@ class GroupTest extends UnitTest {
     @DisplayName("사용자 그룹을 생성한다")
     void success() {
         assertDoesNotThrow(() -> Group.of(member, "test"));
+    }
+
+    @Test
+    @DisplayName("사용자에게 기본적으로 제공되는 그룹 리스트를 생성한다")
+    void init() {
+        // when
+        final List<Group> groups = Group.init(member);
+
+        // then
+        assertThat(groups)
+                .map(Group::getName)
+                .containsExactlyInAnyOrder("친구", "가족", "지인", "직장");
     }
 }
