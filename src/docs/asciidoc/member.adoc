@@ -88,3 +88,14 @@ include::{snippets}/MemberApi/Update/request-fields.adoc[]
 > HTTP Response
 
 include::{snippets}/MemberApi/Update/http-response.adoc[]
+
+=== 내 정보 조회 (AccessToken)
+
+> HTTP Request
+
+include::{snippets}/MemberApi/Profile/Private/http-request.adoc[]
+
+> HTTP Response
+
+include::{snippets}/MemberApi/Profile/Private/http-response.adoc[]
+include::{snippets}/MemberApi/Profile/Private/response-fields.adoc[]
