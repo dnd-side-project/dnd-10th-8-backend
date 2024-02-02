@@ -88,7 +88,7 @@ class ManageRelationApiControllerTest extends ControllerTest {
         );
 
         @Test
-        @DisplayName("관계를 생성한다")
+        @DisplayName("관계를 수정한다")
         void success() {
             // given
             applyToken(true, member.getId());
@@ -121,7 +121,7 @@ class ManageRelationApiControllerTest extends ControllerTest {
         private static final String BASE_URL = "/api/v1/relations/{relationId}";
 
         @Test
-        @DisplayName("관계를 생성한다")
+        @DisplayName("관계를 삭제한다")
         void success() {
             // given
             applyToken(true, member.getId());
