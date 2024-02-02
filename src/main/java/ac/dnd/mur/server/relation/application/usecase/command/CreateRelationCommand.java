@@ -4,7 +4,7 @@ public record CreateRelationCommand(
         long memberId,
         long groupId,
         String name,
-        String phone,
+        String imageUrl,
         String memo
 ) {
 }

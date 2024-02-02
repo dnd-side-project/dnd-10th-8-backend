@@ -31,10 +31,10 @@ public enum RelationFixture {
     ;
 
     private final String name;
-    private final String relationImageUrl;
+    private final String imageUrl;
     private final String memo;
 
     public Relation toDomain(final Member member, final Group group) {
-        return new Relation(member, group, name, relationImageUrl, memo);
+        return new Relation(member, group, name, imageUrl, memo);
     }
 }

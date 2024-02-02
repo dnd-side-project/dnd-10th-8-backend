@@ -43,7 +43,7 @@ public class ManageRelationApiController {
                 authenticated.id(),
                 request.groupId(),
                 request.name(),
-                request.phone(),
+                request.imageUrl(),
                 request.memo()
         ));
         return ResponseEntity.ok(ResponseWrapper.from(relationId));
@@ -57,11 +57,11 @@ public class ManageRelationApiController {
             @RequestBody @Valid final UpdateRelationRequest request
     ) {
         updateRelationUseCase.invoke(new UpdateRelationCommand(
-                relationId,
                 authenticated.id(),
+                relationId,
                 request.groupId(),
                 request.name(),
-                request.phone(),
+                request.imageUrl(),
                 request.memo()
         ));
         return ResponseEntity.noContent().build();
@@ -74,8 +74,8 @@ public class ManageRelationApiController {
             @PathVariable(name = "relationId") final Long relationId
     ) {
         deleteRelationUseCase.invoke(new DeleteRelationCommand(
-                relationId,
-                authenticated.id()
+                authenticated.id(),
+                relationId
         ));
         return ResponseEntity.noContent().build();
     }

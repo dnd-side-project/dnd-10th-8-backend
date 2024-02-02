@@ -1,13 +1,13 @@
 CREATE TABLE IF NOT EXISTS relation
 (
-    id                 BIGINT AUTO_INCREMENT PRIMARY KEY,
-    member_id          BIGINT      NOT NULL,
-    group_id           BIGINT      NOT NULL,
-    name               VARCHAR(30) NOT NULL,
-    relation_image_url VARCHAR(20) NULL,
-    memo               TEXT        NULL,
-    created_at         DATETIME    NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    last_modified_at   DATETIME    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    id               BIGINT AUTO_INCREMENT PRIMARY KEY,
+    member_id        BIGINT       NOT NULL,
+    group_id         BIGINT       NOT NULL,
+    name             VARCHAR(30)  NOT NULL,
+    image_url        VARCHAR(255) NULL,
+    memo             TEXT         NULL,
+    created_at       DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    last_modified_at DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
 

@@ -34,7 +34,7 @@ public class ManageRelationAcceptanceTest extends AcceptanceTest {
             관계를_생성한다(
                     관리하고_있는_특정_그룹의_ID를_조회한다("친구", member.accessToken()),
                     친구_1.getName(),
-                    친구_1.getPhone(),
+                    친구_1.getImageUrl(),
                     친구_1.getMemo(),
                     member.accessToken()
             ).statusCode(OK.value())
@@ -52,7 +52,7 @@ public class ManageRelationAcceptanceTest extends AcceptanceTest {
             final long relationId = 관계를_생성하고_ID를_추출한다(
                     관리하고_있는_특정_그룹의_ID를_조회한다("친구", member.accessToken()),
                     친구_1.getName(),
-                    친구_1.getPhone(),
+                    친구_1.getImageUrl(),
                     친구_1.getMemo(),
                     member.accessToken()
             );
@@ -62,7 +62,7 @@ public class ManageRelationAcceptanceTest extends AcceptanceTest {
                     relationId,
                     groupId,
                     직장_1.getName(),
-                    직장_1.getPhone(),
+                    직장_1.getImageUrl(),
                     직장_1.getMemo(),
                     member.accessToken()
             ).statusCode(NO_CONTENT.value());
@@ -79,7 +79,7 @@ public class ManageRelationAcceptanceTest extends AcceptanceTest {
             final long relationId = 관계를_생성하고_ID를_추출한다(
                     관리하고_있는_특정_그룹의_ID를_조회한다("친구", member.accessToken()),
                     친구_1.getName(),
-                    친구_1.getPhone(),
+                    친구_1.getImageUrl(),
                     친구_1.getMemo(),
                     member.accessToken()
             );
