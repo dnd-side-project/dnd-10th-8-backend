@@ -5,6 +5,8 @@ CREATE TABLE IF NOT EXISTS schedule
     relation_id      BIGINT       NOT NULL,
     day              DATE         NOT NULL,
     event            VARCHAR(50)  NOT NULL,
+    repeat_type      VARCHAR(30)  NULL,
+    repeat_finish    DATE         NULL,
     alarm            DATETIME     NULL,
     time             TIME         NULL,
     link             VARCHAR(250) NULL,
