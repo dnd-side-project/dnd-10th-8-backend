@@ -70,6 +70,20 @@ public class Heart extends BaseEntity<Heart> {
         applyTag(tags);
     }
 
+    public void update(
+            final long money,
+            final LocalDate day,
+            final String event,
+            final String memo,
+            final List<String> tags
+    ) {
+        this.money = money;
+        this.day = day;
+        this.event = event;
+        this.memo = memo;
+        applyTag(tags);
+    }
+
     private void applyTag(final List<String> tags) {
         this.tags.clear();
 
