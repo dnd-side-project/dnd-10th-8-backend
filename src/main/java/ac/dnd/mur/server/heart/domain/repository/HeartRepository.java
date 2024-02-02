@@ -28,6 +28,11 @@ public interface HeartRepository extends JpaRepository<Heart, Long> {
 
     @MurWritableTransactional
     @Modifying(flushAutomatically = true, clearAutomatically = true)
+    @Query("DELETE FROM Heart h WHERE h.id = :id AND h.memberId = :memberId")
+    void deleteMemberHeart(@Param("id") final long id, @Param("memberId") final long memberId);
+
+    @MurWritableTransactional
+    @Modifying(flushAutomatically = true, clearAutomatically = true)
     @Query("DELETE FROM Heart h WHERE h.memberId = :memberId")
     void deleteMemberHearts(@Param("memberId") final Long memberId);
 
