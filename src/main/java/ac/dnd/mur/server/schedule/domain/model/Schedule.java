@@ -4,6 +4,7 @@ import ac.dnd.mur.server.global.base.BaseEntity;
 import ac.dnd.mur.server.member.domain.model.Member;
 import ac.dnd.mur.server.relation.domain.model.Relation;
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
@@ -33,6 +34,9 @@ public class Schedule extends BaseEntity<Schedule> {
     @Column(name = "event", nullable = false)
     private String event;
 
+    @Embedded
+    private Repeat repeat;
+
     @Column(name = "alarm")
     private LocalDateTime alarm;
 
@@ -54,6 +58,7 @@ public class Schedule extends BaseEntity<Schedule> {
             final Relation relation,
             final LocalDate day,
             final String event,
+            final Repeat repeat,
             final LocalDateTime alarm,
             final LocalTime time,
             final String link,
@@ -64,6 +69,7 @@ public class Schedule extends BaseEntity<Schedule> {
         this.relationId = relation.getId();
         this.day = day;
         this.event = event;
+        this.repeat = repeat;
         this.alarm = alarm;
         this.time = time;
         this.link = link;
