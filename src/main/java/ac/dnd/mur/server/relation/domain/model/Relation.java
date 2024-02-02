@@ -26,8 +26,8 @@ public class Relation extends BaseEntity<Relation> {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "phone", nullable = false)
-    private String phone;
+    @Column(name = "relation_image_url")
+    private String relationImageUrl;
 
     @Lob
     @Column(name = "memo", columnDefinition = "TEXT")
@@ -37,25 +37,25 @@ public class Relation extends BaseEntity<Relation> {
             final Member member,
             final Group group,
             final String name,
-            final String phone,
+            final String relationImageUrl,
             final String memo
     ) {
         this.memberId = member.getId();
         this.groupId = group.getId();
         this.name = name;
-        this.phone = phone;
+        this.relationImageUrl = relationImageUrl;
         this.memo = memo;
     }
 
     public void update(
             final Group group,
             final String name,
-            final String phone,
+            final String relationImageUrl,
             final String memo
     ) {
         this.groupId = group.getId();
         this.name = name;
-        this.phone = phone;
+        this.relationImageUrl = relationImageUrl;
         this.memo = memo;
     }
 }
