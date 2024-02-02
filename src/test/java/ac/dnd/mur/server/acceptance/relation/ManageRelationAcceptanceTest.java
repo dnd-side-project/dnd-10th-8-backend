@@ -27,7 +27,7 @@ public class ManageRelationAcceptanceTest extends AcceptanceTest {
     @DisplayName("관계 생성 API")
     class Create {
         @Test
-        @DisplayName("그룹을 추가한다")
+        @DisplayName("관계를 생성한다")
         void success() {
             final AuthMember member = MEMBER_1.회원가입과_로그인을_진행한다();
 
