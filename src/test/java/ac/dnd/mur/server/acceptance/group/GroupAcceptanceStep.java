@@ -1,8 +1,11 @@
 package ac.dnd.mur.server.acceptance.group;
 
+import ac.dnd.mur.server.group.domain.model.GroupResponse;
 import ac.dnd.mur.server.group.presentation.dto.request.AddGroupRequest;
 import io.restassured.response.ValidatableResponse;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import java.util.List;
 
 import static ac.dnd.mur.server.acceptance.CommonRequestFixture.deleteRequestWithAccessToken;
 import static ac.dnd.mur.server.acceptance.CommonRequestFixture.getRequestWithAccessToken;
@@ -48,5 +51,18 @@ public class GroupAcceptanceStep {
                 .getPath();
 
         return getRequestWithAccessToken(uri, accessToken);
+    }
+
+    public static long 관리하고_있는_특정_그룹의_ID를_조회한다(final String name, final String accessToken) {
+        final List<GroupResponse> result = 관리하고_있는_그룹을_조회한다(accessToken)
+                .extract()
+                .jsonPath()
+                .getList("result", GroupResponse.class);
+
+        return result.stream()
+                .filter(it -> it.name().equals(name))
+                .findFirst()
+                .orElseThrow(RuntimeException::new)
+                .id();
     }
 }
