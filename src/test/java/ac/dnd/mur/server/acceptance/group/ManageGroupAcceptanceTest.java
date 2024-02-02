@@ -11,7 +11,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import java.util.List;
 
 import static ac.dnd.mur.server.acceptance.group.GroupAcceptanceStep.관리하고_있는_그룹을_조회한다;
+import static ac.dnd.mur.server.acceptance.group.GroupAcceptanceStep.관리하고_있는_특정_그룹의_ID를_조회한다;
 import static ac.dnd.mur.server.acceptance.group.GroupAcceptanceStep.그룹을_삭제한다;
+import static ac.dnd.mur.server.acceptance.group.GroupAcceptanceStep.그룹을_수정한다;
 import static ac.dnd.mur.server.acceptance.group.GroupAcceptanceStep.그룹을_추가하고_ID를_추출한다;
 import static ac.dnd.mur.server.acceptance.group.GroupAcceptanceStep.그룹을_추가한다;
 import static ac.dnd.mur.server.common.fixture.MemberFixture.MEMBER_1;
@@ -48,6 +50,50 @@ public class ManageGroupAcceptanceTest extends AcceptanceTest {
             그룹을_추가한다("거래처", member.accessToken())
                     .statusCode(OK.value())
                     .body("result", notNullValue(Long.class));
+        }
+    }
+
+    @Nested
+    @DisplayName("그룹 수정 API")
+    class UpdateGroup {
+        @Test
+        @DisplayName("기존 그룹명과 동일하지 않고 이미 관리하고 있는 그룹으로 그룹명을 수정할 수 없다")
+        void throwExceptionByGroupAlreadyExists() {
+            final AuthMember member = MEMBER_1.회원가입과_로그인을_진행한다();
+            final long groupId = 관리하고_있는_특정_그룹의_ID를_조회한다("친구", member.accessToken());
+
+            그룹을_수정한다(groupId, "직장", member.accessToken())
+                    .statusCode(CONFLICT.value())
+                    .body("code", is(GROUP_ALREADY_EXISTS.getCode()))
+                    .body("message", is(GROUP_ALREADY_EXISTS.getMessage()));
+        }
+
+        @Test
+        @DisplayName("기존 이름과 동일한 이름으로 그룹명을 수정한다")
+        void successWithKeep() {
+            final AuthMember member = MEMBER_1.회원가입과_로그인을_진행한다();
+            final long groupId = 관리하고_있는_특정_그룹의_ID를_조회한다("친구", member.accessToken());
+
+            그룹을_수정한다(groupId, "친구", member.accessToken())
+                    .statusCode(NO_CONTENT.value());
+
+            관리하고_있는_그룹을_조회한다(member.accessToken())
+                    .statusCode(OK.value())
+                    .body("result.name", contains(List.of("친구", "가족", "지인", "직장").toArray()));
+        }
+
+        @Test
+        @DisplayName("기존 이름과 다른 이름으로 그룹명을 수정한다")
+        void success() {
+            final AuthMember member = MEMBER_1.회원가입과_로그인을_진행한다();
+            final long groupId = 관리하고_있는_특정_그룹의_ID를_조회한다("친구", member.accessToken());
+
+            그룹을_수정한다(groupId, "테스트", member.accessToken())
+                    .statusCode(NO_CONTENT.value());
+
+            관리하고_있는_그룹을_조회한다(member.accessToken())
+                    .statusCode(OK.value())
+                    .body("result.name", contains(List.of("테스트", "가족", "지인", "직장").toArray()));
         }
     }
 

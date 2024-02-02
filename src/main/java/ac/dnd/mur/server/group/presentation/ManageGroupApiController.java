@@ -6,10 +6,13 @@ import ac.dnd.mur.server.global.dto.ResponseWrapper;
 import ac.dnd.mur.server.group.application.usecase.AddGroupUseCase;
 import ac.dnd.mur.server.group.application.usecase.GetMemberGroupUseCase;
 import ac.dnd.mur.server.group.application.usecase.RemoveGroupUseCase;
+import ac.dnd.mur.server.group.application.usecase.UpdateGroupUseCase;
 import ac.dnd.mur.server.group.application.usecase.command.AddGroupCommand;
 import ac.dnd.mur.server.group.application.usecase.command.RemoveGroupCommand;
+import ac.dnd.mur.server.group.application.usecase.command.UpdateGroupCommand;
 import ac.dnd.mur.server.group.domain.model.GroupResponse;
 import ac.dnd.mur.server.group.presentation.dto.request.AddGroupRequest;
+import ac.dnd.mur.server.group.presentation.dto.request.UpdateGroupRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -17,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,6 +35,7 @@ import java.util.List;
 @RequestMapping("/api")
 public class ManageGroupApiController {
     private final AddGroupUseCase addGroupUseCase;
+    private final UpdateGroupUseCase updateGroupUseCase;
     private final RemoveGroupUseCase removeGroupUseCase;
     private final GetMemberGroupUseCase getMemberGroupUseCase;
 
@@ -45,6 +50,21 @@ public class ManageGroupApiController {
                 request.name()
         ));
         return ResponseEntity.ok(ResponseWrapper.from(groupId));
+    }
+
+    @Operation(summary = "그룹 수정 Endpoint")
+    @PatchMapping("/v1/groups/{groupId}")
+    public ResponseEntity<Void> updateGroup(
+            @Auth final Authenticated authenticated,
+            @PathVariable(name = "groupId") final Long groupId,
+            @RequestBody @Valid final UpdateGroupRequest request
+    ) {
+        updateGroupUseCase.invoke(new UpdateGroupCommand(
+                authenticated.id(),
+                groupId,
+                request.name()
+        ));
+        return ResponseEntity.noContent().build();
     }
 
     @Operation(summary = "그룹 삭제 Endpoint")

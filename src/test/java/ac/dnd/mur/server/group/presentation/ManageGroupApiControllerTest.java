@@ -4,9 +4,11 @@ import ac.dnd.mur.server.common.ControllerTest;
 import ac.dnd.mur.server.group.application.usecase.AddGroupUseCase;
 import ac.dnd.mur.server.group.application.usecase.GetMemberGroupUseCase;
 import ac.dnd.mur.server.group.application.usecase.RemoveGroupUseCase;
+import ac.dnd.mur.server.group.application.usecase.UpdateGroupUseCase;
 import ac.dnd.mur.server.group.domain.model.GroupResponse;
 import ac.dnd.mur.server.group.exception.GroupException;
 import ac.dnd.mur.server.group.presentation.dto.request.AddGroupRequest;
+import ac.dnd.mur.server.group.presentation.dto.request.UpdateGroupRequest;
 import ac.dnd.mur.server.member.domain.model.Member;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -36,6 +38,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class ManageGroupApiControllerTest extends ControllerTest {
     @Autowired
     private AddGroupUseCase addGroupUseCase;
+
+    @Autowired
+    private UpdateGroupUseCase updateGroupUseCase;
 
     @Autowired
     private RemoveGroupUseCase removeGroupUseCase;
@@ -89,6 +94,61 @@ class ManageGroupApiControllerTest extends ControllerTest {
                             ),
                             responseFields(
                                     body("result", "추가한 그룹 ID(PK)")
+                            )
+                    ))
+            );
+        }
+    }
+
+    @Nested
+    @DisplayName("그룹 수정 API [POST /api/v1/groups]")
+    class UpdateGroup {
+        private static final String BASE_URL = "/api/v1/groups/{groupId}";
+
+        @Test
+        @DisplayName("이미 관리하고 있는 그룹으로 그룹명을 수정할 수 없다")
+        void throwExceptionByGroupAlreadyExists() {
+            // given
+            applyToken(true, member.getId());
+            doThrow(new GroupException(GROUP_ALREADY_EXISTS))
+                    .when(updateGroupUseCase)
+                    .invoke(any());
+
+            // when - then
+            failedExecute(
+                    patchRequestWithAccessToken(new UrlWithVariables(BASE_URL, 1L), new UpdateGroupRequest("거래처")),
+                    status().isConflict(),
+                    ExceptionSpec.of(GROUP_ALREADY_EXISTS),
+                    failureDocsWithAccessToken("GroupApi/Update/Failure", createHttpSpecSnippets(
+                            pathParameters(
+                                    path("groupId", "그룹 ID(PK)", true)
+                            ),
+                            requestFields(
+                                    body("name", "그룹명", true)
+                            )
+                    ))
+            );
+        }
+
+        @Test
+        @DisplayName("그룹명을 수정한다")
+        void success() {
+            // given
+            applyToken(true, member.getId());
+            doNothing()
+                    .when(updateGroupUseCase)
+                    .invoke(any());
+
+            // when - then
+            successfulExecute(
+                    patchRequestWithAccessToken(new UrlWithVariables(BASE_URL, 1L), new UpdateGroupRequest("거래처")),
+                    status().isNoContent(),
+                    successDocsWithAccessToken("GroupApi/Update/Success", createHttpSpecSnippets(
+                            pathParameters(
+                                    path("groupId", "그룹 ID(PK)", true)
+                            ),
+                            requestFields(
+                                    body("name", "그룹명", true)
                             )
                     ))
             );

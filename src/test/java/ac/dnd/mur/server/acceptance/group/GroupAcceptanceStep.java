@@ -2,6 +2,7 @@ package ac.dnd.mur.server.acceptance.group;
 
 import ac.dnd.mur.server.group.domain.model.GroupResponse;
 import ac.dnd.mur.server.group.presentation.dto.request.AddGroupRequest;
+import ac.dnd.mur.server.group.presentation.dto.request.UpdateGroupRequest;
 import io.restassured.response.ValidatableResponse;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -9,6 +10,7 @@ import java.util.List;
 
 import static ac.dnd.mur.server.acceptance.CommonRequestFixture.deleteRequestWithAccessToken;
 import static ac.dnd.mur.server.acceptance.CommonRequestFixture.getRequestWithAccessToken;
+import static ac.dnd.mur.server.acceptance.CommonRequestFixture.patchRequestWithAccessToken;
 import static ac.dnd.mur.server.acceptance.CommonRequestFixture.postRequestWithAccessToken;
 
 public class GroupAcceptanceStep {
@@ -29,6 +31,17 @@ public class GroupAcceptanceStep {
                 .extract()
                 .jsonPath()
                 .getLong("result");
+    }
+
+    public static ValidatableResponse 그룹을_수정한다(final long groupId, final String name, final String accessToken) {
+        final String uri = UriComponentsBuilder
+                .fromPath("/api/v1/groups/{groupId}")
+                .build(groupId)
+                .getPath();
+
+        final UpdateGroupRequest request = new UpdateGroupRequest(name);
+
+        return patchRequestWithAccessToken(uri, request, accessToken);
     }
 
     public static ValidatableResponse 그룹을_삭제한다(

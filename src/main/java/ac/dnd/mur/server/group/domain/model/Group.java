@@ -1,11 +1,10 @@
 package ac.dnd.mur.server.group.domain.model;
 
+import ac.dnd.mur.server.global.base.BaseEntity;
 import ac.dnd.mur.server.member.domain.model.Member;
 import ac.dnd.mur.server.member.exception.MemberException;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,20 +12,15 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 import static ac.dnd.mur.server.member.exception.MemberExceptionCode.MEMBER_GROUP_NAME_TOO_LONG;
-import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
 @Getter
 @NoArgsConstructor(access = PROTECTED)
 @Entity
 @Table(name = "member_group")
-public class Group {
+public class Group extends BaseEntity<Group> {
     private static final List<String> defaultGroups = List.of("친구", "가족", "지인", "직장");
     private static final int NAME_MAX_LENGTH = 8;
-
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    private Long id;
 
     @Column(name = "member_id", nullable = false)
     private Long memberId;
@@ -54,5 +48,9 @@ public class Group {
         if (name.length() > NAME_MAX_LENGTH) {
             throw new MemberException(MEMBER_GROUP_NAME_TOO_LONG);
         }
+    }
+
+    public void update(final String name) {
+        this.name = name;
     }
 }
