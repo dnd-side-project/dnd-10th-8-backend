@@ -46,4 +46,16 @@ public class Relation extends BaseEntity<Relation> {
         this.phone = phone;
         this.memo = memo;
     }
+
+    public void update(
+            final Group group,
+            final String name,
+            final String phone,
+            final String memo
+    ) {
+        this.groupId = group.getId();
+        this.name = name;
+        this.phone = phone;
+        this.memo = memo;
+    }
 }
