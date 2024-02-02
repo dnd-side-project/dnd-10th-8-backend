@@ -1,4 +1,4 @@
-package ac.dnd.mur.server.relation.application;
+package ac.dnd.mur.server.relation.application.usecase;
 
 import ac.dnd.mur.server.global.annotation.MurWritableTransactional;
 import ac.dnd.mur.server.global.annotation.UseCase;
