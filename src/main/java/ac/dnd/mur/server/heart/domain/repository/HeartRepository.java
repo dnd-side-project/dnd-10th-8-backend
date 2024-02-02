@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 import static ac.dnd.mur.server.heart.exception.HeartExceptionCode.HEART_NOT_FOUND;
 
@@ -27,6 +28,18 @@ public interface HeartRepository extends JpaRepository<Heart, Long> {
 
     @MurWritableTransactional
     @Modifying(flushAutomatically = true, clearAutomatically = true)
+    @Query("DELETE FROM Heart h WHERE h.id = :id AND h.memberId = :memberId")
+    void deleteMemberHeart(@Param("id") final long id, @Param("memberId") final long memberId);
+
+    @MurWritableTransactional
+    @Modifying(flushAutomatically = true, clearAutomatically = true)
     @Query("DELETE FROM Heart h WHERE h.memberId = :memberId")
     void deleteMemberHearts(@Param("memberId") final Long memberId);
+
+    Optional<Heart> findByIdAndMemberId(final long id, final long memberId);
+
+    default Heart getMemberHeart(final long id, final long memberId) {
+        return findByIdAndMemberId(id, memberId)
+                .orElseThrow(() -> new HeartException(HEART_NOT_FOUND));
+    }
 }

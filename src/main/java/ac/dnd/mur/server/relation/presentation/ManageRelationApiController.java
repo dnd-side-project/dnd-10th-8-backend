@@ -35,7 +35,7 @@ public class ManageRelationApiController {
 
     @Operation(summary = "관계 생성 Endpoint")
     @PostMapping("/v1/relations")
-    public ResponseEntity<ResponseWrapper<Long>> addGroup(
+    public ResponseEntity<ResponseWrapper<Long>> createRelation(
             @Auth final Authenticated authenticated,
             @RequestBody @Valid final CreateRelationRequest request
     ) {
@@ -51,7 +51,7 @@ public class ManageRelationApiController {
 
     @Operation(summary = "관계 수정 Endpoint")
     @PatchMapping("/v1/relations/{relationId}")
-    public ResponseEntity<Void> removeGroup(
+    public ResponseEntity<Void> updateRelation(
             @Auth final Authenticated authenticated,
             @PathVariable(name = "relationId") final Long relationId,
             @RequestBody @Valid final UpdateRelationRequest request
@@ -69,7 +69,7 @@ public class ManageRelationApiController {
 
     @Operation(summary = "관계 삭제 Endpoint")
     @DeleteMapping("/v1/relations/{relationId}")
-    public ResponseEntity<Void> delete(
+    public ResponseEntity<Void> deleteRelation(
             @Auth final Authenticated authenticated,
             @PathVariable(name = "relationId") final Long relationId
     ) {

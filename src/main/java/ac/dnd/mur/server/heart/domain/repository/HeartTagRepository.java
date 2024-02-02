@@ -12,6 +12,11 @@ import java.util.List;
 public interface HeartTagRepository extends JpaRepository<Tag, Long> {
     @MurWritableTransactional
     @Modifying(flushAutomatically = true, clearAutomatically = true)
+    @Query("DELETE FROM Tag t WHERE t.heart.id = :heartId")
+    void deleteByHeartId(@Param("heartId") final Long heartId);
+
+    @MurWritableTransactional
+    @Modifying(flushAutomatically = true, clearAutomatically = true)
     @Query("DELETE FROM Tag t WHERE t.heart.id IN :heartIds")
     void deleteByHeartIds(@Param("heartIds") final List<Long> heartIds);
 }
