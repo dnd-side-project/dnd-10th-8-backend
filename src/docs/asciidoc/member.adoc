@@ -76,7 +76,7 @@ include::{snippets}/MemberApi/Register/Process/request-fields.adoc[]
 include::{snippets}/MemberApi/Register/Process/http-response.adoc[]
 include::{snippets}/MemberApi/Register/Process/response-fields.adoc[]
 
-== 사용자별 그룹 관리
+== 사용자별 그룹 관리 (AccessToken)
 
 === 추가
 

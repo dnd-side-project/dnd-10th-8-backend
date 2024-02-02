@@ -1,4 +1,4 @@
-= 관계 관련 API
+= 관계 관련 API (AccessToken)
 :doctype: book
 :icons: font
 :source-highlighter: highlightjs
