@@ -10,8 +10,7 @@ public record UpdateRelationRequest(
         @NotBlank(message = "이름은 필수입니다.")
         String name,
 
-        @NotBlank(message = "연락처는 필수입니다.")
-        String phone,
+        String imageUrl,
 
         String memo
 ) {

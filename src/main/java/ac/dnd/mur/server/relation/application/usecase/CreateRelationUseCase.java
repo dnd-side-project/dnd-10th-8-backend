@@ -27,7 +27,7 @@ public class CreateRelationUseCase {
                 member,
                 group,
                 command.name(),
-                command.phone(),
+                command.imageUrl(),
                 command.memo()
         )).getId();
     }

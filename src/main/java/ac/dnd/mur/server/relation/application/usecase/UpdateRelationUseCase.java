@@ -22,7 +22,7 @@ public class UpdateRelationUseCase {
         relation.update(
                 group,
                 command.name(),
-                command.phone(),
+                command.imageUrl(),
                 command.memo()
         );
     }

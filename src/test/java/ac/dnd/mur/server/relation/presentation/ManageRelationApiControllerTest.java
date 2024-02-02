@@ -46,7 +46,7 @@ class ManageRelationApiControllerTest extends ControllerTest {
         private final CreateRelationRequest request = new CreateRelationRequest(
                 1L,
                 친구_1.getName(),
-                친구_1.getPhone(),
+                친구_1.getImageUrl(),
                 친구_1.getMemo()
         );
 
@@ -65,7 +65,7 @@ class ManageRelationApiControllerTest extends ControllerTest {
                             requestFields(
                                     body("groupId", "그룹 ID(PK)", true),
                                     body("name", "이름", true),
-                                    body("phone", "연락처", true),
+                                    body("imageUrl", "이미지 URL", false),
                                     body("memo", "메모", false)
                             ),
                             responseFields(
@@ -83,7 +83,7 @@ class ManageRelationApiControllerTest extends ControllerTest {
         private final UpdateRelationRequest request = new UpdateRelationRequest(
                 1L,
                 친구_1.getName(),
-                친구_1.getPhone(),
+                친구_1.getImageUrl(),
                 친구_1.getMemo()
         );
 
@@ -107,7 +107,7 @@ class ManageRelationApiControllerTest extends ControllerTest {
                             requestFields(
                                     body("groupId", "그룹 ID(PK)", true),
                                     body("name", "이름", true),
-                                    body("phone", "연락처", true),
+                                    body("imageUrl", "이미지 URL", false),
                                     body("memo", "메모", false)
                             )
                     ))
