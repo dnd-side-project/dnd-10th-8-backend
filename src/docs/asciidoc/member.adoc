@@ -90,6 +90,19 @@ include::{snippets}/GroupApi/Add/Success/request-fields.adoc[]
 include::{snippets}/GroupApi/Add/Failure/http-response.adoc[]
 include::{snippets}/GroupApi/Add/Success/http-response.adoc[]
 
+=== 수정
+
+> HTTP Request
+
+include::{snippets}/GroupApi/Update/Success/http-request.adoc[]
+include::{snippets}/GroupApi/Update/Success/path-parameters.adoc[]
+include::{snippets}/GroupApi/Update/Success/request-fields.adoc[]
+
+> HTTP Response
+
+include::{snippets}/GroupApi/Update/Failure/http-response.adoc[]
+include::{snippets}/GroupApi/Update/Success/http-response.adoc[]
+
 === 삭제
 
 > HTTP Request
