@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Optional;
+
 import static ac.dnd.mur.server.schedule.exception.ScheduleExceptionCode.SCHEDULE_NOT_FOUND;
 
 public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
@@ -20,4 +22,11 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
     @Modifying(flushAutomatically = true, clearAutomatically = true)
     @Query("DELETE FROM Schedule s WHERE s.memberId = :memberId")
     void deleteMemberSchedules(@Param("memberId") final Long memberId);
+
+    Optional<Schedule> findByIdAndMemberId(final long id, final long memberId);
+
+    default Schedule getMemberSchedule(final long id, final long memberId) {
+        return findByIdAndMemberId(id, memberId)
+                .orElseThrow(() -> new ScheduleException(SCHEDULE_NOT_FOUND));
+    }
 }
