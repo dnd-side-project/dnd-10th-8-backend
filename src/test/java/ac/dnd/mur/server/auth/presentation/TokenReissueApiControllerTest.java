@@ -38,7 +38,7 @@ class TokenReissueApiControllerTest extends ControllerTest {
         @DisplayName("유효하지 않은 RefreshToken으로 인해 토큰 재발급에 실패한다")
         void throwExceptionByExpiredRefreshToken() {
             // given
-            applyToken(false, member.getId());
+            applyToken(false, member);
 
             // when - then
             failedExecute(
@@ -53,7 +53,7 @@ class TokenReissueApiControllerTest extends ControllerTest {
         @DisplayName("사용자 소유의 RefreshToken을 통해서 AccessToken과 RefreshToken을 재발급받는다")
         void success() {
             // given
-            applyToken(true, member.getId());
+            applyToken(true, member);
             given(reissueTokenUseCase.invoke(any())).willReturn(new AuthToken(ACCESS_TOKEN, REFRESH_TOKEN));
 
             // when - then

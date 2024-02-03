@@ -8,6 +8,7 @@ import ac.dnd.mur.server.common.config.TestAopConfig;
 import ac.dnd.mur.server.common.utils.TokenUtils;
 import ac.dnd.mur.server.global.base.BaseExceptionCode;
 import ac.dnd.mur.server.global.exception.SlackAlertManager;
+import ac.dnd.mur.server.member.domain.model.Member;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -541,7 +542,7 @@ public abstract class ControllerTest {
         };
     }
 
-    protected void applyToken(final boolean isValid, final Long payloadId) {
+    protected void applyToken(final boolean isValid, final Member member) {
         if (isValid) {
             doNothing()
                     .when(tokenProvider)
@@ -551,6 +552,6 @@ public abstract class ControllerTest {
                     .when(tokenProvider)
                     .validateToken(anyString());
         }
-        given(tokenProvider.getId(anyString())).willReturn(payloadId);
+        given(tokenProvider.getId(anyString())).willReturn(member.getId());
     }
 }

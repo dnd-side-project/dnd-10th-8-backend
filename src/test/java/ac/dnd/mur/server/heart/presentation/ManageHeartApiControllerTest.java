@@ -57,7 +57,7 @@ class ManageHeartApiControllerTest extends ControllerTest {
         @DisplayName("마음을 생성한다")
         void success() {
             // given
-            applyToken(true, member.getId());
+            applyToken(true, member);
             given(createHeartUseCase.invoke(any())).willReturn(1L);
 
             // when - then
@@ -98,7 +98,7 @@ class ManageHeartApiControllerTest extends ControllerTest {
         @DisplayName("마음을 수정한다")
         void success() {
             // given
-            applyToken(true, member.getId());
+            applyToken(true, member);
             doNothing()
                     .when(updateHeartUseCase)
                     .invoke(any());
@@ -132,7 +132,7 @@ class ManageHeartApiControllerTest extends ControllerTest {
         @DisplayName("마음을 삭제한다")
         void success() {
             // given
-            applyToken(true, member.getId());
+            applyToken(true, member);
             doNothing()
                     .when(deleteHeartUseCase)
                     .invoke(any());
