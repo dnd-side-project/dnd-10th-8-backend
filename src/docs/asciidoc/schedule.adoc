@@ -4,3 +4,37 @@
 :source-highlighter: highlightjs
 :toc: left
 :toclevels: 3
+
+== 생성
+
+*HTTP Request*
+
+include::{snippets}/ScheduleApi/Create/http-request.adoc[]
+include::{snippets}/ScheduleApi/Create/request-fields.adoc[]
+
+*HTTP Response*
+
+include::{snippets}/ScheduleApi/Create/http-response.adoc[]
+
+== 수정
+
+*HTTP Request*
+
+include::{snippets}/ScheduleApi/Update/http-request.adoc[]
+include::{snippets}/ScheduleApi/Update/path-parameters.adoc[]
+include::{snippets}/ScheduleApi/Update/request-fields.adoc[]
+
+*HTTP Response*
+
+include::{snippets}/ScheduleApi/Update/http-response.adoc[]
+
+== 삭제
+
+*HTTP Request*
+
+include::{snippets}/ScheduleApi/Delete/http-request.adoc[]
+include::{snippets}/ScheduleApi/Delete/path-parameters.adoc[]
+
+*HTTP Response*
+
+include::{snippets}/ScheduleApi/Delete/http-response.adoc[]

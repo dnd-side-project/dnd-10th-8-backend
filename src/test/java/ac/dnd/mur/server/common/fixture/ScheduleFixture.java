@@ -11,10 +11,21 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+import static ac.dnd.mur.server.schedule.domain.model.Repeat.Type.EVERY_YEAR;
+
 @Getter
 @RequiredArgsConstructor
 public enum ScheduleFixture {
-    ;
+    결혼식(
+            LocalDate.of(2024, 1, 10), "결혼", null,
+            LocalDateTime.of(2024, 1, 10, 9, 0), LocalTime.of(16, 0),
+            null, "신라호텔", "~~~ 결혼식..."
+    ),
+    친구_XXX_생일(
+            LocalDate.of(2024, 2, 10), "친구 생일", new Repeat(EVERY_YEAR, null),
+            LocalDateTime.of(2024, 2, 10, 9, 0), null,
+            null, null, "~~~ 생일"
+    );
 
     private final LocalDate day;
     private final String event;
