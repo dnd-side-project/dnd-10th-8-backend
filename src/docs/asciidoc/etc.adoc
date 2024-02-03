@@ -7,12 +7,12 @@
 
 == PresignedUrl 응답 (AccessToken)
 
-> HTTP Request
+*HTTP Request*
 
 include::{snippets}/FileApi/GetPresignedUrl/Image/Success/http-request.adoc[]
 include::{snippets}/FileApi/GetPresignedUrl/Image/Success/query-parameters.adoc[]
 
-> HTTP Response
+*HTTP Response*
 
 include::{snippets}/FileApi/GetPresignedUrl/Image/Failure/http-response.adoc[]
 include::{snippets}/FileApi/GetPresignedUrl/Image/Success/http-response.adoc[]
