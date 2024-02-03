@@ -1,10 +1,10 @@
-[cols="3,2,6,6", options=header]
+[cols="3,2,6,6",options=header]
 |===
-|필드명|타입|제약 조건|설명
+|Response Body|타입|설명|제약 사항
 {{#fields}}
 |{{#tableCellContent}}`+{{path}}+`{{/tableCellContent}}
 |{{#tableCellContent}}`+{{type}}+`{{/tableCellContent}}
-|{{#tableCellContent}}{{#constraints}}{{.}}{{/constraints}}{{/tableCellContent}}
 |{{#tableCellContent}}{{description}}{{/tableCellContent}}
+|{{#tableCellContent}}{{#constraints}}{{.}}{{/constraints}}{{/tableCellContent}}
 {{/fields}}
 |===

@@ -54,7 +54,7 @@ class ManageRelationApiControllerTest extends ControllerTest {
         @DisplayName("관계를 생성한다")
         void success() {
             // given
-            applyToken(true, member.getId());
+            applyToken(true, member);
             given(createRelationUseCase.invoke(any())).willReturn(1L);
 
             // when - then
@@ -91,7 +91,7 @@ class ManageRelationApiControllerTest extends ControllerTest {
         @DisplayName("관계를 수정한다")
         void success() {
             // given
-            applyToken(true, member.getId());
+            applyToken(true, member);
             doNothing()
                     .when(updateRelationUseCase)
                     .invoke(any());
@@ -124,7 +124,7 @@ class ManageRelationApiControllerTest extends ControllerTest {
         @DisplayName("관계를 삭제한다")
         void success() {
             // given
-            applyToken(true, member.getId());
+            applyToken(true, member);
             doNothing()
                     .when(deleteRelationUseCase)
                     .invoke(any());

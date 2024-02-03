@@ -42,7 +42,7 @@ class FileManagementApiControllerTest extends ControllerTest {
         @DisplayName("이미지 파일[JPG, JPEG, PNG]이 아니면 Presigned Url을 얻을 수 없다")
         void throwExceptionByNotImage() {
             // given
-            applyToken(true, member.getId());
+            applyToken(true, member);
             doThrow(new FileException(FileExceptionCode.INVALID_FILE_EXTENSION))
                     .when(createPresignedUrlUseCase)
                     .invoke(any());
@@ -64,7 +64,7 @@ class FileManagementApiControllerTest extends ControllerTest {
         @DisplayName("Presigned Url을 얻는다")
         void success() {
             // given
-            applyToken(true, member.getId());
+            applyToken(true, member);
             given(createPresignedUrlUseCase.invoke(any())).willReturn(new PresignedUrlDetails(
                     "https://storage-url/path/fileName.png?X-xxx=xxx",
                     "https://storage-url/path/fileName.png"

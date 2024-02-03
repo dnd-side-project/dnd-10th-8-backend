@@ -104,7 +104,7 @@ class AuthApiControllerTest extends ControllerTest {
         @DisplayName("로그아웃을 진행한다")
         void success() {
             // given
-            applyToken(true, member.getId());
+            applyToken(true, member);
             doNothing()
                     .when(logoutUseCase)
                     .invoke(any());

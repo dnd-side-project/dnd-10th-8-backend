@@ -17,7 +17,7 @@ public class UpdateRelationUseCase {
 
     @MurWritableTransactional
     public void invoke(final UpdateRelationCommand command) {
-        final Relation relation = relationRepository.getById(command.relationId());
+        final Relation relation = relationRepository.getMemberRelation(command.relationId(), command.memberId());
         final Group group = groupRepository.getMemberGroup(command.groupId(), command.memberId());
         relation.update(
                 group,

@@ -76,4 +76,24 @@ public class Schedule extends BaseEntity<Schedule> {
         this.location = location;
         this.memo = memo;
     }
+
+    public void update(
+            final LocalDate day,
+            final String event,
+            final Repeat repeat,
+            final LocalDateTime alarm,
+            final LocalTime time,
+            final String link,
+            final String location,
+            final String memo
+    ) {
+        this.day = day;
+        this.event = event;
+        this.repeat = repeat;
+        this.alarm = alarm;
+        this.time = time;
+        this.link = link;
+        this.location = location;
+        this.memo = memo;
+    }
 }

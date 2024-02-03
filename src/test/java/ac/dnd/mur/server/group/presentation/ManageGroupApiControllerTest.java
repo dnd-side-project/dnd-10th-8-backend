@@ -59,7 +59,7 @@ class ManageGroupApiControllerTest extends ControllerTest {
         @DisplayName("중복된 그룹은 추가할 수 없다")
         void throwExceptionByGroupAlreadyExists() {
             // given
-            applyToken(true, member.getId());
+            applyToken(true, member);
             doThrow(new GroupException(GROUP_ALREADY_EXISTS))
                     .when(addGroupUseCase)
                     .invoke(any());
@@ -81,7 +81,7 @@ class ManageGroupApiControllerTest extends ControllerTest {
         @DisplayName("그룹을 추가한다")
         void success() {
             // given
-            applyToken(true, member.getId());
+            applyToken(true, member);
             given(addGroupUseCase.invoke(any())).willReturn(1L);
 
             // when - then
@@ -109,7 +109,7 @@ class ManageGroupApiControllerTest extends ControllerTest {
         @DisplayName("이미 관리하고 있는 그룹으로 그룹명을 수정할 수 없다")
         void throwExceptionByGroupAlreadyExists() {
             // given
-            applyToken(true, member.getId());
+            applyToken(true, member);
             doThrow(new GroupException(GROUP_ALREADY_EXISTS))
                     .when(updateGroupUseCase)
                     .invoke(any());
@@ -134,7 +134,7 @@ class ManageGroupApiControllerTest extends ControllerTest {
         @DisplayName("그룹명을 수정한다")
         void success() {
             // given
-            applyToken(true, member.getId());
+            applyToken(true, member);
             doNothing()
                     .when(updateGroupUseCase)
                     .invoke(any());
@@ -164,7 +164,7 @@ class ManageGroupApiControllerTest extends ControllerTest {
         @DisplayName("그룹을 삭제한다")
         void success() {
             // given
-            applyToken(true, member.getId());
+            applyToken(true, member);
             doNothing()
                     .when(removeGroupUseCase)
                     .invoke(any());
@@ -191,7 +191,7 @@ class ManageGroupApiControllerTest extends ControllerTest {
         @DisplayName("사용자가 관리하고 있는 그룹을 조회한다")
         void success() {
             // given
-            applyToken(true, member.getId());
+            applyToken(true, member);
             given(getMemberGroupUseCase.invoke(member.getId())).willReturn(List.of(
                     new GroupResponse(1L, "친구"),
                     new GroupResponse(2L, "가족"),

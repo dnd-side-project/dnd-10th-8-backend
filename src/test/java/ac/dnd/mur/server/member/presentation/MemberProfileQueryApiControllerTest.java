@@ -32,7 +32,7 @@ class MemberProfileQueryApiControllerTest extends ControllerTest {
         @DisplayName("마이페이지 프로필을 조회한다")
         void success() {
             // given
-            applyToken(true, member.getId());
+            applyToken(true, member);
             given(getPrivateProfileUseCase.invoke(member.getId())).willReturn(MemberPrivateProfile.of(member));
 
             // when - then

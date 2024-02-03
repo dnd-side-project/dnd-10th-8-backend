@@ -74,7 +74,7 @@ class ManageAccountApiControllerTest extends ControllerTest {
         @DisplayName("탈퇴 처리를 진행한다")
         void success() {
             // given
-            applyToken(true, member.getId());
+            applyToken(true, member);
             doNothing()
                     .when(deleteAccountUseCase)
                     .invoke(anyLong());

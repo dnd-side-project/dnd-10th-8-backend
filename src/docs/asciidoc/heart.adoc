@@ -7,34 +7,34 @@
 
 == 생성
 
-> HTTP Request
+*HTTP Request*
 
 include::{snippets}/HeartApi/Create/http-request.adoc[]
 include::{snippets}/HeartApi/Create/request-fields.adoc[]
 
-> HTTP Response
+*HTTP Response*
 
 include::{snippets}/HeartApi/Create/http-response.adoc[]
 
 == 수정
 
-> HTTP Request
+*HTTP Request*
 
 include::{snippets}/HeartApi/Update/http-request.adoc[]
 include::{snippets}/HeartApi/Update/path-parameters.adoc[]
 include::{snippets}/HeartApi/Update/request-fields.adoc[]
 
-> HTTP Response
+*HTTP Response*
 
 include::{snippets}/HeartApi/Update/http-response.adoc[]
 
 == 삭제
 
-> HTTP Request
+*HTTP Request*
 
 include::{snippets}/HeartApi/Delete/http-request.adoc[]
 include::{snippets}/HeartApi/Delete/path-parameters.adoc[]
 
-> HTTP Response
+*HTTP Response*
 
 include::{snippets}/HeartApi/Delete/http-response.adoc[]
