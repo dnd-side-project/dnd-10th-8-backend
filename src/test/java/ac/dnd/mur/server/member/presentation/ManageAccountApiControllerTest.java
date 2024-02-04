@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import static ac.dnd.mur.server.common.fixture.MemberFixture.MEMBER_1;
 import static ac.dnd.mur.server.common.utils.RestDocsSpecificationUtils.SnippetFactory.body;
 import static ac.dnd.mur.server.common.utils.RestDocsSpecificationUtils.createHttpSpecSnippets;
-import static ac.dnd.mur.server.common.utils.RestDocsSpecificationUtils.successDocs;
 import static ac.dnd.mur.server.common.utils.RestDocsSpecificationUtils.successDocsWithAccessToken;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -52,7 +51,7 @@ class ManageAccountApiControllerTest extends ControllerTest {
             successfulExecute(
                     patchRequestWithAccessToken(BASE_URL, request),
                     status().isNoContent(),
-                    successDocs("MemberApi/Update", createHttpSpecSnippets(
+                    successDocsWithAccessToken("MemberApi/Update", createHttpSpecSnippets(
                             requestFields(
                                     body("profileImageUrl", "프로필 이미지 URL", true),
                                     body("nickname", "닉네임", true),

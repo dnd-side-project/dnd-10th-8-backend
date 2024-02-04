@@ -22,7 +22,6 @@ import static ac.dnd.mur.server.common.utils.RestDocsSpecificationUtils.SnippetF
 import static ac.dnd.mur.server.common.utils.RestDocsSpecificationUtils.SnippetFactory.path;
 import static ac.dnd.mur.server.common.utils.RestDocsSpecificationUtils.createHttpSpecSnippets;
 import static ac.dnd.mur.server.common.utils.RestDocsSpecificationUtils.failureDocsWithAccessToken;
-import static ac.dnd.mur.server.common.utils.RestDocsSpecificationUtils.successDocs;
 import static ac.dnd.mur.server.common.utils.RestDocsSpecificationUtils.successDocsWithAccessToken;
 import static ac.dnd.mur.server.group.exception.GroupExceptionCode.GROUP_ALREADY_EXISTS;
 import static org.mockito.ArgumentMatchers.any;
@@ -203,7 +202,7 @@ class ManageGroupApiControllerTest extends ControllerTest {
             successfulExecute(
                     getRequestWithAccessToken(BASE_URL),
                     status().isOk(),
-                    successDocs("GroupApi/GetMembers", createHttpSpecSnippets(
+                    successDocsWithAccessToken("GroupApi/GetMembers", createHttpSpecSnippets(
                             responseFields(
                                     body("result[].id", "그룹 ID(PK)"),
                                     body("result[].name", "그룹명")
