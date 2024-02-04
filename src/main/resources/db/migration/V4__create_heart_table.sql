@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS heart
     member_id        BIGINT      NOT NULL,
     relation_id      BIGINT      NOT NULL,
     is_give          TINYINT     NOT NULL,
-    amount           BIGINT      NOT NULL,
+    money            BIGINT      NOT NULL,
     day              DATE        NOT NULL,
     event            VARCHAR(50) NOT NULL,
     memo             TEXT        NULL,

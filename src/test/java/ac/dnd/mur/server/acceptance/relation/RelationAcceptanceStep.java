@@ -6,6 +6,7 @@ import io.restassured.response.ValidatableResponse;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import static ac.dnd.mur.server.acceptance.CommonRequestFixture.deleteRequestWithAccessToken;
+import static ac.dnd.mur.server.acceptance.CommonRequestFixture.getRequestWithAccessToken;
 import static ac.dnd.mur.server.acceptance.CommonRequestFixture.patchRequestWithAccessToken;
 import static ac.dnd.mur.server.acceptance.CommonRequestFixture.postRequestWithAccessToken;
 
@@ -69,5 +70,17 @@ public class RelationAcceptanceStep {
                 .getPath();
 
         return deleteRequestWithAccessToken(uri, accessToken);
+    }
+
+    public static ValidatableResponse 관계_단건_정보를_조회한다(
+            final long relationId,
+            final String accessToken
+    ) {
+        final String uri = UriComponentsBuilder
+                .fromPath("/api/v1/relations/me/{relationId}")
+                .build(relationId)
+                .getPath();
+
+        return getRequestWithAccessToken(uri, accessToken);
     }
 }

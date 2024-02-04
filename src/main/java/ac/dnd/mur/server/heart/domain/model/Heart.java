@@ -34,7 +34,7 @@ public class Heart extends BaseEntity<Heart> {
     @Column(name = "is_give", nullable = false, columnDefinition = "TINYINT")
     private boolean give;
 
-    @Column(name = "amount", nullable = false)
+    @Column(name = "money", nullable = false)
     private long money;
 
     @Column(name = "day", nullable = false)

@@ -13,8 +13,21 @@ import java.util.List;
 @Getter
 @RequiredArgsConstructor
 public enum HeartFixture {
+    생일_선물을_보냈다(
+            true, 500_000,
+            LocalDate.of(2024, 1, 24),
+            "생일", "메모...",
+            new ArrayList<>(List.of("상품권"))
+    ),
+    생일_선물을_받았다(
+            false, 1_000_000,
+            LocalDate.of(2024, 2, 24),
+            "생일", "메모...",
+            new ArrayList<>(List.of("상품권"))
+    ),
+
     결혼_축의금을_보냈다(
-            true, 300_000,
+            true, 500_000,
             LocalDate.of(2024, 1, 24),
             "결혼", "메모...",
             new ArrayList<>(List.of("참석"))
@@ -27,13 +40,13 @@ public enum HeartFixture {
     ),
 
     승진_선물을_보냈다(
-            true, 500_000,
+            true, 1_000_000,
             LocalDate.of(2024, 1, 24),
             "승진", "메모...",
             new ArrayList<>(List.of("참석", "상품권"))
     ),
     승진_선물을_받았다(
-            false, 500_000,
+            false, 2_000_000,
             LocalDate.of(2024, 1, 24),
             "승진", "메모...",
             new ArrayList<>(List.of("참석", "상품권"))
