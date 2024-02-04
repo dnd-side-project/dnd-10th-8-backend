@@ -4,10 +4,12 @@ import ac.dnd.mur.server.group.domain.model.GroupResponse;
 import ac.dnd.mur.server.heart.domain.repository.query.response.HeartHistory;
 import ac.dnd.mur.server.relation.domain.model.response.RelationSummary;
 
+import java.util.List;
+
 public record HeartHistoryDetails(
         RelationSummary relation,
-        long giveMoney,
-        long takeMoney
+        List<Long> giveHistories,
+        List<Long> takeHistories
 ) {
     public static HeartHistoryDetails from(final HeartHistory heartHistory) {
         return new HeartHistoryDetails(
@@ -16,8 +18,8 @@ public record HeartHistoryDetails(
                         heartHistory.relationName(),
                         new GroupResponse(heartHistory.groupid(), heartHistory.groupName())
                 ),
-                heartHistory.giveMoney(),
-                heartHistory.takeMoney()
+                heartHistory.giveHistories(),
+                heartHistory.takeHistories()
         );
     }
 }

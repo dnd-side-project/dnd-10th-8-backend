@@ -56,8 +56,8 @@ class GetHeartHistoryApiControllerTest extends ControllerTest {
                                     "관계-친구1",
                                     new GroupResponse(1L, "친구")
                             ),
-                            7_000_000,
-                            15_000_000
+                            List.of(7_000_000L, 1_500_000L),
+                            List.of(3_000_000L, 8_500_000L)
                     ),
                     new HeartHistoryDetails(
                             new RelationSummary(
@@ -65,8 +65,8 @@ class GetHeartHistoryApiControllerTest extends ControllerTest {
                                     "관계-친구2",
                                     new GroupResponse(1L, "친구")
                             ),
-                            5_000_000,
-                            10_000_000
+                            List.of(2_000_000L, 500_000L),
+                            List.of(1_000_000L, 3_500_000L)
                     )
             ));
 
@@ -84,8 +84,8 @@ class GetHeartHistoryApiControllerTest extends ControllerTest {
                                     body("result[].relation.name", "등록한 관계 이름"),
                                     body("result[].relation.group.id", "그룹 ID(PK)"),
                                     body("result[].relation.group.name", "그룹명"),
-                                    body("result[].giveMoney", "보낸 금액"),
-                                    body("result[].takeMoney", "받은 금액")
+                                    body("result[].giveHistories", "보낸 금액 내역"),
+                                    body("result[].takeHistories", "받은 금액 내역")
                             )
                     ))
             );

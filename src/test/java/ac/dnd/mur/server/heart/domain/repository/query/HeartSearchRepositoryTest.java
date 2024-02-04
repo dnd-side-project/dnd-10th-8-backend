@@ -140,8 +140,20 @@ class HeartSearchRepositoryTest extends RepositoryTest {
                     result1,
                     List.of(relations[4], relations[3], relations[2], relations[1], relations[0]),
                     List.of(groups[2], groups[1], groups[0], groups[0], groups[0]),
-                    List.of(650_000L, 0L, 1_000_000L, 9_000_000L, 6_000_000L),
-                    List.of(150_000L, 35_000_000L, 2_150_000L, 0L, 1_500_000L)
+                    List.of(
+                            List.of(50_000L, 200_000L, 300_000L, 100_000L),
+                            List.of(),
+                            List.of(1_000_000L),
+                            List.of(2_000_000L, 7_000_000L),
+                            List.of(1_000_000L, 2_000_000L, 3_000_000L)
+                    ),
+                    List.of(
+                            List.of(100_000L, 50_000L),
+                            List.of(5_000_000L, 10_000_000L, 20_000_000L),
+                            List.of(500_000L, 1_050_000L, 250_000L, 350_000L),
+                            List.of(),
+                            List.of(1_500_000L)
+                    )
             );
 
             /* 이름 조건 O */
@@ -154,8 +166,16 @@ class HeartSearchRepositoryTest extends RepositoryTest {
                     result2,
                     List.of(relations[2], relations[1], relations[0]),
                     List.of(groups[0], groups[0], groups[0]),
-                    List.of(1_000_000L, 9_000_000L, 6_000_000L),
-                    List.of(2_150_000L, 0L, 1_500_000L)
+                    List.of(
+                            List.of(1_000_000L),
+                            List.of(2_000_000L, 7_000_000L),
+                            List.of(1_000_000L, 2_000_000L, 3_000_000L)
+                    ),
+                    List.of(
+                            List.of(500_000L, 1_050_000L, 250_000L, 350_000L),
+                            List.of(),
+                            List.of(1_500_000L)
+                    )
             );
 
             final List<HeartHistory> result3 = sut.fetchHeartsByCondition(new SearchHeartCondition(
@@ -167,8 +187,8 @@ class HeartSearchRepositoryTest extends RepositoryTest {
                     result3,
                     List.of(relations[3]),
                     List.of(groups[1]),
-                    List.of(0L),
-                    List.of(35_000_000L)
+                    List.of(List.of()),
+                    List.of(List.of(5_000_000L, 10_000_000L, 20_000_000L))
             );
 
             final List<HeartHistory> result4 = sut.fetchHeartsByCondition(new SearchHeartCondition(
@@ -180,8 +200,8 @@ class HeartSearchRepositoryTest extends RepositoryTest {
                     result4,
                     List.of(relations[4]),
                     List.of(groups[2]),
-                    List.of(650_000L),
-                    List.of(150_000L)
+                    List.of(List.of(50_000L, 200_000L, 300_000L, 100_000L)),
+                    List.of(List.of(100_000L, 50_000L))
             );
 
             final List<HeartHistory> result5 = sut.fetchHeartsByCondition(new SearchHeartCondition(
@@ -205,8 +225,20 @@ class HeartSearchRepositoryTest extends RepositoryTest {
                     result1,
                     List.of(relations[3], relations[1], relations[0], relations[2], relations[4]),
                     List.of(groups[1], groups[0], groups[0], groups[0], groups[2]),
-                    List.of(0L, 9_000_000L, 6_000_000L, 1_000_000L, 650_000L),
-                    List.of(35_000_000L, 0L, 1_500_000L, 2_150_000L, 150_000L)
+                    List.of(
+                            List.of(),
+                            List.of(2_000_000L, 7_000_000L),
+                            List.of(1_000_000L, 2_000_000L, 3_000_000L),
+                            List.of(1_000_000L),
+                            List.of(50_000L, 200_000L, 300_000L, 100_000L)
+                    ),
+                    List.of(
+                            List.of(5_000_000L, 10_000_000L, 20_000_000L),
+                            List.of(),
+                            List.of(1_500_000L),
+                            List.of(500_000L, 1_050_000L, 250_000L, 350_000L),
+                            List.of(100_000L, 50_000L)
+                    )
             );
 
             /* 이름 조건 O */
@@ -219,8 +251,16 @@ class HeartSearchRepositoryTest extends RepositoryTest {
                     result2,
                     List.of(relations[1], relations[0], relations[2]),
                     List.of(groups[0], groups[0], groups[0]),
-                    List.of(9_000_000L, 6_000_000L, 1_000_000L),
-                    List.of(0L, 1_500_000L, 2_150_000L)
+                    List.of(
+                            List.of(2_000_000L, 7_000_000L),
+                            List.of(1_000_000L, 2_000_000L, 3_000_000L),
+                            List.of(1_000_000L)
+                    ),
+                    List.of(
+                            List.of(),
+                            List.of(1_500_000L),
+                            List.of(500_000L, 1_050_000L, 250_000L, 350_000L)
+                    )
             );
 
             final List<HeartHistory> result3 = sut.fetchHeartsByCondition(new SearchHeartCondition(
@@ -232,8 +272,8 @@ class HeartSearchRepositoryTest extends RepositoryTest {
                     result3,
                     List.of(relations[3]),
                     List.of(groups[1]),
-                    List.of(0L),
-                    List.of(35_000_000L)
+                    List.of(List.of()),
+                    List.of(List.of(5_000_000L, 10_000_000L, 20_000_000L))
             );
 
             final List<HeartHistory> result4 = sut.fetchHeartsByCondition(new SearchHeartCondition(
@@ -245,8 +285,8 @@ class HeartSearchRepositoryTest extends RepositoryTest {
                     result4,
                     List.of(relations[4]),
                     List.of(groups[2]),
-                    List.of(650_000L),
-                    List.of(150_000L)
+                    List.of(List.of(50_000L, 200_000L, 300_000L, 100_000L)),
+                    List.of(List.of(100_000L, 50_000L))
             );
 
             final List<HeartHistory> result5 = sut.fetchHeartsByCondition(new SearchHeartCondition(
@@ -261,30 +301,28 @@ class HeartSearchRepositoryTest extends RepositoryTest {
                 final List<HeartHistory> result,
                 final List<Relation> relations,
                 final List<Group> groups,
-                final List<Long> giveMoney,
-                final List<Long> takeMoney
+                final List<List<Long>> giveHistories,
+                final List<List<Long>> takeHistories
         ) {
-            assertAll(
-                    () -> assertThat(result).hasSize(relations.size()),
-                    () -> assertThat(result)
-                            .map(HeartHistory::relationId)
-                            .containsExactlyElementsOf(relations.stream().map(Relation::getId).toList()),
-                    () -> assertThat(result)
-                            .map(HeartHistory::relationName)
-                            .containsExactlyElementsOf(relations.stream().map(Relation::getName).toList()),
-                    () -> assertThat(result)
-                            .map(HeartHistory::groupid)
-                            .containsExactlyElementsOf(groups.stream().map(Group::getId).toList()),
-                    () -> assertThat(result)
-                            .map(HeartHistory::groupName)
-                            .containsExactlyElementsOf(groups.stream().map(Group::getName).toList()),
-                    () -> assertThat(result)
-                            .map(HeartHistory::giveMoney)
-                            .containsExactlyElementsOf(giveMoney),
-                    () -> assertThat(result)
-                            .map(HeartHistory::takeMoney)
-                            .containsExactlyElementsOf(takeMoney)
-            );
+            final int totalSize = relations.size();
+            assertThat(result).hasSize(totalSize);
+
+            for (int i = 0; i < totalSize; i++) {
+                final HeartHistory heartHistory = result.get(i);
+                final Relation relation = relations.get(i);
+                final Group group = groups.get(i);
+                final List<Long> giveHistory = giveHistories.get(i);
+                final List<Long> takeHistory = takeHistories.get(i);
+
+                assertAll(
+                        () -> assertThat(heartHistory.relationId()).isEqualTo(relation.getId()),
+                        () -> assertThat(heartHistory.relationName()).isEqualTo(relation.getName()),
+                        () -> assertThat(heartHistory.groupid()).isEqualTo(group.getId()),
+                        () -> assertThat(heartHistory.groupName()).isEqualTo(group.getName()),
+                        () -> assertThat(heartHistory.giveHistories()).containsExactlyInAnyOrderElementsOf(giveHistory),
+                        () -> assertThat(heartHistory.takeHistories()).containsExactlyInAnyOrderElementsOf(takeHistory)
+                );
+            }
         }
     }
 

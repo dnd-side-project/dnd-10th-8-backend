@@ -8,7 +8,7 @@ import ac.dnd.mur.server.heart.domain.repository.query.spec.SearchSpecificRelati
 import java.util.List;
 
 public interface HeartSearchRepository {
-    List<HeartHistory> fetchHeartsByCondition(final SearchHeartCondition condition);
-
     List<Heart> fetchHeartsWithSpecificRelation(final SearchSpecificRelationHeartCondition condition);
+
+    List<HeartHistory> fetchHeartsByCondition(final SearchHeartCondition condition);
 }
