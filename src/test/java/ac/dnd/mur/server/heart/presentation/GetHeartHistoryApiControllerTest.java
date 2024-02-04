@@ -1,10 +1,11 @@
 package ac.dnd.mur.server.heart.presentation;
 
 import ac.dnd.mur.server.common.ControllerTest;
+import ac.dnd.mur.server.group.domain.model.GroupResponse;
 import ac.dnd.mur.server.heart.application.usecase.GetHeartHistoryUseCase;
 import ac.dnd.mur.server.heart.application.usecase.query.response.HeartHistoryDetails;
 import ac.dnd.mur.server.member.domain.model.Member;
-import ac.dnd.mur.server.relation.domain.repository.query.response.RelationDetails;
+import ac.dnd.mur.server.relation.domain.model.response.RelationSummary;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -43,21 +44,19 @@ class GetHeartHistoryApiControllerTest extends ControllerTest {
             applyToken(true, member);
             given(getHeartHistoryUseCase.getHeartHistories(any())).willReturn(List.of(
                     new HeartHistoryDetails(
-                            new RelationDetails(
+                            new RelationSummary(
                                     1L,
                                     "관계-친구1",
-                                    1L,
-                                    "친구"
+                                    new GroupResponse(1L, "친구")
                             ),
                             7_000_000,
                             15_000_000
                     ),
                     new HeartHistoryDetails(
-                            new RelationDetails(
+                            new RelationSummary(
                                     2L,
                                     "관계-친구2",
-                                    1L,
-                                    "친구"
+                                    new GroupResponse(1L, "친구")
                             ),
                             5_000_000,
                             10_000_000
@@ -76,8 +75,8 @@ class GetHeartHistoryApiControllerTest extends ControllerTest {
                             responseFields(
                                     body("result[].relation.id", "관계 ID(PK)"),
                                     body("result[].relation.name", "등록한 관계 이름"),
-                                    body("result[].relation.groupId", "그룹 ID(PK)"),
-                                    body("result[].relation.groupName", "그룹명"),
+                                    body("result[].relation.group.id", "그룹 ID(PK)"),
+                                    body("result[].relation.group.name", "그룹명"),
                                     body("result[].giveMoney", "보낸 금액"),
                                     body("result[].takeMoney", "받은 금액")
                             )
