@@ -38,3 +38,17 @@ include::{snippets}/RelationApi/Delete/path-parameters.adoc[]
 *HTTP Response*
 
 include::{snippets}/RelationApi/Delete/http-response.adoc[]
+
+== 등록한 관계 정보 조회
+
+=== 단건
+
+*HTTP Request*
+
+include::{snippets}/RelationApi/Details/Single/http-request.adoc[]
+include::{snippets}/RelationApi/Details/Single/path-parameters.adoc[]
+
+*HTTP Response*
+
+include::{snippets}/RelationApi/Details/Single/http-response.adoc[]
+include::{snippets}/RelationApi/Details/Single/response-fields.adoc[]
