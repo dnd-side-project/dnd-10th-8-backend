@@ -1,5 +1,6 @@
 package ac.dnd.mur.server.acceptance.heart;
 
+import ac.dnd.mur.server.heart.presentation.dto.request.ApplyUnrecordedHeartRequest;
 import ac.dnd.mur.server.heart.presentation.dto.request.CreateHeartRequest;
 import ac.dnd.mur.server.heart.presentation.dto.request.UpdateHeartRequest;
 import io.restassured.response.ValidatableResponse;
@@ -45,6 +46,35 @@ public class HeartAcceptanceStep {
             final String accessToken
     ) {
         return 마음을_생성한다(relationId, give, money, day, event, memo, tags, accessToken)
+                .extract()
+                .jsonPath()
+                .getLong("result");
+    }
+
+    public static ValidatableResponse 지출이_기록되지_않는_일정에_대한_마음을_생성한다(
+            final long scheduleId,
+            final long money,
+            final List<String> tags,
+            final String accessToken
+    ) {
+        final String uri = UriComponentsBuilder
+                .fromPath("/api/v1/hearts/unrecorded-schedule")
+                .build()
+                .toUri()
+                .getPath();
+
+        final ApplyUnrecordedHeartRequest request = new ApplyUnrecordedHeartRequest(scheduleId, money, tags);
+
+        return postRequestWithAccessToken(uri, request, accessToken);
+    }
+
+    public static long 지출이_기록되지_않는_일정에_대한_마음을_생성하고_ID를_추출한다(
+            final long scheduleId,
+            final long money,
+            final List<String> tags,
+            final String accessToken
+    ) {
+        return 지출이_기록되지_않는_일정에_대한_마음을_생성한다(scheduleId, money, tags, accessToken)
                 .extract()
                 .jsonPath()
                 .getLong("result");
