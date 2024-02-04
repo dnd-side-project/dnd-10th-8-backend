@@ -49,3 +49,17 @@ include::{snippets}/HeartApi/Delete/path-parameters.adoc[]
 *HTTP Response*
 
 include::{snippets}/HeartApi/Delete/http-response.adoc[]
+
+== 조회
+
+=== 메인 홈 내역
+
+*HTTP Request*
+
+include::{snippets}/HeartApi/Search/Home/http-request.adoc[]
+include::{snippets}/HeartApi/Search/Home/query-parameters.adoc[]
+
+*HTTP Response*
+
+include::{snippets}/HeartApi/Search/Home/http-response.adoc[]
+include::{snippets}/HeartApi/Search/Home/response-fields.adoc[]

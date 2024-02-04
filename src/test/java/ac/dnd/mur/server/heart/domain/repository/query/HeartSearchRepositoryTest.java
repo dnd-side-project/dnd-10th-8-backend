@@ -47,7 +47,7 @@ class HeartSearchRepositoryTest extends RepositoryTest {
     private static final LocalDate day = LocalDate.of(2024, 1, 1);
 
     private Member member;
-    private Group[] groups = new Group[3];
+    private final Group[] groups = new Group[3];
     private Relation[] relations = new Relation[5];
 
     @BeforeEach
