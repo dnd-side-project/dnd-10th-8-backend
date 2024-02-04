@@ -3,6 +3,7 @@ package ac.dnd.mur.server.schedule.presentation;
 import ac.dnd.mur.server.common.ControllerTest;
 import ac.dnd.mur.server.group.domain.model.GroupResponse;
 import ac.dnd.mur.server.member.domain.model.Member;
+import ac.dnd.mur.server.relation.domain.model.response.RelationSummary;
 import ac.dnd.mur.server.schedule.application.usecase.GetUnrecordedScheduleUseCase;
 import ac.dnd.mur.server.schedule.application.usecase.query.response.UnrecordedScheduleResponse;
 import org.junit.jupiter.api.DisplayName;
@@ -44,7 +45,7 @@ class GetUnrecordedScheduleApiControllerTest extends ControllerTest {
             given(getUnrecordedScheduleUseCase.invoke(member.getId())).willReturn(List.of(
                     new UnrecordedScheduleResponse(
                             10L,
-                            new UnrecordedScheduleResponse.RelationSummary(
+                            new RelationSummary(
                                     1L,
                                     친구_1.getName(),
                                     new GroupResponse(1L, 친구.getName())
