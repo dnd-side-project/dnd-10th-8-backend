@@ -83,4 +83,16 @@ public class RelationAcceptanceStep {
 
         return getRequestWithAccessToken(uri, accessToken);
     }
+
+    public static ValidatableResponse 관계_N건_정보를_조회한다(
+            final String name,
+            final String accessToken
+    ) {
+        final String uri = UriComponentsBuilder
+                .fromPath("/api/v1/relations/me?name={name}")
+                .build(name)
+                .getPath();
+
+        return getRequestWithAccessToken(uri, accessToken);
+    }
 }

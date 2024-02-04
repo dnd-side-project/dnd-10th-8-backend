@@ -52,3 +52,15 @@ include::{snippets}/RelationApi/Details/Single/path-parameters.adoc[]
 
 include::{snippets}/RelationApi/Details/Single/http-response.adoc[]
 include::{snippets}/RelationApi/Details/Single/response-fields.adoc[]
+
+=== N건
+
+*HTTP Request*
+
+include::{snippets}/RelationApi/Details/Multiple/http-request.adoc[]
+include::{snippets}/RelationApi/Details/Multiple/query-parameters.adoc[]
+
+*HTTP Response*
+
+include::{snippets}/RelationApi/Details/Multiple/http-response.adoc[]
+include::{snippets}/RelationApi/Details/Multiple/response-fields.adoc[]
