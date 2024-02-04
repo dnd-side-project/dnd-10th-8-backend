@@ -38,3 +38,18 @@ include::{snippets}/ScheduleApi/Delete/path-parameters.adoc[]
 *HTTP Response*
 
 include::{snippets}/ScheduleApi/Delete/http-response.adoc[]
+
+== 지출(보낸 마음)이 기록되지 않은 일정 조회
+
+TIP: 하루 이상 지난 일정에 대해서만 필터링
+
+IMPORTANT: 일정(Schedule) & 마음(Heart)에 대해서 [relationId, day, event]를 기준으로 공통 레코드 필터링
+
+*HTTP Request*
+
+include::{snippets}/ScheduleApi/UnrecordedHeart/http-request.adoc[]
+
+*HTTP Response*
+
+include::{snippets}/ScheduleApi/UnrecordedHeart/http-response.adoc[]
+include::{snippets}/ScheduleApi/UnrecordedHeart/response-fields.adoc[]
