@@ -3,12 +3,15 @@ package ac.dnd.mur.server.heart.presentation;
 import ac.dnd.mur.server.auth.domain.model.Authenticated;
 import ac.dnd.mur.server.global.annotation.Auth;
 import ac.dnd.mur.server.global.dto.ResponseWrapper;
+import ac.dnd.mur.server.heart.application.usecase.ApplyUnrecordedHeartUseCase;
 import ac.dnd.mur.server.heart.application.usecase.CreateHeartUseCase;
 import ac.dnd.mur.server.heart.application.usecase.DeleteHeartUseCase;
 import ac.dnd.mur.server.heart.application.usecase.UpdateHeartUseCase;
+import ac.dnd.mur.server.heart.application.usecase.command.ApplyUnrecordedHeartCommand;
 import ac.dnd.mur.server.heart.application.usecase.command.CreateHeartCommand;
 import ac.dnd.mur.server.heart.application.usecase.command.DeleteHeartCommand;
 import ac.dnd.mur.server.heart.application.usecase.command.UpdateHeartCommand;
+import ac.dnd.mur.server.heart.presentation.dto.request.ApplyUnrecordedHeartRequest;
 import ac.dnd.mur.server.heart.presentation.dto.request.CreateHeartRequest;
 import ac.dnd.mur.server.heart.presentation.dto.request.UpdateHeartRequest;
 import io.swagger.v3.oas.annotations.Operation;
@@ -30,6 +33,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class ManageHeartApiController {
     private final CreateHeartUseCase createHeartUseCase;
+    private final ApplyUnrecordedHeartUseCase applyUnrecordedHeartUseCase;
     private final UpdateHeartUseCase updateHeartUseCase;
     private final DeleteHeartUseCase deleteHeartUseCase;
 
@@ -47,6 +51,21 @@ public class ManageHeartApiController {
                 request.day(),
                 request.event(),
                 request.memo(),
+                request.tags()
+        ));
+        return ResponseEntity.ok(ResponseWrapper.from(heartId));
+    }
+
+    @Operation(summary = "지출(보낸 마음)이 기록되지 않은 일정에 대한 마음 생성 Endpoint")
+    @PostMapping("/v1/hearts/unrecorded-schedule")
+    public ResponseEntity<ResponseWrapper<Long>> applyUnrecordedHeart(
+            @Auth final Authenticated authenticated,
+            @RequestBody @Valid final ApplyUnrecordedHeartRequest request
+    ) {
+        final long heartId = applyUnrecordedHeartUseCase.invoke(new ApplyUnrecordedHeartCommand(
+                authenticated.id(),
+                request.scheduleId(),
+                request.money(),
                 request.tags()
         ));
         return ResponseEntity.ok(ResponseWrapper.from(heartId));

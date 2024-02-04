@@ -16,6 +16,17 @@ include::{snippets}/HeartApi/Create/request-fields.adoc[]
 
 include::{snippets}/HeartApi/Create/http-response.adoc[]
 
+== 지출(보낸 마음)이 기록되지 않은 일정에 대한 마음 생성
+
+*HTTP Request*
+
+include::{snippets}/HeartApi/ApplyUnrecordedHeart/http-request.adoc[]
+include::{snippets}/HeartApi/ApplyUnrecordedHeart/request-fields.adoc[]
+
+*HTTP Response*
+
+include::{snippets}/HeartApi/ApplyUnrecordedHeart/http-response.adoc[]
+
 == 수정
 
 *HTTP Request*

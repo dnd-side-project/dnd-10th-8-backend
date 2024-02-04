@@ -1,9 +1,11 @@
 package ac.dnd.mur.server.heart.presentation;
 
 import ac.dnd.mur.server.common.ControllerTest;
+import ac.dnd.mur.server.heart.application.usecase.ApplyUnrecordedHeartUseCase;
 import ac.dnd.mur.server.heart.application.usecase.CreateHeartUseCase;
 import ac.dnd.mur.server.heart.application.usecase.DeleteHeartUseCase;
 import ac.dnd.mur.server.heart.application.usecase.UpdateHeartUseCase;
+import ac.dnd.mur.server.heart.presentation.dto.request.ApplyUnrecordedHeartRequest;
 import ac.dnd.mur.server.heart.presentation.dto.request.CreateHeartRequest;
 import ac.dnd.mur.server.heart.presentation.dto.request.UpdateHeartRequest;
 import ac.dnd.mur.server.member.domain.model.Member;
@@ -30,6 +32,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class ManageHeartApiControllerTest extends ControllerTest {
     @Autowired
     private CreateHeartUseCase createHeartUseCase;
+
+    @Autowired
+    private ApplyUnrecordedHeartUseCase applyUnrecordedHeartUseCase;
 
     @Autowired
     private UpdateHeartUseCase updateHeartUseCase;
@@ -72,6 +77,41 @@ class ManageHeartApiControllerTest extends ControllerTest {
                                     body("day", "날짜", true),
                                     body("event", "행사 종류", true),
                                     body("memo", "메모", false),
+                                    body("tags", "태그", "0..N개", false)
+                            ),
+                            responseFields(
+                                    body("result", "생성한 마음 ID(PK)")
+                            )
+                    ))
+            );
+        }
+    }
+
+    @Nested
+    @DisplayName("지출(보낸 마음)이 기록되지 않은 일정에 대한 마음 생성 API [POST /api/v1/hearts/unrecorded-schedule]")
+    class ApplyUnrecordedHeart {
+        private static final String BASE_URL = "/api/v1/hearts/unrecorded-schedule";
+        private final ApplyUnrecordedHeartRequest request = new ApplyUnrecordedHeartRequest(
+                1L,
+                결혼_축의금을_보냈다.getMoney(),
+                결혼_축의금을_보냈다.getTags()
+        );
+
+        @Test
+        @DisplayName("지출(보낸 마음)이 기록되지 않은 일정에 대한 마음을 생성한다")
+        void success() {
+            // given
+            applyToken(true, member);
+            given(applyUnrecordedHeartUseCase.invoke(any())).willReturn(1L);
+
+            // when - then
+            successfulExecute(
+                    postRequestWithAccessToken(BASE_URL, request),
+                    status().isOk(),
+                    successDocsWithAccessToken("HeartApi/ApplyUnrecordedHeart", createHttpSpecSnippets(
+                            requestFields(
+                                    body("scheduleId", "일정 ID(PK)", true),
+                                    body("money", "금액", true),
                                     body("tags", "태그", "0..N개", false)
                             ),
                             responseFields(

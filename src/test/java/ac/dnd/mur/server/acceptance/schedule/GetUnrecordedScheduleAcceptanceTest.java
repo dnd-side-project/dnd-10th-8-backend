@@ -15,7 +15,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static ac.dnd.mur.server.acceptance.group.GroupAcceptanceStep.관리하고_있는_특정_그룹의_ID를_조회한다;
-import static ac.dnd.mur.server.acceptance.heart.HeartAcceptanceStep.마음을_생성한다;
+import static ac.dnd.mur.server.acceptance.heart.HeartAcceptanceStep.지출이_기록되지_않는_일정에_대한_마음을_생성한다;
 import static ac.dnd.mur.server.acceptance.relation.RelationAcceptanceStep.관계를_생성하고_ID를_추출한다;
 import static ac.dnd.mur.server.acceptance.schedule.ScheduleAcceptanceStep.일정을_생성하고_ID를_추출한다;
 import static ac.dnd.mur.server.acceptance.schedule.ScheduleAcceptanceStep.지출이_기록되지_않은_일정을_조회한다;
@@ -73,7 +73,7 @@ public class GetUnrecordedScheduleAcceptanceTest extends AcceptanceTest {
                     List.of("일정1", "일정2")
             );
 
-            마음을_생성한다(relationId2, true, 100_000, LocalDate.of(2024, 1, 15), "일정2", null, List.of(), member.accessToken());
+            지출이_기록되지_않는_일정에_대한_마음을_생성한다(scheduleId2, 100_000_000, List.of("특별한 일정", "이제 기록", "2"), member.accessToken());
             final ValidatableResponse response2 = 지출이_기록되지_않은_일정을_조회한다(member.accessToken()).statusCode(OK.value());
             assertUnrecordedSchedulesMatch(
                     response2,
@@ -85,7 +85,7 @@ public class GetUnrecordedScheduleAcceptanceTest extends AcceptanceTest {
                     List.of("일정1")
             );
 
-            마음을_생성한다(relationId1, true, 100_000, LocalDate.of(2024, 1, 1), "일정1", null, List.of(), member.accessToken());
+            지출이_기록되지_않는_일정에_대한_마음을_생성한다(scheduleId1, 300_000_000, List.of("특별한 일정", "이제 기록", "1"), member.accessToken());
             final ValidatableResponse response3 = 지출이_기록되지_않은_일정을_조회한다(member.accessToken()).statusCode(OK.value());
             assertUnrecordedSchedulesMatch(
                     response3,
