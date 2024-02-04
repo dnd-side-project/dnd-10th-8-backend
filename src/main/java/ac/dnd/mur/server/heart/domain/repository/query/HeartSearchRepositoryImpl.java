@@ -64,6 +64,7 @@ public class HeartSearchRepositoryImpl implements HeartSearchRepository {
         return query
                 .select(heart)
                 .from(heart)
+                .leftJoin(heart.tags).fetchJoin()
                 .where(
                         heart.memberId.eq(condition.memberId()),
                         heart.relationId.eq(condition.relationId())
