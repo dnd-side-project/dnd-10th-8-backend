@@ -55,4 +55,6 @@ public interface HeartRepository extends JpaRepository<Heart, Long> {
         return findByIdAndMemberId(id, memberId)
                 .orElseThrow(() -> new HeartException(HEART_NOT_FOUND));
     }
+
+    List<Heart> findByRelationIdIn(final List<Long> relationIds);
 }
