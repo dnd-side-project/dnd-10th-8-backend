@@ -1,9 +1,11 @@
 package ac.dnd.mur.server.heart.domain.repository.query;
 
 import ac.dnd.mur.server.global.annotation.MurReadOnlyTransactional;
+import ac.dnd.mur.server.heart.domain.model.Heart;
 import ac.dnd.mur.server.heart.domain.repository.query.response.HeartHistory;
 import ac.dnd.mur.server.heart.domain.repository.query.response.QHeartHistory;
 import ac.dnd.mur.server.heart.domain.repository.query.spec.SearchHeartCondition;
+import ac.dnd.mur.server.heart.domain.repository.query.spec.SearchSpecificRelationHeartCondition;
 import com.querydsl.core.types.Expression;
 import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -55,6 +57,23 @@ public class HeartSearchRepositoryImpl implements HeartSearchRepository {
             return sortWithIntimacy(result);
         }
         return result;
+    }
+
+    @Override
+    public List<Heart> fetchHeartsWithSpecificRelation(final SearchSpecificRelationHeartCondition condition) {
+        return query
+                .select(heart)
+                .from(heart)
+                .where(
+                        heart.memberId.eq(condition.memberId()),
+                        heart.relationId.eq(condition.relationId())
+                )
+                .orderBy(
+                        condition.sort() == SearchSpecificRelationHeartCondition.Sort.RECENT
+                                ? heart.id.desc()
+                                : heart.id.asc()
+                )
+                .fetch();
     }
 
     private List<HeartHistory> sortWithIntimacy(final List<HeartHistory> result) {
