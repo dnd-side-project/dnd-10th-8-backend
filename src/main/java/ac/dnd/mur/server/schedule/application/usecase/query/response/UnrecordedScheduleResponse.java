@@ -1,6 +1,7 @@
 package ac.dnd.mur.server.schedule.application.usecase.query.response;
 
 import ac.dnd.mur.server.group.domain.model.GroupResponse;
+import ac.dnd.mur.server.relation.domain.model.response.RelationSummary;
 import ac.dnd.mur.server.schedule.domain.repository.query.response.UnrecordedSchedule;
 
 import java.time.LocalDate;
@@ -15,13 +16,6 @@ public record UnrecordedScheduleResponse(
         String link,
         String location
 ) {
-    public record RelationSummary(
-            long id,
-            String name,
-            GroupResponse group
-    ) {
-    }
-
     public static UnrecordedScheduleResponse from(final UnrecordedSchedule schedule) {
         return new UnrecordedScheduleResponse(
                 schedule.id(),
