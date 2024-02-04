@@ -20,7 +20,7 @@ import static ac.dnd.mur.server.common.utils.RestDocsSpecificationUtils.SnippetF
 import static ac.dnd.mur.server.common.utils.RestDocsSpecificationUtils.SnippetFactory.path;
 import static ac.dnd.mur.server.common.utils.RestDocsSpecificationUtils.SnippetFactory.query;
 import static ac.dnd.mur.server.common.utils.RestDocsSpecificationUtils.createHttpSpecSnippets;
-import static ac.dnd.mur.server.common.utils.RestDocsSpecificationUtils.successDocs;
+import static ac.dnd.mur.server.common.utils.RestDocsSpecificationUtils.successDocsWithAccessToken;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
@@ -57,7 +57,7 @@ class GetRelationDetailsApiControllerTest extends ControllerTest {
             successfulExecute(
                     getRequestWithAccessToken(new UrlWithVariables(BASE_URL, 1L)),
                     status().isOk(),
-                    successDocs("RelationApi/Details/Single", createHttpSpecSnippets(
+                    successDocsWithAccessToken("RelationApi/Details/Single", createHttpSpecSnippets(
                             pathParameters(
                                     path("relationId", "관계 ID(PK)", true)
                             ),
@@ -94,7 +94,7 @@ class GetRelationDetailsApiControllerTest extends ControllerTest {
             successfulExecute(
                     getRequestWithAccessToken(new UrlWithVariables(BASE_URL, 1L), Map.of("name", "HelloUser")),
                     status().isOk(),
-                    successDocs("RelationApi/Details/Multiple", createHttpSpecSnippets(
+                    successDocsWithAccessToken("RelationApi/Details/Multiple", createHttpSpecSnippets(
                             queryParameters(
                                     query("name", "검색할 이름", "관계 등록할 때 적용한 이름으로 조회", false)
                             ),

@@ -25,7 +25,12 @@ public enum ScheduleFixture {
             LocalDate.of(2024, 2, 10), "친구 생일", new Repeat(EVERY_YEAR, null),
             LocalDateTime.of(2024, 2, 10, 9, 0), null,
             null, null, "~~~ 생일"
-    );
+    ),
+    특별한_일정_XXX(
+            LocalDate.of(2024, 1, 1), "특별한 일정 XXX",
+            null, null, null, null, null, null
+    ),
+    ;
 
     private final LocalDate day;
     private final String event;

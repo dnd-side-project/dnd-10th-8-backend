@@ -6,7 +6,10 @@ import ac.dnd.mur.server.schedule.presentation.dto.request.UpdateScheduleRequest
 import io.restassured.response.ValidatableResponse;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.time.LocalDate;
+
 import static ac.dnd.mur.server.acceptance.CommonRequestFixture.deleteRequestWithAccessToken;
+import static ac.dnd.mur.server.acceptance.CommonRequestFixture.getRequestWithAccessToken;
 import static ac.dnd.mur.server.acceptance.CommonRequestFixture.patchRequestWithAccessToken;
 import static ac.dnd.mur.server.acceptance.CommonRequestFixture.postRequestWithAccessToken;
 
@@ -36,6 +39,48 @@ public class ScheduleAcceptanceStep {
         );
 
         return postRequestWithAccessToken(uri, request, accessToken);
+    }
+
+    public static ValidatableResponse 일정을_생성한다(
+            final long relationId,
+            final LocalDate day,
+            final String event,
+            final ScheduleFixture fixture,
+            final String accessToken
+    ) {
+        final String uri = UriComponentsBuilder
+                .fromPath("/api/v1/schedules")
+                .build()
+                .toUri()
+                .getPath();
+
+        final CreateScheduleRequest request = new CreateScheduleRequest(
+                relationId,
+                day,
+                event,
+                (fixture.getRepeat() != null) ? fixture.getRepeat().getType().getValue() : null,
+                (fixture.getRepeat() != null) ? fixture.getRepeat().getFinish() : null,
+                fixture.getAlarm(),
+                fixture.getTime(),
+                fixture.getLink(),
+                fixture.getLocation(),
+                fixture.getMemo()
+        );
+
+        return postRequestWithAccessToken(uri, request, accessToken);
+    }
+
+    public static long 일정을_생성하고_ID를_추출한다(
+            final long relationId,
+            final LocalDate day,
+            final String event,
+            final ScheduleFixture fixture,
+            final String accessToken
+    ) {
+        return 일정을_생성한다(relationId, day, event, fixture, accessToken)
+                .extract()
+                .jsonPath()
+                .getLong("result");
     }
 
     public static long 일정을_생성하고_ID를_추출한다(
@@ -74,6 +119,33 @@ public class ScheduleAcceptanceStep {
         return patchRequestWithAccessToken(uri, request, accessToken);
     }
 
+    public static ValidatableResponse 일정을_수정한다(
+            final long scheduleId,
+            final LocalDate day,
+            final String event,
+            final ScheduleFixture fixture,
+            final String accessToken
+    ) {
+        final String uri = UriComponentsBuilder
+                .fromPath("/api/v1/schedules/{scheduleId}")
+                .build(scheduleId)
+                .getPath();
+
+        final UpdateScheduleRequest request = new UpdateScheduleRequest(
+                day,
+                event,
+                (fixture.getRepeat() != null) ? fixture.getRepeat().getType().getValue() : null,
+                (fixture.getRepeat() != null) ? fixture.getRepeat().getFinish() : null,
+                fixture.getAlarm(),
+                fixture.getTime(),
+                fixture.getLink(),
+                fixture.getLocation(),
+                fixture.getMemo()
+        );
+
+        return patchRequestWithAccessToken(uri, request, accessToken);
+    }
+
     public static ValidatableResponse 일정을_삭제한다(
             final long scheduleId,
             final String accessToken
@@ -84,5 +156,15 @@ public class ScheduleAcceptanceStep {
                 .getPath();
 
         return deleteRequestWithAccessToken(uri, accessToken);
+    }
+
+    public static ValidatableResponse 지출이_기록되지_않은_일정을_조회한다(final String accessToken) {
+        final String uri = UriComponentsBuilder
+                .fromPath("/api/v1/schedules/unrecorded")
+                .build()
+                .toUri()
+                .getPath();
+
+        return getRequestWithAccessToken(uri, accessToken);
     }
 }
