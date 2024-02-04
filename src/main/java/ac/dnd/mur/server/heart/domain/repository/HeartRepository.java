@@ -19,6 +19,7 @@ public interface HeartRepository extends JpaRepository<Heart, Long> {
                 .orElseThrow(() -> new HeartException(HEART_NOT_FOUND));
     }
 
+    // @Query
     @Query("""
             SELECT h.id
             FROM Heart h
@@ -36,6 +37,18 @@ public interface HeartRepository extends JpaRepository<Heart, Long> {
     @Query("DELETE FROM Heart h WHERE h.memberId = :memberId")
     void deleteMemberHearts(@Param("memberId") final Long memberId);
 
+    @Query("""
+            SELECT SUM(h.money)
+            FROM Heart h
+            WHERE h.memberId = :memberId AND h.relationId = :relationId AND h.give = :give
+            """)
+    long fetchInteractionMoney(
+            @Param("memberId") final long memberId,
+            @Param("relationId") final long relationId,
+            @Param("give") final boolean give
+    );
+
+    // Query Method
     Optional<Heart> findByIdAndMemberId(final long id, final long memberId);
 
     default Heart getMemberHeart(final long id, final long memberId) {
