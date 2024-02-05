@@ -4,3 +4,15 @@
 :source-highlighter: highlightjs
 :toc: left
 :toclevels: 3
+
+== 자신의 행사별 주고 받은 마음 내역
+
+*HTTP Request*
+
+include::{snippets}/StatisticsApi/PersonalHeartHistories/http-request.adoc[]
+include::{snippets}/StatisticsApi/PersonalHeartHistories/query-parameters.adoc[]
+
+*HTTP Response*
+
+include::{snippets}/StatisticsApi/PersonalHeartHistories/http-response.adoc[]
+include::{snippets}/StatisticsApi/PersonalHeartHistories/response-fields.adoc[]
