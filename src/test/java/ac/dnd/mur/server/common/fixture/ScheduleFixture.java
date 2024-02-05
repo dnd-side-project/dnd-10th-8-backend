@@ -44,4 +44,8 @@ public enum ScheduleFixture {
     public Schedule toDomain(final Member member, final Relation relation) {
         return new Schedule(member, relation, day, event, repeat, alarm, time, link, location, memo);
     }
+
+    public Schedule toDomain(final Member member, final Relation relation, final LocalDate day) {
+        return new Schedule(member, relation, day, event, repeat, alarm, time, link, location, memo);
+    }
 }

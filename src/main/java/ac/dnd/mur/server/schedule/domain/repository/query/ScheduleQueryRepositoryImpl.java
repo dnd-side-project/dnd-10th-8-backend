@@ -1,12 +1,17 @@
 package ac.dnd.mur.server.schedule.domain.repository.query;
 
 import ac.dnd.mur.server.global.annotation.MurReadOnlyTransactional;
+import ac.dnd.mur.server.schedule.domain.repository.query.response.CalendarSchedule;
+import ac.dnd.mur.server.schedule.domain.repository.query.response.QCalendarSchedule;
 import ac.dnd.mur.server.schedule.domain.repository.query.response.QUnrecordedSchedule;
 import ac.dnd.mur.server.schedule.domain.repository.query.response.UnrecordedSchedule;
+import ac.dnd.mur.server.schedule.domain.repository.query.spec.SearchCalendarScheduleCondition;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static ac.dnd.mur.server.group.domain.model.QGroup.group;
@@ -40,5 +45,38 @@ public class ScheduleQueryRepositoryImpl implements ScheduleQueryRepository {
                 .where(schedule.id.in(scheduleIds))
                 .orderBy(schedule.id.asc())
                 .fetch();
+    }
+
+    @Override
+    public List<CalendarSchedule> fetchCalendarSchedules(final SearchCalendarScheduleCondition condition) {
+        return query
+                .select(new QCalendarSchedule(
+                        schedule.id,
+                        relation.id,
+                        relation.name,
+                        group.id,
+                        group.name,
+                        schedule.day,
+                        schedule.event,
+                        schedule.time,
+                        schedule.link,
+                        schedule.location
+                ))
+                .from(schedule)
+                .innerJoin(relation).on(relation.id.eq(schedule.relationId))
+                .innerJoin(group).on(group.id.eq(relation.groupId))
+                .where(
+                        schedule.memberId.eq(condition.memberId()),
+                        scheduleDayInclude(condition.year(), condition.month())
+                )
+                .orderBy(schedule.day.asc())
+                .fetch();
+    }
+
+    private BooleanExpression scheduleDayInclude(final int year, final int month) {
+        final LocalDate start = LocalDate.of(year, month, 1);
+        final LocalDate end = start.plusMonths(1);
+
+        return schedule.day.goe(start).and(schedule.day.lt(end));
     }
 }
