@@ -1,0 +1,58 @@
+[give]
+## 2024/02
+- hearts[0], relations[0], groups[0], 2024/2/3 = 결혼
+
+## 2024/03
+- hearts[16], relations[0], groups[0], 2024/3/3 = 개업
+- hearts[8], relations[1], groups[0], 2024/3/1 = 출산
+
+## 2024/05
+- hearts[22], relations[3], groups[1], 2024/5/20 = 그외
+- hearts[17], relations[1], groups[0], 2024/5/3 = 개업
+- hearts[6], relations[2], groups[0], 2024/5/3 = 생일
+- hearts[1], relations[3], groups[1], 2024/5/3 = 결혼
+- hearts[9], relations[4], groups[2], 2024/5/1 = 출산
+
+## 2024/06
+- hearts[12], relations[1], groups[0], 2024/6/8 = 돌잔치
+- hearts[2], relations[4], groups[2], 2024/6/3 = 결혼
+
+## 2024/07
+- hearts[18], relations[2], groups[0], 2024/7/3 = 개업
+
+## 2024/08
+- hearts[13], relations[4], groups[2], 2024/8/8 = 돌잔치
+
+## 2025/05
+- hearts[27], relations[3], groups[1], 2025/5/20 = 그외
+- hearts[25], relations[2], groups[0], 2025/5/3 = 생일
+
+
+[take]
+## 2024/07
+- hearts[5], relations[4], groups[2], 2024/7/1 = 결혼
+- hearts[4], relations[3], groups[1], 2024/7/1 = 결혼
+- hearts[3], relations[0], groups[0], 2024/7/1 = 결혼
+
+## 2024/09
+- hearts[11], relations[4], groups[2], 2024/9/14 = 출산
+- hearts[10], relations[1], groups[0], 2024/9/14 = 출산
+- hearts[7], relations[2], groups[0], 2024/9/3 = 생일
+
+## 2024/11
+- hearts[24], relations[3], groups[1], 2024/11/20 = 그외
+- hearts[23], relations[0], groups[0], 2024/11/20 = 그외
+
+## 2024/12
+- hearts[15], relations[4], groups[2], 2024/12/22 = 돌잔치
+- hearts[14], relations[1], groups[0], 2024/12/22 = 돌잔치
+- hearts[21], relations[2], groups[0], 2024/12/15 = 개업
+- hearts[20], relations[1], groups[0], 2024/12/15 = 개업
+- hearts[19], relations[0], groups[0], 2024/12/15 = 개업
+
+## 2025/09
+- hearts[26], relations[2], groups[0], 2025/9/3 = 생일
+
+## 2025/11
+- hearts[29], relations[3], groups[1], 2025/11/20 = 그외
+- hearts[28], relations[0], groups[0], 2025/11/20 = 그외
