@@ -39,8 +39,8 @@ import static ac.dnd.mur.server.common.fixture.RelationFixture.직장_1;
 import static ac.dnd.mur.server.common.fixture.RelationFixture.친구_1;
 import static ac.dnd.mur.server.common.fixture.RelationFixture.친구_2;
 import static ac.dnd.mur.server.common.fixture.RelationFixture.친구_3;
-import static ac.dnd.mur.server.heart.domain.repository.query.spec.PersonalHeartStatisticsCondition.Type.MONTH;
-import static ac.dnd.mur.server.heart.domain.repository.query.spec.PersonalHeartStatisticsCondition.Type.YEAR;
+import static ac.dnd.mur.server.heart.domain.repository.query.spec.StatisticsStandard.MONTH;
+import static ac.dnd.mur.server.heart.domain.repository.query.spec.StatisticsStandard.YEAR;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 

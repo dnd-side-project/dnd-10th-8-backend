@@ -4,6 +4,7 @@ import ac.dnd.mur.server.global.annotation.MurReadOnlyTransactional;
 import ac.dnd.mur.server.heart.domain.repository.query.response.PersonalHeartHistory;
 import ac.dnd.mur.server.heart.domain.repository.query.response.QPersonalHeartHistory;
 import ac.dnd.mur.server.heart.domain.repository.query.spec.PersonalHeartStatisticsCondition;
+import ac.dnd.mur.server.heart.domain.repository.query.spec.StatisticsStandard;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +40,7 @@ public class HeartStatisticsRepositoryImpl implements HeartStatisticsRepository 
                 .where(
                         heart.memberId.eq(condition.memberId()),
                         isGive(condition.give()),
-                        byYearOrMonth(condition.type(), condition.year(), condition.month())
+                        byYearOrMonth(condition.standard(), condition.year(), condition.month())
                 )
                 .orderBy(heart.day.desc(), heart.id.desc())
                 .fetch();
@@ -49,8 +50,8 @@ public class HeartStatisticsRepositoryImpl implements HeartStatisticsRepository 
         return give ? heart.give.isTrue() : heart.give.isFalse();
     }
 
-    private BooleanExpression byYearOrMonth(final PersonalHeartStatisticsCondition.Type type, final int year, final int month) {
-        if (type == PersonalHeartStatisticsCondition.Type.YEAR) {
+    private BooleanExpression byYearOrMonth(final StatisticsStandard standard, final int year, final int month) {
+        if (standard == StatisticsStandard.YEAR) {
             final LocalDate start = LocalDate.of(year, 1, 1);
             final LocalDate end = start.plusYears(1);
             return heart.day.goe(start).and(heart.day.lt(end));
