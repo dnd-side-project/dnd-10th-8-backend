@@ -72,6 +72,10 @@ public class HeartSearchRepositoryImpl implements HeartSearchRepository {
                 .distinct()
                 .toList();
 
+        if (relations.isEmpty()) {
+            return List.of();
+        }
+
         final List<HeartHistory> result = conbineMoneyHistories(relations);
 
         if (condition.sort() == INTIMACY) {
@@ -81,10 +85,6 @@ public class HeartSearchRepositoryImpl implements HeartSearchRepository {
     }
 
     private List<HeartHistory> conbineMoneyHistories(final List<HeartHistory.RelationInfo> relations) {
-        if (relations.isEmpty()) {
-            return List.of();
-        }
-
         final List<Long> relationIds = relations.stream()
                 .map(HeartHistory.RelationInfo::relationId)
                 .toList();
