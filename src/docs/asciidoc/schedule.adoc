@@ -39,7 +39,9 @@ include::{snippets}/ScheduleApi/Delete/path-parameters.adoc[]
 
 include::{snippets}/ScheduleApi/Delete/http-response.adoc[]
 
-== 지출(보낸 마음)이 기록되지 않은 일정 조회
+== 일정 조회
+
+=== 지출(보낸 마음)이 기록되지 않은 일정
 
 TIP: 하루 이상 지난 일정에 대해서만 필터링
 
@@ -53,3 +55,15 @@ include::{snippets}/ScheduleApi/UnrecordedHeart/http-request.adoc[]
 
 include::{snippets}/ScheduleApi/UnrecordedHeart/http-response.adoc[]
 include::{snippets}/ScheduleApi/UnrecordedHeart/response-fields.adoc[]
+
+=== Year/Month 캘린더 일정
+
+*HTTP Request*
+
+include::{snippets}/ScheduleApi/Calendar/http-request.adoc[]
+include::{snippets}/ScheduleApi/Calendar/query-parameters.adoc[]
+
+*HTTP Response*
+
+include::{snippets}/ScheduleApi/Calendar/http-response.adoc[]
+include::{snippets}/ScheduleApi/Calendar/response-fields.adoc[]

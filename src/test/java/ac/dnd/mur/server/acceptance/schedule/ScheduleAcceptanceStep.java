@@ -167,4 +167,17 @@ public class ScheduleAcceptanceStep {
 
         return getRequestWithAccessToken(uri, accessToken);
     }
+
+    public static ValidatableResponse 캘린더_Year_Month에_해당하는_일정을_조회한다(
+            final int year,
+            final int month,
+            final String accessToken
+    ) {
+        final String uri = UriComponentsBuilder
+                .fromPath("/api/v1/schedules/me?year={year}&month={month}")
+                .build(year, month)
+                .getPath();
+
+        return getRequestWithAccessToken(uri, accessToken);
+    }
 }
