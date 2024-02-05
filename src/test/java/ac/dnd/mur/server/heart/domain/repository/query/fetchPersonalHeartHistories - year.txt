@@ -1,0 +1,93 @@
+## 2024
+### give
+결혼
+- hearts[2], relations[4], groups[2], 2024/6/3
+- hearts[1], relations[3], groups[1], 2024/5/3
+- hearts[0], relations[0], groups[0], 2024/2/3
+
+생일
+- hearts[6], relations[2], groups[0], 2024/5/3
+
+출산
+- hearts[9], relations[4], groups[2], 2024/5/1
+- hearts[8], relations[1], groups[0], 2024/3/1
+
+돌잔치
+- hearts[13], relations[4], groups[2], 2024/8/8
+- hearts[12], relations[1], groups[0], 2024/6/8
+
+개업
+- hearts[18], relations[2], groups[0], 2024/7/3
+- hearts[17], relations[1], groups[0], 2024/5/3
+- hearts[16], relations[0], groups[0], 2024/3/3
+
+그외
+- hearts[22], relations[3], groups[1], 2024/5/20
+
+
+### take
+결혼
+- hearts[5], relations[4], groups[2], 2024/7/1
+- hearts[4], relations[3], groups[1], 2024/7/1
+- hearts[3], relations[0], groups[0], 2024/7/1
+
+생일
+- hearts[7], relations[2], groups[0], 2024/9/3
+
+출산
+- hearts[11], relations[4], groups[2], 2024/9/14
+- hearts[10], relations[1], groups[0], 2024/9/14
+
+돌잔치
+- hearts[15], relations[4], groups[2], 2024/12/22
+- hearts[14], relations[1], groups[0], 2024/12/22
+
+개업
+- hearts[21], relations[2], groups[0], 2024/12/15
+- hearts[20], relations[1], groups[0], 2024/12/15
+- hearts[19], relations[0], groups[0], 2024/12/15
+
+그외
+- hearts[24], relations[3], groups[1], 2024/11/20
+- hearts[23], relations[0], groups[0], 2024/11/20
+
+
+## 2025
+### give
+결혼
+- 
+
+생일
+- hearts[25], relations[2], groups[0], 2025/5/3
+
+출산
+- 
+
+돌잔치
+- 
+
+개업
+- 
+
+그외
+- hearts[27], relations[3], groups[1], 2025/5/20
+
+### take
+결혼
+- 
+
+생일
+- hearts[26], relations[2], groups[0], 2025/9/3
+
+출산
+- 
+
+돌잔치
+- 
+
+개업
+- 
+
+그외
+- hearts[29], relations[3], groups[1], 2025/11/20
+- hearts[28], relations[0], groups[0], 2025/11/20

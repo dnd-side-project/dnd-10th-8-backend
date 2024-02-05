@@ -26,6 +26,7 @@ import static org.springframework.restdocs.operation.preprocess.Preprocessors.pr
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.payload.PayloadDocumentation.subsectionWithPath;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.partWithName;
 
@@ -251,6 +252,24 @@ public class RestDocsSpecificationUtils {
 
         public static FieldDescriptor body(final String name, final String description, final String constraint, final boolean mustRequired) {
             final FieldDescriptor result = fieldWithPath(name).description(description).attributes(constraint(constraint));
+            return mustRequired ? result : result.optional();
+        }
+
+        public static FieldDescriptor subsection(final String name, final String description) {
+            return subsectionWithPath(name).description(description);
+        }
+
+        public static FieldDescriptor subsection(final String name, final String description, final boolean mustRequired) {
+            final FieldDescriptor result = subsectionWithPath(name).description(description);
+            return mustRequired ? result : result.optional();
+        }
+
+        public static FieldDescriptor subsection(final String name, final String description, final String constraint) {
+            return subsectionWithPath(name).description(description).attributes(constraint(constraint));
+        }
+
+        public static FieldDescriptor subsection(final String name, final String description, final String constraint, final boolean mustRequired) {
+            final FieldDescriptor result = subsectionWithPath(name).description(description).attributes(constraint(constraint));
             return mustRequired ? result : result.optional();
         }
 

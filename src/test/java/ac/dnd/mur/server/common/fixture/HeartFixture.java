@@ -13,6 +13,19 @@ import java.util.List;
 @Getter
 @RequiredArgsConstructor
 public enum HeartFixture {
+    결혼_축의금을_보냈다(
+            true, 500_000,
+            LocalDate.of(2024, 1, 24),
+            "결혼", "메모...",
+            new ArrayList<>(List.of("참석"))
+    ),
+    결혼_축의금을_받았다(
+            false, 300_000,
+            LocalDate.of(2024, 1, 24),
+            "결혼", "메모...",
+            new ArrayList<>(List.of("참석"))
+    ),
+
     생일_선물을_보냈다(
             true, 500_000,
             LocalDate.of(2024, 1, 24),
@@ -26,17 +39,43 @@ public enum HeartFixture {
             new ArrayList<>(List.of("상품권"))
     ),
 
-    결혼_축의금을_보냈다(
+    출산_선물을_보냈다(
             true, 500_000,
             LocalDate.of(2024, 1, 24),
-            "결혼", "메모...",
-            new ArrayList<>(List.of("참석"))
+            "출산", "메모...",
+            new ArrayList<>(List.of("출산"))
     ),
-    결혼_축의금을_받았다(
-            false, 300_000,
+    출산_선물을_받았다(
+            false, 1_000_000,
             LocalDate.of(2024, 1, 24),
-            "결혼", "메모...",
-            new ArrayList<>(List.of("참석"))
+            "출산", "메모...",
+            new ArrayList<>(List.of("출산"))
+    ),
+
+    돌잔치_선물을_보냈다(
+            true, 500_000,
+            LocalDate.of(2024, 1, 24),
+            "돌잔치", "메모...",
+            new ArrayList<>(List.of("돌잔치"))
+    ),
+    돌잔치_선물을_받았다(
+            false, 1_000_000,
+            LocalDate.of(2024, 1, 24),
+            "돌잔치", "메모...",
+            new ArrayList<>(List.of("돌잔치"))
+    ),
+
+    개업_선물을_보냈다(
+            true, 500_000,
+            LocalDate.of(2024, 1, 24),
+            "개업", "메모...",
+            new ArrayList<>(List.of("개업"))
+    ),
+    개업_선물을_받았다(
+            false, 1_000_000,
+            LocalDate.of(2024, 1, 24),
+            "개업", "메모...",
+            new ArrayList<>(List.of("개업"))
     ),
 
     승진_선물을_보냈다(
@@ -65,6 +104,10 @@ public enum HeartFixture {
     }
 
     public Heart toDomain(final Member member, final Relation relation, final List<String> tags) {
+        return new Heart(member, relation, give, money, day, event, memo, tags);
+    }
+
+    public Heart toDomain(final Member member, final Relation relation, final long money, final LocalDate day) {
         return new Heart(member, relation, give, money, day, event, memo, tags);
     }
 }
