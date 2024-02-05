@@ -11,6 +11,7 @@ import static ac.dnd.mur.server.global.exception.GlobalExceptionCode.VALIDATION_
 import static ac.dnd.mur.server.heart.exception.HeartExceptionCode.INVALID_TYPE;
 
 public record PersonalStatisticsCondition(
+        long memberId,
         Type type,
         int year,
         int month,

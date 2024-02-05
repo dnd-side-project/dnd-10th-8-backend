@@ -37,6 +37,7 @@ public class HeartStatisticsRepositoryImpl implements HeartStatisticsRepository 
                 .innerJoin(relation).on(relation.id.eq(heart.relationId))
                 .innerJoin(group).on(group.id.eq(relation.groupId))
                 .where(
+                        heart.memberId.eq(condition.memberId()),
                         isGive(condition.give()),
                         byYearOrMonth(condition.type(), condition.year(), condition.month())
                 )
