@@ -6,7 +6,7 @@ import ac.dnd.mur.server.group.domain.repository.GroupRepository;
 import ac.dnd.mur.server.heart.domain.model.Heart;
 import ac.dnd.mur.server.heart.domain.repository.HeartRepository;
 import ac.dnd.mur.server.heart.domain.repository.query.response.PersonalHeartHistory;
-import ac.dnd.mur.server.heart.domain.repository.query.spec.PersonalStatisticsCondition;
+import ac.dnd.mur.server.heart.domain.repository.query.spec.PersonalHeartStatisticsCondition;
 import ac.dnd.mur.server.member.domain.model.Member;
 import ac.dnd.mur.server.member.domain.repository.MemberRepository;
 import ac.dnd.mur.server.relation.domain.model.Relation;
@@ -39,8 +39,8 @@ import static ac.dnd.mur.server.common.fixture.RelationFixture.직장_1;
 import static ac.dnd.mur.server.common.fixture.RelationFixture.친구_1;
 import static ac.dnd.mur.server.common.fixture.RelationFixture.친구_2;
 import static ac.dnd.mur.server.common.fixture.RelationFixture.친구_3;
-import static ac.dnd.mur.server.heart.domain.repository.query.spec.PersonalStatisticsCondition.Type.MONTH;
-import static ac.dnd.mur.server.heart.domain.repository.query.spec.PersonalStatisticsCondition.Type.YEAR;
+import static ac.dnd.mur.server.heart.domain.repository.query.spec.PersonalHeartStatisticsCondition.Type.MONTH;
+import static ac.dnd.mur.server.heart.domain.repository.query.spec.PersonalHeartStatisticsCondition.Type.YEAR;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -132,7 +132,7 @@ class HeartStatisticsRepositoryFetchPersonalHeartHistoriesTest extends Repositor
         @Test
         @DisplayName("자신의 연도별 보낸 마음 통계를 조회한다 [2024년]")
         void year2024Give() {
-            final List<PersonalHeartHistory> result = sut.fetchPersonalHeartHistories(new PersonalStatisticsCondition(member.getId(), YEAR, 2024, 0, true));
+            final List<PersonalHeartHistory> result = sut.fetchPersonalHeartHistories(new PersonalHeartStatisticsCondition(member.getId(), YEAR, 2024, 0, true));
             assertPersonalHeartHistoriesMatch(
                     result,
                     List.of("결혼", "생일", "출산", "돌잔치", "개업", "ETC"),
@@ -166,7 +166,7 @@ class HeartStatisticsRepositoryFetchPersonalHeartHistoriesTest extends Repositor
         @Test
         @DisplayName("자신의 연도별 받은 마음 통계를 조회한다 [2024년]")
         void year2024Take() {
-            final List<PersonalHeartHistory> result = sut.fetchPersonalHeartHistories(new PersonalStatisticsCondition(member.getId(), YEAR, 2024, 0, false));
+            final List<PersonalHeartHistory> result = sut.fetchPersonalHeartHistories(new PersonalHeartStatisticsCondition(member.getId(), YEAR, 2024, 0, false));
             assertPersonalHeartHistoriesMatch(
                     result,
                     List.of("결혼", "생일", "출산", "돌잔치", "개업", "ETC"),
@@ -200,7 +200,7 @@ class HeartStatisticsRepositoryFetchPersonalHeartHistoriesTest extends Repositor
         @Test
         @DisplayName("자신의 연도별 보낸 마음 통계를 조회한다 [2025년]")
         void year2025Give() {
-            final List<PersonalHeartHistory> result = sut.fetchPersonalHeartHistories(new PersonalStatisticsCondition(member.getId(), YEAR, 2025, 0, true));
+            final List<PersonalHeartHistory> result = sut.fetchPersonalHeartHistories(new PersonalHeartStatisticsCondition(member.getId(), YEAR, 2025, 0, true));
             assertPersonalHeartHistoriesMatch(
                     result,
                     List.of("결혼", "생일", "출산", "돌잔치", "개업", "ETC"),
@@ -213,7 +213,7 @@ class HeartStatisticsRepositoryFetchPersonalHeartHistoriesTest extends Repositor
         @Test
         @DisplayName("자신의 연도별 받은 마음 통계를 조회한다 [2025년]")
         void year2025Take() {
-            final List<PersonalHeartHistory> result = sut.fetchPersonalHeartHistories(new PersonalStatisticsCondition(member.getId(), YEAR, 2025, 0, false));
+            final List<PersonalHeartHistory> result = sut.fetchPersonalHeartHistories(new PersonalHeartStatisticsCondition(member.getId(), YEAR, 2025, 0, false));
             assertPersonalHeartHistoriesMatch(
                     result,
                     List.of("결혼", "생일", "출산", "돌잔치", "개업", "ETC"),
@@ -230,7 +230,7 @@ class HeartStatisticsRepositoryFetchPersonalHeartHistoriesTest extends Repositor
         @Test
         @DisplayName("자신의 월별 보낸 마음 통계를 조회한다 [2024년-x월]")
         void year2024Give() {
-            final List<PersonalHeartHistory> result1 = sut.fetchPersonalHeartHistories(new PersonalStatisticsCondition(member.getId(), MONTH, 2024, 2, true));
+            final List<PersonalHeartHistory> result1 = sut.fetchPersonalHeartHistories(new PersonalHeartStatisticsCondition(member.getId(), MONTH, 2024, 2, true));
             assertPersonalHeartHistoriesMatch(
                     result1,
                     List.of("결혼", "생일", "출산", "돌잔치", "개업", "ETC"),
@@ -239,7 +239,7 @@ class HeartStatisticsRepositoryFetchPersonalHeartHistoriesTest extends Repositor
                     List.of(List.of(groups[0]), List.of(), List.of(), List.of(), List.of(), List.of())
             );
 
-            final List<PersonalHeartHistory> result2 = sut.fetchPersonalHeartHistories(new PersonalStatisticsCondition(member.getId(), MONTH, 2024, 3, true));
+            final List<PersonalHeartHistory> result2 = sut.fetchPersonalHeartHistories(new PersonalHeartStatisticsCondition(member.getId(), MONTH, 2024, 3, true));
             assertPersonalHeartHistoriesMatch(
                     result2,
                     List.of("결혼", "생일", "출산", "돌잔치", "개업", "ETC"),
@@ -248,7 +248,7 @@ class HeartStatisticsRepositoryFetchPersonalHeartHistoriesTest extends Repositor
                     List.of(List.of(), List.of(), List.of(groups[0]), List.of(), List.of(groups[0]), List.of())
             );
 
-            final List<PersonalHeartHistory> result3 = sut.fetchPersonalHeartHistories(new PersonalStatisticsCondition(member.getId(), MONTH, 2024, 5, true));
+            final List<PersonalHeartHistory> result3 = sut.fetchPersonalHeartHistories(new PersonalHeartStatisticsCondition(member.getId(), MONTH, 2024, 5, true));
             assertPersonalHeartHistoriesMatch(
                     result3,
                     List.of("결혼", "생일", "출산", "돌잔치", "개업", "ETC"),
@@ -257,7 +257,7 @@ class HeartStatisticsRepositoryFetchPersonalHeartHistoriesTest extends Repositor
                     List.of(List.of(groups[1]), List.of(groups[0]), List.of(groups[2]), List.of(), List.of(groups[0]), List.of(groups[1]))
             );
 
-            final List<PersonalHeartHistory> result4 = sut.fetchPersonalHeartHistories(new PersonalStatisticsCondition(member.getId(), MONTH, 2024, 6, true));
+            final List<PersonalHeartHistory> result4 = sut.fetchPersonalHeartHistories(new PersonalHeartStatisticsCondition(member.getId(), MONTH, 2024, 6, true));
             assertPersonalHeartHistoriesMatch(
                     result4,
                     List.of("결혼", "생일", "출산", "돌잔치", "개업", "ETC"),
@@ -266,7 +266,7 @@ class HeartStatisticsRepositoryFetchPersonalHeartHistoriesTest extends Repositor
                     List.of(List.of(groups[2]), List.of(), List.of(), List.of(groups[0]), List.of(), List.of())
             );
 
-            final List<PersonalHeartHistory> result5 = sut.fetchPersonalHeartHistories(new PersonalStatisticsCondition(member.getId(), MONTH, 2024, 7, true));
+            final List<PersonalHeartHistory> result5 = sut.fetchPersonalHeartHistories(new PersonalHeartStatisticsCondition(member.getId(), MONTH, 2024, 7, true));
             assertPersonalHeartHistoriesMatch(
                     result5,
                     List.of("결혼", "생일", "출산", "돌잔치", "개업", "ETC"),
@@ -275,7 +275,7 @@ class HeartStatisticsRepositoryFetchPersonalHeartHistoriesTest extends Repositor
                     List.of(List.of(), List.of(), List.of(), List.of(), List.of(groups[0]), List.of())
             );
 
-            final List<PersonalHeartHistory> result6 = sut.fetchPersonalHeartHistories(new PersonalStatisticsCondition(member.getId(), MONTH, 2024, 8, true));
+            final List<PersonalHeartHistory> result6 = sut.fetchPersonalHeartHistories(new PersonalHeartStatisticsCondition(member.getId(), MONTH, 2024, 8, true));
             assertPersonalHeartHistoriesMatch(
                     result6,
                     List.of("결혼", "생일", "출산", "돌잔치", "개업", "ETC"),
@@ -288,7 +288,7 @@ class HeartStatisticsRepositoryFetchPersonalHeartHistoriesTest extends Repositor
         @Test
         @DisplayName("자신의 월별 받은 마음 통계를 조회한다 [2024년-x월]")
         void year2024Take() {
-            final List<PersonalHeartHistory> result1 = sut.fetchPersonalHeartHistories(new PersonalStatisticsCondition(member.getId(), MONTH, 2024, 7, false));
+            final List<PersonalHeartHistory> result1 = sut.fetchPersonalHeartHistories(new PersonalHeartStatisticsCondition(member.getId(), MONTH, 2024, 7, false));
             assertPersonalHeartHistoriesMatch(
                     result1,
                     List.of("결혼", "생일", "출산", "돌잔치", "개업", "ETC"),
@@ -297,7 +297,7 @@ class HeartStatisticsRepositoryFetchPersonalHeartHistoriesTest extends Repositor
                     List.of(List.of(groups[2], groups[1], groups[0]), List.of(), List.of(), List.of(), List.of(), List.of())
             );
 
-            final List<PersonalHeartHistory> result2 = sut.fetchPersonalHeartHistories(new PersonalStatisticsCondition(member.getId(), MONTH, 2024, 9, false));
+            final List<PersonalHeartHistory> result2 = sut.fetchPersonalHeartHistories(new PersonalHeartStatisticsCondition(member.getId(), MONTH, 2024, 9, false));
             assertPersonalHeartHistoriesMatch(
                     result2,
                     List.of("결혼", "생일", "출산", "돌잔치", "개업", "ETC"),
@@ -306,7 +306,7 @@ class HeartStatisticsRepositoryFetchPersonalHeartHistoriesTest extends Repositor
                     List.of(List.of(), List.of(groups[0]), List.of(groups[2], groups[0]), List.of(), List.of(), List.of())
             );
 
-            final List<PersonalHeartHistory> result3 = sut.fetchPersonalHeartHistories(new PersonalStatisticsCondition(member.getId(), MONTH, 2024, 11, false));
+            final List<PersonalHeartHistory> result3 = sut.fetchPersonalHeartHistories(new PersonalHeartStatisticsCondition(member.getId(), MONTH, 2024, 11, false));
             assertPersonalHeartHistoriesMatch(
                     result3,
                     List.of("결혼", "생일", "출산", "돌잔치", "개업", "ETC"),
@@ -315,7 +315,7 @@ class HeartStatisticsRepositoryFetchPersonalHeartHistoriesTest extends Repositor
                     List.of(List.of(), List.of(), List.of(), List.of(), List.of(), List.of(groups[1], groups[0]))
             );
 
-            final List<PersonalHeartHistory> result4 = sut.fetchPersonalHeartHistories(new PersonalStatisticsCondition(member.getId(), MONTH, 2024, 12, false));
+            final List<PersonalHeartHistory> result4 = sut.fetchPersonalHeartHistories(new PersonalHeartStatisticsCondition(member.getId(), MONTH, 2024, 12, false));
             assertPersonalHeartHistoriesMatch(
                     result4,
                     List.of("결혼", "생일", "출산", "돌잔치", "개업", "ETC"),
@@ -328,7 +328,7 @@ class HeartStatisticsRepositoryFetchPersonalHeartHistoriesTest extends Repositor
         @Test
         @DisplayName("자신의 월별 보낸 마음 통계를 조회한다 [2025년-x월]")
         void year2025Give() {
-            final List<PersonalHeartHistory> result = sut.fetchPersonalHeartHistories(new PersonalStatisticsCondition(member.getId(), MONTH, 2025, 5, true));
+            final List<PersonalHeartHistory> result = sut.fetchPersonalHeartHistories(new PersonalHeartStatisticsCondition(member.getId(), MONTH, 2025, 5, true));
             assertPersonalHeartHistoriesMatch(
                     result,
                     List.of("결혼", "생일", "출산", "돌잔치", "개업", "ETC"),
@@ -341,7 +341,7 @@ class HeartStatisticsRepositoryFetchPersonalHeartHistoriesTest extends Repositor
         @Test
         @DisplayName("자신의 월별 받은 마음 통계를 조회한다 [2025년-x월]")
         void year2025Take() {
-            final List<PersonalHeartHistory> result1 = sut.fetchPersonalHeartHistories(new PersonalStatisticsCondition(member.getId(), MONTH, 2025, 9, false));
+            final List<PersonalHeartHistory> result1 = sut.fetchPersonalHeartHistories(new PersonalHeartStatisticsCondition(member.getId(), MONTH, 2025, 9, false));
             assertPersonalHeartHistoriesMatch(
                     result1,
                     List.of("결혼", "생일", "출산", "돌잔치", "개업", "ETC"),
@@ -350,7 +350,7 @@ class HeartStatisticsRepositoryFetchPersonalHeartHistoriesTest extends Repositor
                     List.of(List.of(), List.of(groups[0]), List.of(), List.of(), List.of(), List.of())
             );
 
-            final List<PersonalHeartHistory> result2 = sut.fetchPersonalHeartHistories(new PersonalStatisticsCondition(member.getId(), MONTH, 2025, 11, false));
+            final List<PersonalHeartHistory> result2 = sut.fetchPersonalHeartHistories(new PersonalHeartStatisticsCondition(member.getId(), MONTH, 2025, 11, false));
             assertPersonalHeartHistoriesMatch(
                     result2,
                     List.of("결혼", "생일", "출산", "돌잔치", "개업", "ETC"),

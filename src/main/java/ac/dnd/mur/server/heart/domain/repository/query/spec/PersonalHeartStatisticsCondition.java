@@ -10,14 +10,14 @@ import java.util.Arrays;
 import static ac.dnd.mur.server.global.exception.GlobalExceptionCode.VALIDATION_ERROR;
 import static ac.dnd.mur.server.heart.exception.HeartExceptionCode.INVALID_TYPE;
 
-public record PersonalStatisticsCondition(
+public record PersonalHeartStatisticsCondition(
         long memberId,
         Type type,
         int year,
         int month,
         boolean give
 ) {
-    public PersonalStatisticsCondition {
+    public PersonalHeartStatisticsCondition {
         if (type == Type.YEAR && (year < 1900 || year > 2100)) {
             throw new GlobalException(VALIDATION_ERROR);
         }

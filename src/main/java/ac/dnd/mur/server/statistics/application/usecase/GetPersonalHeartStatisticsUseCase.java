@@ -4,7 +4,7 @@ import ac.dnd.mur.server.global.annotation.MurReadOnlyTransactional;
 import ac.dnd.mur.server.global.annotation.UseCase;
 import ac.dnd.mur.server.heart.domain.repository.query.HeartStatisticsRepository;
 import ac.dnd.mur.server.heart.domain.repository.query.response.PersonalHeartHistory;
-import ac.dnd.mur.server.heart.domain.repository.query.spec.PersonalStatisticsCondition;
+import ac.dnd.mur.server.heart.domain.repository.query.spec.PersonalHeartStatisticsCondition;
 import ac.dnd.mur.server.statistics.application.usecase.query.GetPersonalHeartStatistics;
 import ac.dnd.mur.server.statistics.application.usecase.query.response.PersonalHeartStatisticsResponse;
 import ac.dnd.mur.server.statistics.application.usecase.query.response.PersonalHeartSummary;
@@ -29,10 +29,10 @@ public class GetPersonalHeartStatisticsUseCase {
         return new PersonalHeartStatisticsResponse(groupingByEvent(giveHistories), groupingByEvent(takeHistories));
     }
 
-    private PersonalStatisticsCondition createGiveOrTakeCondition(final GetPersonalHeartStatistics query, final boolean give) {
-        return new PersonalStatisticsCondition(
+    private PersonalHeartStatisticsCondition createGiveOrTakeCondition(final GetPersonalHeartStatistics query, final boolean give) {
+        return new PersonalHeartStatisticsCondition(
                 query.memberId(),
-                PersonalStatisticsCondition.Type.from(query.type()),
+                PersonalHeartStatisticsCondition.Type.from(query.type()),
                 query.year(),
                 query.month(),
                 give
