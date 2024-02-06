@@ -22,9 +22,13 @@ import java.util.List;
 
 import static ac.dnd.mur.server.common.fixture.HeartFixture.개업_선물을_보냈다;
 import static ac.dnd.mur.server.common.fixture.HeartFixture.결혼_축의금을_보냈다;
+import static ac.dnd.mur.server.common.fixture.HeartFixture.돌잔치_선물을_받았다;
 import static ac.dnd.mur.server.common.fixture.HeartFixture.돌잔치_선물을_보냈다;
+import static ac.dnd.mur.server.common.fixture.HeartFixture.생일_선물을_받았다;
 import static ac.dnd.mur.server.common.fixture.HeartFixture.생일_선물을_보냈다;
+import static ac.dnd.mur.server.common.fixture.HeartFixture.승진_선물을_받았다;
 import static ac.dnd.mur.server.common.fixture.HeartFixture.승진_선물을_보냈다;
+import static ac.dnd.mur.server.common.fixture.HeartFixture.출산_선물을_받았다;
 import static ac.dnd.mur.server.common.fixture.HeartFixture.출산_선물을_보냈다;
 import static ac.dnd.mur.server.common.fixture.MemberFixture.MEMBER_1;
 import static ac.dnd.mur.server.common.fixture.MemberFixture.MEMBER_2;
@@ -93,10 +97,14 @@ public class HeartStatisticsRepositoryFetchTrendHeartAveragePerEventTest extends
                 개업_선물을_보냈다.toDomain(members[0], relations[0], 180_000),
                 개업_선물을_보냈다.toDomain(members[0], relations[1], 470_000),
                 승진_선물을_보냈다.toDomain(members[0], relations[0], 1_000_000),
+                승진_선물을_받았다.toDomain(members[0], relations[0], 2_000_000),
+                승진_선물을_받았다.toDomain(members[0], relations[1], 3_000_000),
 
                 결혼_축의금을_보냈다.toDomain(members[1], relations[2], 580_000),
                 생일_선물을_보냈다.toDomain(members[1], relations[2], 80_000),
                 생일_선물을_보냈다.toDomain(members[1], relations[3], 180_000),
+                생일_선물을_받았다.toDomain(members[1], relations[2], 380_000),
+                생일_선물을_받았다.toDomain(members[1], relations[3], 580_000),
                 출산_선물을_보냈다.toDomain(members[1], relations[2], 10_000_000),
                 출산_선물을_보냈다.toDomain(members[1], relations[2], 20_000_000),
                 출산_선물을_보냈다.toDomain(members[1], relations[2], 37_000_000),
@@ -112,10 +120,13 @@ public class HeartStatisticsRepositoryFetchTrendHeartAveragePerEventTest extends
                 생일_선물을_보냈다.toDomain(members[2], relations[5], 370_000),
                 출산_선물을_보냈다.toDomain(members[2], relations[4], 290_000),
                 출산_선물을_보냈다.toDomain(members[2], relations[5], 530_000),
+                출산_선물을_받았다.toDomain(members[2], relations[4], 230_000),
+                출산_선물을_받았다.toDomain(members[2], relations[5], 330_000),
                 돌잔치_선물을_보냈다.toDomain(members[2], relations[4], 120_000),
                 개업_선물을_보냈다.toDomain(members[2], relations[4], 1_700_000),
                 개업_선물을_보냈다.toDomain(members[2], relations[5], 5_550_000),
                 승진_선물을_보냈다.toDomain(members[2], relations[4], 100_000),
+                승진_선물을_받았다.toDomain(members[2], relations[4], 150_000),
 
                 // 30대 남성 -> members[3]
                 결혼_축의금을_보냈다.toDomain(members[3], relations[6], 1_500_000),
@@ -128,6 +139,8 @@ public class HeartStatisticsRepositoryFetchTrendHeartAveragePerEventTest extends
                 돌잔치_선물을_보냈다.toDomain(members[3], relations[6], 150_000),
                 돌잔치_선물을_보냈다.toDomain(members[3], relations[6], 390_000),
                 돌잔치_선물을_보냈다.toDomain(members[3], relations[7], 250_000),
+                돌잔치_선물을_받았다.toDomain(members[3], relations[6], 350_000),
+                돌잔치_선물을_받았다.toDomain(members[3], relations[6], 550_000),
                 개업_선물을_보냈다.toDomain(members[3], relations[6], 380_000),
                 개업_선물을_보냈다.toDomain(members[3], relations[6], 978_000),
                 개업_선물을_보냈다.toDomain(members[3], relations[7], 1_380_000),

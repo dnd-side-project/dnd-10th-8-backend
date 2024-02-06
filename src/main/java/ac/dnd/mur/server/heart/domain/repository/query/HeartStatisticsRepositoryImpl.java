@@ -77,6 +77,7 @@ public class HeartStatisticsRepositoryImpl implements HeartStatisticsRepository 
                 .from(heart)
                 .innerJoin(member).on(member.id.eq(heart.memberId))
                 .where(
+                        heart.give.isTrue(),
                         member.gender.eq(condition.gender()),
                         calculateBirthFromTrendRange(condition.range())
                 )
