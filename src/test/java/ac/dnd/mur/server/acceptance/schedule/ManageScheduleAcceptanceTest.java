@@ -31,13 +31,8 @@ public class ManageScheduleAcceptanceTest extends AcceptanceTest {
         @DisplayName("일정을 생성한다")
         void success() {
             final AuthMember member = MEMBER_1.회원가입과_로그인을_진행한다();
-            final long relationId = 관계를_생성하고_ID를_추출한다(
-                    관리하고_있는_특정_그룹의_ID를_조회한다("친구", member.accessToken()),
-                    친구_1.getName(),
-                    친구_1.getImageUrl(),
-                    친구_1.getMemo(),
-                    member.accessToken()
-            );
+            final long groupId = 관리하고_있는_특정_그룹의_ID를_조회한다("친구", member.accessToken());
+            final long relationId = 관계를_생성하고_ID를_추출한다(groupId, 친구_1.getName(), 친구_1.getImageUrl(), 친구_1.getMemo(), member.accessToken());
 
             일정을_생성한다(relationId, ScheduleFixture.결혼식, member.accessToken())
                     .statusCode(OK.value())
@@ -52,13 +47,8 @@ public class ManageScheduleAcceptanceTest extends AcceptanceTest {
         @DisplayName("일정을 수정한다")
         void success() {
             final AuthMember member = MEMBER_1.회원가입과_로그인을_진행한다();
-            final long relationId = 관계를_생성하고_ID를_추출한다(
-                    관리하고_있는_특정_그룹의_ID를_조회한다("친구", member.accessToken()),
-                    친구_1.getName(),
-                    친구_1.getImageUrl(),
-                    친구_1.getMemo(),
-                    member.accessToken()
-            );
+            final long groupId = 관리하고_있는_특정_그룹의_ID를_조회한다("친구", member.accessToken());
+            final long relationId = 관계를_생성하고_ID를_추출한다(groupId, 친구_1.getName(), 친구_1.getImageUrl(), 친구_1.getMemo(), member.accessToken());
 
             final long scheduleId = 일정을_생성하고_ID를_추출한다(relationId, ScheduleFixture.결혼식, member.accessToken());
             일정을_수정한다(scheduleId, ScheduleFixture.친구_XXX_생일, member.accessToken())
@@ -73,13 +63,8 @@ public class ManageScheduleAcceptanceTest extends AcceptanceTest {
         @DisplayName("일정을 삭제한다")
         void success() {
             final AuthMember member = MEMBER_1.회원가입과_로그인을_진행한다();
-            final long relationId = 관계를_생성하고_ID를_추출한다(
-                    관리하고_있는_특정_그룹의_ID를_조회한다("친구", member.accessToken()),
-                    친구_1.getName(),
-                    친구_1.getImageUrl(),
-                    친구_1.getMemo(),
-                    member.accessToken()
-            );
+            final long groupId = 관리하고_있는_특정_그룹의_ID를_조회한다("친구", member.accessToken());
+            final long relationId = 관계를_생성하고_ID를_추출한다(groupId, 친구_1.getName(), 친구_1.getImageUrl(), 친구_1.getMemo(), member.accessToken());
 
             final long scheduleId = 일정을_생성하고_ID를_추출한다(relationId, ScheduleFixture.결혼식, member.accessToken());
             일정을_삭제한다(scheduleId, member.accessToken())

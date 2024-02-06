@@ -30,14 +30,10 @@ public class ManageRelationAcceptanceTest extends AcceptanceTest {
         @DisplayName("관계를 생성한다")
         void success() {
             final AuthMember member = MEMBER_1.회원가입과_로그인을_진행한다();
+            final long groupId = 관리하고_있는_특정_그룹의_ID를_조회한다("친구", member.accessToken());
 
-            관계를_생성한다(
-                    관리하고_있는_특정_그룹의_ID를_조회한다("친구", member.accessToken()),
-                    친구_1.getName(),
-                    친구_1.getImageUrl(),
-                    친구_1.getMemo(),
-                    member.accessToken()
-            ).statusCode(OK.value())
+            관계를_생성한다(groupId, 친구_1.getName(), 친구_1.getImageUrl(), 친구_1.getMemo(), member.accessToken())
+                    .statusCode(OK.value())
                     .body("result", notNullValue(Long.class));
         }
     }
@@ -49,23 +45,12 @@ public class ManageRelationAcceptanceTest extends AcceptanceTest {
         @DisplayName("관계를 수정한다")
         void success() {
             final AuthMember member = MEMBER_1.회원가입과_로그인을_진행한다();
-            final long relationId = 관계를_생성하고_ID를_추출한다(
-                    관리하고_있는_특정_그룹의_ID를_조회한다("친구", member.accessToken()),
-                    친구_1.getName(),
-                    친구_1.getImageUrl(),
-                    친구_1.getMemo(),
-                    member.accessToken()
-            );
+            final long groupId = 관리하고_있는_특정_그룹의_ID를_조회한다("친구", member.accessToken());
+            final long relationId = 관계를_생성하고_ID를_추출한다(groupId, 친구_1.getName(), 친구_1.getImageUrl(), 친구_1.getMemo(), member.accessToken());
 
-            final long groupId = 관리하고_있는_특정_그룹의_ID를_조회한다("직장", member.accessToken());
-            관계를_수정한다(
-                    relationId,
-                    groupId,
-                    직장_1.getName(),
-                    직장_1.getImageUrl(),
-                    직장_1.getMemo(),
-                    member.accessToken()
-            ).statusCode(NO_CONTENT.value());
+            final long updateGroupId = 관리하고_있는_특정_그룹의_ID를_조회한다("직장", member.accessToken());
+            관계를_수정한다(relationId, updateGroupId, 직장_1.getName(), 직장_1.getImageUrl(), 직장_1.getMemo(), member.accessToken())
+                    .statusCode(NO_CONTENT.value());
         }
     }
 
@@ -76,13 +61,8 @@ public class ManageRelationAcceptanceTest extends AcceptanceTest {
         @DisplayName("관계를 삭제한다")
         void success() {
             final AuthMember member = MEMBER_1.회원가입과_로그인을_진행한다();
-            final long relationId = 관계를_생성하고_ID를_추출한다(
-                    관리하고_있는_특정_그룹의_ID를_조회한다("친구", member.accessToken()),
-                    친구_1.getName(),
-                    친구_1.getImageUrl(),
-                    친구_1.getMemo(),
-                    member.accessToken()
-            );
+            final long groupId = 관리하고_있는_특정_그룹의_ID를_조회한다("친구", member.accessToken());
+            final long relationId = 관계를_생성하고_ID를_추출한다(groupId, 친구_1.getName(), 친구_1.getImageUrl(), 친구_1.getMemo(), member.accessToken());
 
             관계를_삭제한다(relationId, member.accessToken())
                     .statusCode(NO_CONTENT.value());

@@ -41,27 +41,10 @@ public class GetScheduleAcceptanceTest extends AcceptanceTest {
             final long relationId1 = 관계를_생성하고_ID를_추출한다(groupId, "관계-친구XXX-1", null, null, member.accessToken());
             final long relationId2 = 관계를_생성하고_ID를_추출한다(groupId, "관계-친구XXX-2", null, null, member.accessToken());
             final long relationId3 = 관계를_생성하고_ID를_추출한다(groupId, "관계-친구XXX-3", null, null, member.accessToken());
-            final long scheduleId1 = 일정을_생성하고_ID를_추출한다(
-                    relationId1,
-                    LocalDate.of(2024, 1, 1),
-                    "일정1",
-                    특별한_일정_XXX,
-                    member.accessToken()
-            );
-            final long scheduleId2 = 일정을_생성하고_ID를_추출한다(
-                    relationId2,
-                    LocalDate.of(2024, 1, 15),
-                    "일정2",
-                    특별한_일정_XXX,
-                    member.accessToken()
-            );
-            final long scheduleId3 = 일정을_생성하고_ID를_추출한다(
-                    relationId3,
-                    LocalDate.of(2024, 1, 22),
-                    "일정3",
-                    특별한_일정_XXX,
-                    member.accessToken()
-            );
+
+            final long scheduleId1 = 일정을_생성하고_ID를_추출한다(relationId1, LocalDate.of(2024, 1, 1), "일정1", 특별한_일정_XXX, member.accessToken());
+            final long scheduleId2 = 일정을_생성하고_ID를_추출한다(relationId2, LocalDate.of(2024, 1, 15), "일정2", 특별한_일정_XXX, member.accessToken());
+            final long scheduleId3 = 일정을_생성하고_ID를_추출한다(relationId3, LocalDate.of(2024, 1, 22), "일정3", 특별한_일정_XXX, member.accessToken());
 
             final ValidatableResponse response1 = 지출이_기록되지_않은_일정을_조회한다(member.accessToken()).statusCode(OK.value());
             assertUnrecordedSchedulesMatch(
@@ -111,27 +94,10 @@ public class GetScheduleAcceptanceTest extends AcceptanceTest {
             final long relationId1 = 관계를_생성하고_ID를_추출한다(groupId, "관계-친구XXX-1", null, null, member.accessToken());
             final long relationId2 = 관계를_생성하고_ID를_추출한다(groupId, "관계-친구XXX-2", null, null, member.accessToken());
             final long relationId3 = 관계를_생성하고_ID를_추출한다(groupId, "관계-친구XXX-3", null, null, member.accessToken());
-            final long scheduleId1 = 일정을_생성하고_ID를_추출한다(
-                    relationId1,
-                    LocalDate.of(2024, 1, 1),
-                    "일정1",
-                    특별한_일정_XXX,
-                    member.accessToken()
-            );
-            final long scheduleId2 = 일정을_생성하고_ID를_추출한다(
-                    relationId2,
-                    LocalDate.of(2024, 1, 15),
-                    "일정2",
-                    특별한_일정_XXX,
-                    member.accessToken()
-            );
-            final long scheduleId3 = 일정을_생성하고_ID를_추출한다(
-                    relationId3,
-                    LocalDate.of(2024, 2, 1),
-                    "일정3",
-                    특별한_일정_XXX,
-                    member.accessToken()
-            );
+
+            final long scheduleId1 = 일정을_생성하고_ID를_추출한다(relationId1, LocalDate.of(2024, 1, 1), "일정1", 특별한_일정_XXX, member.accessToken());
+            final long scheduleId2 = 일정을_생성하고_ID를_추출한다(relationId2, LocalDate.of(2024, 1, 15), "일정2", 특별한_일정_XXX, member.accessToken());
+            final long scheduleId3 = 일정을_생성하고_ID를_추출한다(relationId3, LocalDate.of(2024, 2, 1), "일정3", 특별한_일정_XXX, member.accessToken());
 
             final ValidatableResponse response1 = 캘린더_Year_Month에_해당하는_일정을_조회한다(2024, 1, member.accessToken());
             assertUnrecordedSchedulesMatch(
