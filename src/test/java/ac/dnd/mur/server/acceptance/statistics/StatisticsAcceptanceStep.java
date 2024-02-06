@@ -19,4 +19,17 @@ public class StatisticsAcceptanceStep {
 
         return getRequestWithAccessToken(uri, accessToken);
     }
+
+    public static ValidatableResponse 사용자_트렌드별_평균_행사비_통계를_조회한다(
+            final String gender,
+            final int range,
+            final String accessToken
+    ) {
+        final String uri = UriComponentsBuilder
+                .fromPath("/api/v1/statistics/users?gender={gender}&range={range}")
+                .build(gender, range)
+                .getPath();
+
+        return getRequestWithAccessToken(uri, accessToken);
+    }
 }

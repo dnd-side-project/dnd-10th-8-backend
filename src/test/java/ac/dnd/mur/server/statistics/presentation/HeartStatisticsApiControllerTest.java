@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -103,12 +104,12 @@ class HeartStatisticsApiControllerTest extends ControllerTest {
             // given
             applyToken(true, member);
             given(getTrendHeartAverageStatisticsUseCase.invoke(any())).willReturn(new TrendHeartAverageStatisticsResponse(Map.of(
-                    "결혼", 100_000.3333D,
-                    "생일", 200_000.3333D,
-                    "출산", 300_000.3333D,
-                    "돌잔치", 400_000.3333D,
-                    "개업", 500_000.3333D,
-                    "기타", 600_000.3333D
+                    "결혼", BigDecimal.valueOf(100_000.3333D),
+                    "생일", BigDecimal.valueOf(200_000.3333D),
+                    "출산", BigDecimal.valueOf(300_000.3333D),
+                    "돌잔치", BigDecimal.valueOf(400_000.3333D),
+                    "개업", BigDecimal.valueOf(500_000.3333D),
+                    "기타", BigDecimal.valueOf(600_000.3333D)
             )));
 
             // when - then

@@ -11,6 +11,7 @@ import ac.dnd.mur.server.statistics.application.usecase.query.response.TrendHear
 import ac.dnd.mur.server.statistics.domain.model.StatisticsCategory;
 import lombok.RequiredArgsConstructor;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -30,11 +31,14 @@ public class GetTrendHeartAverageStatisticsUseCase {
         return new TrendHeartAverageStatisticsResponse(groupingByEvent(result));
     }
 
-    private Map<String, Double> groupingByEvent(final List<TrendHeartStatistics> histories) {
-        final Map<String, Double> result = histories.stream()
+    private Map<String, BigDecimal> groupingByEvent(final List<TrendHeartStatistics> histories) {
+        final Map<String, BigDecimal> result = histories.stream()
                 .collect(Collectors.groupingBy(
                         it -> isSpecialEvent(it.event()) ? it.event() : "기타",
-                        Collectors.averagingDouble(TrendHeartStatistics::average)
+                        Collectors.collectingAndThen(
+                                Collectors.averagingDouble(TrendHeartStatistics::average),
+                                BigDecimal::valueOf
+                        )
                 ));
         applyAllEvents(result);
         return result;
@@ -44,10 +48,10 @@ public class GetTrendHeartAverageStatisticsUseCase {
         return StatisticsCategory.isSpecialEvent(event);
     }
 
-    private void applyAllEvents(final Map<String, Double> result) {
+    private void applyAllEvents(final Map<String, BigDecimal> result) {
         final List<String> totalEvents = StatisticsCategory.getTotalEvents();
         for (final String event : totalEvents) {
-            result.put(event, result.getOrDefault(event, 0.0));
+            result.put(event, result.getOrDefault(event, BigDecimal.ZERO));
         }
     }
 }

@@ -96,4 +96,17 @@ public enum MemberFixture {
                 refreshToken
         );
     }
+
+    public AuthMember 회원가입과_로그인을_진행한다(final Gender gender, final LocalDate birth) {
+        final ExtractableResponse<Response> result = MemberAcceptanceStep.회원가입을_진행한다(this, gender, birth).extract();
+        final long memberId = result.jsonPath().getLong("id");
+        final String accessToken = result.jsonPath().getString("accessToken");
+        final String refreshToken = result.jsonPath().getString("refreshToken");
+
+        return new AuthMember(
+                memberId,
+                accessToken,
+                refreshToken
+        );
+    }
 }
