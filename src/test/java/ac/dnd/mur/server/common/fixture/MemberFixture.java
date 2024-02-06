@@ -80,6 +80,10 @@ public enum MemberFixture {
         return Member.create(platform, profileImageUrl, name, nickname, gender, birth);
     }
 
+    public Member toDomain(final Gender gender, final LocalDate birth) {
+        return Member.create(platform, profileImageUrl, name, nickname, gender, birth);
+    }
+
     public AuthMember 회원가입과_로그인을_진행한다() {
         final ExtractableResponse<Response> result = MemberAcceptanceStep.회원가입을_진행한다(this).extract();
         final long memberId = result.jsonPath().getLong("id");
