@@ -1,4 +1,4 @@
-= 마음 관련 API (AccessToken)
+= [마음 관련 기능]
 :doctype: book
 :icons: font
 :source-highlighter: highlightjs

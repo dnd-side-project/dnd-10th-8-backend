@@ -37,13 +37,7 @@ public class GetRelationDetailsAcceptanceTest extends AcceptanceTest {
         void success() {
             final AuthMember member = MEMBER_1.회원가입과_로그인을_진행한다();
             final long groupId = 관리하고_있는_특정_그룹의_ID를_조회한다("친구", member.accessToken());
-            final long relationId = 관계를_생성하고_ID를_추출한다(
-                    groupId,
-                    친구_1.getName(),
-                    친구_1.getImageUrl(),
-                    친구_1.getMemo(),
-                    member.accessToken()
-            );
+            final long relationId = 관계를_생성하고_ID를_추출한다(groupId, 친구_1.getName(), 친구_1.getImageUrl(), 친구_1.getMemo(), member.accessToken());
             마음을_생성한다(
                     relationId,
                     결혼_축의금을_받았다.isGive(),

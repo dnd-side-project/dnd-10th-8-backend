@@ -107,6 +107,10 @@ public enum HeartFixture {
         return new Heart(member, relation, give, money, day, event, memo, tags);
     }
 
+    public Heart toDomain(final Member member, final Relation relation, final long money) {
+        return new Heart(member, relation, give, money, day, event, memo, tags);
+    }
+
     public Heart toDomain(final Member member, final Relation relation, final long money, final LocalDate day) {
         return new Heart(member, relation, give, money, day, event, memo, tags);
     }

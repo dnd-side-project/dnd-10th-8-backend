@@ -4,10 +4,12 @@ import ac.dnd.mur.server.global.annotation.MurReadOnlyTransactional;
 import ac.dnd.mur.server.global.annotation.UseCase;
 import ac.dnd.mur.server.heart.domain.repository.query.HeartStatisticsRepository;
 import ac.dnd.mur.server.heart.domain.repository.query.response.PersonalHeartHistory;
-import ac.dnd.mur.server.heart.domain.repository.query.spec.PersonalStatisticsCondition;
+import ac.dnd.mur.server.heart.domain.repository.query.spec.PersonalHeartStatisticsCondition;
+import ac.dnd.mur.server.heart.domain.repository.query.spec.StatisticsStandard;
 import ac.dnd.mur.server.statistics.application.usecase.query.GetPersonalHeartStatistics;
 import ac.dnd.mur.server.statistics.application.usecase.query.response.PersonalHeartStatisticsResponse;
 import ac.dnd.mur.server.statistics.application.usecase.query.response.PersonalHeartSummary;
+import ac.dnd.mur.server.statistics.domain.model.StatisticsCategory;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -17,9 +19,6 @@ import java.util.stream.Collectors;
 @UseCase
 @RequiredArgsConstructor
 public class GetPersonalHeartStatisticsUseCase {
-    private static final List<String> totalEvents = List.of("결혼", "생일", "출산", "돌잔치", "개업", "기타");
-    private static final List<String> specialEvents = List.of("결혼", "생일", "출산", "돌잔치", "개업");
-
     private final HeartStatisticsRepository heartStatisticsRepository;
 
     @MurReadOnlyTransactional
@@ -29,10 +28,10 @@ public class GetPersonalHeartStatisticsUseCase {
         return new PersonalHeartStatisticsResponse(groupingByEvent(giveHistories), groupingByEvent(takeHistories));
     }
 
-    private PersonalStatisticsCondition createGiveOrTakeCondition(final GetPersonalHeartStatistics query, final boolean give) {
-        return new PersonalStatisticsCondition(
+    private PersonalHeartStatisticsCondition createGiveOrTakeCondition(final GetPersonalHeartStatistics query, final boolean give) {
+        return new PersonalHeartStatisticsCondition(
                 query.memberId(),
-                PersonalStatisticsCondition.Type.from(query.type()),
+                StatisticsStandard.from(query.standard()),
                 query.year(),
                 query.month(),
                 give
@@ -62,10 +61,11 @@ public class GetPersonalHeartStatisticsUseCase {
     }
 
     private boolean isSpecialEvent(final String event) {
-        return specialEvents.contains(event);
+        return StatisticsCategory.isSpecialEvent(event);
     }
 
     private void applyAllEvents(final List<Map<String, List<PersonalHeartSummary>>> result) {
+        final List<String> totalEvents = StatisticsCategory.getTotalEvents();
         for (final String event : totalEvents) {
             final boolean eventExists = result.stream().anyMatch(map -> map.containsKey(event));
             if (!eventExists) {

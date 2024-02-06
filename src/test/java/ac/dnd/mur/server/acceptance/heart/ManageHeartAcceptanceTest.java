@@ -38,13 +38,8 @@ public class ManageHeartAcceptanceTest extends AcceptanceTest {
         @DisplayName("마음을 생성한다")
         void success() {
             final AuthMember member = MEMBER_1.회원가입과_로그인을_진행한다();
-            final long relationId = 관계를_생성하고_ID를_추출한다(
-                    관리하고_있는_특정_그룹의_ID를_조회한다("친구", member.accessToken()),
-                    친구_1.getName(),
-                    친구_1.getImageUrl(),
-                    친구_1.getMemo(),
-                    member.accessToken()
-            );
+            final long groupId = 관리하고_있는_특정_그룹의_ID를_조회한다("친구", member.accessToken());
+            final long relationId = 관계를_생성하고_ID를_추출한다(groupId, 친구_1.getName(), 친구_1.getImageUrl(), 친구_1.getMemo(), member.accessToken());
 
             마음을_생성한다(
                     relationId,
@@ -69,13 +64,7 @@ public class ManageHeartAcceptanceTest extends AcceptanceTest {
             final AuthMember member = MEMBER_1.회원가입과_로그인을_진행한다();
             final long groupId = 관리하고_있는_특정_그룹의_ID를_조회한다("친구", member.accessToken());
             final long relationId = 관계를_생성하고_ID를_추출한다(groupId, "관계-친구XXX-1", null, null, member.accessToken());
-            final long scheduleId = 일정을_생성하고_ID를_추출한다(
-                    relationId,
-                    LocalDate.of(2024, 1, 1),
-                    "일정1",
-                    특별한_일정_XXX,
-                    member.accessToken()
-            );
+            final long scheduleId = 일정을_생성하고_ID를_추출한다(relationId, LocalDate.of(2024, 1, 1), "일정1", 특별한_일정_XXX, member.accessToken());
 
             지출이_기록되지_않는_일정에_대한_마음을_생성한다(scheduleId, 100_000_000, List.of("일정", "지금 기록"), member.accessToken())
                     .statusCode(OK.value())
@@ -90,13 +79,8 @@ public class ManageHeartAcceptanceTest extends AcceptanceTest {
         @DisplayName("마음을 수정한다")
         void success() {
             final AuthMember member = MEMBER_1.회원가입과_로그인을_진행한다();
-            final long relationId = 관계를_생성하고_ID를_추출한다(
-                    관리하고_있는_특정_그룹의_ID를_조회한다("친구", member.accessToken()),
-                    친구_1.getName(),
-                    친구_1.getImageUrl(),
-                    친구_1.getMemo(),
-                    member.accessToken()
-            );
+            final long groupId = 관리하고_있는_특정_그룹의_ID를_조회한다("친구", member.accessToken());
+            final long relationId = 관계를_생성하고_ID를_추출한다(groupId, 친구_1.getName(), 친구_1.getImageUrl(), 친구_1.getMemo(), member.accessToken());
             final long heartId = 마음을_생성하고_ID를_추출한다(
                     relationId,
                     결혼_축의금을_받았다.isGive(),
@@ -127,13 +111,8 @@ public class ManageHeartAcceptanceTest extends AcceptanceTest {
         @DisplayName("마음을 삭제한다")
         void success() {
             final AuthMember member = MEMBER_1.회원가입과_로그인을_진행한다();
-            final long relationId = 관계를_생성하고_ID를_추출한다(
-                    관리하고_있는_특정_그룹의_ID를_조회한다("친구", member.accessToken()),
-                    친구_1.getName(),
-                    친구_1.getImageUrl(),
-                    친구_1.getMemo(),
-                    member.accessToken()
-            );
+            final long groupId = 관리하고_있는_특정_그룹의_ID를_조회한다("친구", member.accessToken());
+            final long relationId = 관계를_생성하고_ID를_추출한다(groupId, 친구_1.getName(), 친구_1.getImageUrl(), 친구_1.getMemo(), member.accessToken());
             final long heartId = 마음을_생성하고_ID를_추출한다(
                     relationId,
                     결혼_축의금을_받았다.isGive(),

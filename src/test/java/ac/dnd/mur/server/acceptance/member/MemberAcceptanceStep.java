@@ -1,10 +1,13 @@
 package ac.dnd.mur.server.acceptance.member;
 
 import ac.dnd.mur.server.common.fixture.MemberFixture;
+import ac.dnd.mur.server.member.domain.model.Gender;
 import ac.dnd.mur.server.member.presentation.dto.request.RegisterMemberRequest;
 import ac.dnd.mur.server.member.presentation.dto.request.UpdateMemberRequest;
 import io.restassured.response.ValidatableResponse;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import java.time.LocalDate;
 
 import static ac.dnd.mur.server.acceptance.CommonRequestFixture.deleteRequestWithAccessToken;
 import static ac.dnd.mur.server.acceptance.CommonRequestFixture.getRequest;
@@ -37,6 +40,26 @@ public class MemberAcceptanceStep {
                 fixture.getNickname().getValue(),
                 fixture.getGender().getValue(),
                 fixture.getBirth()
+        );
+
+        return postRequest(uri, request);
+    }
+
+    public static ValidatableResponse 회원가입을_진행한다(final MemberFixture fixture, final Gender gender, final LocalDate birth) {
+        final String uri = UriComponentsBuilder
+                .fromPath("/api/v1/members")
+                .build()
+                .toUri()
+                .getPath();
+
+        final RegisterMemberRequest request = new RegisterMemberRequest(
+                fixture.getPlatform().getSocialId(),
+                fixture.getPlatform().getEmail().getValue(),
+                fixture.getProfileImageUrl(),
+                fixture.getName(),
+                fixture.getNickname().getValue(),
+                gender.getValue(),
+                birth
         );
 
         return postRequest(uri, request);
