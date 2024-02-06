@@ -78,10 +78,17 @@ public class HeartStatisticsRepositoryImpl implements HeartStatisticsRepository 
                 .innerJoin(member).on(member.id.eq(heart.memberId))
                 .where(
                         member.gender.eq(condition.gender()),
-                        member.birth.between(getTrendRangeStart(condition.range()), getTrendRangeEnd(condition.range()))
+                        calculateBirthFromTrendRange(condition.range())
                 )
                 .groupBy(heart.event)
                 .fetch();
+    }
+
+    private BooleanExpression calculateBirthFromTrendRange(final TrendRange range) {
+        if (range != TrendRange.RANGE_50_OVER) {
+            return member.birth.between(getTrendRangeStart(range), getTrendRangeEnd(range));
+        }
+        return member.birth.loe(getTrendRangeEnd(range));
     }
 
     private LocalDate getTrendRangeStart(final TrendRange range) {

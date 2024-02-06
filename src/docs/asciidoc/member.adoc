@@ -1,11 +1,11 @@
-= 사용자 관련 API
+= [사용자 관련 기능]
 :doctype: book
 :icons: font
 :source-highlighter: highlightjs
 :toc: left
 :toclevels: 3
 
-== 토큰 재발급 (RefreshToken)
+== 토큰 재발급
 
 *HTTP Request*
 
@@ -30,7 +30,7 @@ include::{snippets}/AuthApi/Login/Failure/http-response.adoc[]
 include::{snippets}/AuthApi/Login/Success/http-response.adoc[]
 include::{snippets}/AuthApi/Login/Success/response-fields.adoc[]
 
-== 로그아웃 (AccessToken)
+== 로그아웃
 
 *HTTP Request*
 
@@ -40,7 +40,7 @@ include::{snippets}/AuthApi/Logout/http-request.adoc[]
 
 include::{snippets}/AuthApi/Logout/http-response.adoc[]
 
-== 탈퇴 (AccessToken)
+== 탈퇴
 
 *HTTP Request*
 
@@ -76,7 +76,7 @@ include::{snippets}/MemberApi/Register/Process/request-fields.adoc[]
 include::{snippets}/MemberApi/Register/Process/http-response.adoc[]
 include::{snippets}/MemberApi/Register/Process/response-fields.adoc[]
 
-== 사용자별 그룹 관리 (AccessToken)
+== 사용자별 그룹 관리
 
 === 추가
 
@@ -127,7 +127,7 @@ include::{snippets}/GroupApi/GetMembers/response-fields.adoc[]
 
 == 마이페이지
 
-=== 내 정보 수정 (AccessToken)
+=== 내 정보 수정
 
 *HTTP Request*
 
@@ -138,7 +138,7 @@ include::{snippets}/MemberApi/Update/request-fields.adoc[]
 
 include::{snippets}/MemberApi/Update/http-response.adoc[]
 
-=== 내 정보 조회 (AccessToken)
+=== 내 정보 조회
 
 *HTTP Request*
 

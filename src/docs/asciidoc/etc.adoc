@@ -1,4 +1,4 @@
-= 그 외 API
+= [그 외 기능]
 :doctype: book
 :icons: font
 :source-highlighter: highlightjs

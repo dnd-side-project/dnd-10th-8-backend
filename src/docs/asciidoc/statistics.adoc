@@ -1,4 +1,4 @@
-= 통계 관련 API
+= [통계 관련 기능]
 :doctype: book
 :icons: font
 :source-highlighter: highlightjs
@@ -16,3 +16,15 @@ include::{snippets}/StatisticsApi/PersonalHeartHistories/query-parameters.adoc[]
 
 include::{snippets}/StatisticsApi/PersonalHeartHistories/http-response.adoc[]
 include::{snippets}/StatisticsApi/PersonalHeartHistories/response-fields.adoc[]
+
+== 사용자 트렌드별 평균 행사비 통계
+
+*HTTP Request*
+
+include::{snippets}/StatisticsApi/TrendHeartAverage/http-request.adoc[]
+include::{snippets}/StatisticsApi/TrendHeartAverage/query-parameters.adoc[]
+
+*HTTP Response*
+
+include::{snippets}/StatisticsApi/TrendHeartAverage/http-response.adoc[]
+include::{snippets}/StatisticsApi/TrendHeartAverage/response-fields.adoc[]
