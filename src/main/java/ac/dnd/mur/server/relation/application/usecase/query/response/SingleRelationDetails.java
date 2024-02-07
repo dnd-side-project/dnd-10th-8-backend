@@ -6,6 +6,8 @@ import ac.dnd.mur.server.relation.domain.repository.query.response.RelationDetai
 public record SingleRelationDetails(
         long id,
         String name,
+        String imageUrl,
+        String memo,
         GroupResponse group,
         long giveMoney,
         long takeMoney
@@ -18,6 +20,8 @@ public record SingleRelationDetails(
         return new SingleRelationDetails(
                 details.id(),
                 details.name(),
+                details.imageUrl(),
+                details.memo(),
                 new GroupResponse(details.groupId(), details.groupName()),
                 giveMoney,
                 takeMoney

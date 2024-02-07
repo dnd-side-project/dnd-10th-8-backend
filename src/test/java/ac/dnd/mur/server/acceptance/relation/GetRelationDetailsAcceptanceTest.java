@@ -73,6 +73,8 @@ public class GetRelationDetailsAcceptanceTest extends AcceptanceTest {
                     .statusCode(OK.value())
                     .body("id", is((int) relationId))
                     .body("name", is(친구_1.getName()))
+                    .body("imageUrl", is(친구_1.getImageUrl()))
+                    .body("memo", is(친구_1.getMemo()))
                     .body("group.id", is((int) groupId))
                     .body("group.name", is("친구"))
                     .body("giveMoney", is((int) 승진_선물을_보냈다.getMoney()))

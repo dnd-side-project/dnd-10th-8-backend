@@ -48,6 +48,8 @@ class GetRelationDetailsApiControllerTest extends ControllerTest {
             given(getRelationDetailsUseCase.getRelation(any())).willReturn(new SingleRelationDetails(
                     1L,
                     친구_1.getName(),
+                    친구_1.getImageUrl(),
+                    친구_1.getMemo(),
                     new GroupResponse(1L, "친구"),
                     320_000,
                     250_000
@@ -64,6 +66,8 @@ class GetRelationDetailsApiControllerTest extends ControllerTest {
                             responseFields(
                                     body("id", "관계 ID(PK)"),
                                     body("name", "등록한 관계 이름"),
+                                    body("imageUrl", "이미지 URL"),
+                                    body("memo", "메모"),
                                     body("group.id", "그룹 ID(PK)"),
                                     body("group.name", "그룹명"),
                                     body("giveMoney", "보낸 금액"),

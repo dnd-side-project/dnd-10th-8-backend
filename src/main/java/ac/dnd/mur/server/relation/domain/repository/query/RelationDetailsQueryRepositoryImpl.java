@@ -2,7 +2,9 @@ package ac.dnd.mur.server.relation.domain.repository.query;
 
 import ac.dnd.mur.server.global.annotation.MurReadOnlyTransactional;
 import ac.dnd.mur.server.relation.domain.repository.query.response.QRelationDetails;
+import ac.dnd.mur.server.relation.domain.repository.query.response.QRelationSummary;
 import ac.dnd.mur.server.relation.domain.repository.query.response.RelationDetails;
+import ac.dnd.mur.server.relation.domain.repository.query.response.RelationSummary;
 import ac.dnd.mur.server.relation.exception.RelationException;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -28,6 +30,8 @@ public class RelationDetailsQueryRepositoryImpl implements RelationDetailsQueryR
                 .select(new QRelationDetails(
                         relation.id,
                         relation.name,
+                        relation.imageUrl,
+                        relation.memo,
                         group.id,
                         group.name
                 ))
@@ -46,9 +50,9 @@ public class RelationDetailsQueryRepositoryImpl implements RelationDetailsQueryR
     }
 
     @Override
-    public List<RelationDetails> fetchRelations(final long memberId, final String name) {
+    public List<RelationSummary> fetchRelations(final long memberId, final String name) {
         return query
-                .select(new QRelationDetails(
+                .select(new QRelationSummary(
                         relation.id,
                         relation.name,
                         group.id,

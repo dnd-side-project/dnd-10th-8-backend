@@ -2,15 +2,13 @@ package ac.dnd.mur.server.relation.domain.repository.query.response;
 
 import com.querydsl.core.annotations.QueryProjection;
 
-public record RelationDetails(
+public record RelationSummary(
         long id,
         String name,
-        String imageUrl,
-        String memo,
         long groupId,
         String groupName
 ) {
     @QueryProjection
-    public RelationDetails {
+    public RelationSummary {
     }
 }
