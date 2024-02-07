@@ -180,4 +180,14 @@ public class ScheduleAcceptanceStep {
 
         return getRequestWithAccessToken(uri, accessToken);
     }
+
+    public static ValidatableResponse 알람_동기화를_위한_일정을_조회한다(final String accessToken) {
+        final String uri = UriComponentsBuilder
+                .fromPath("/api/v1/schedules/me/alarm")
+                .build()
+                .toUri()
+                .getPath();
+
+        return getRequestWithAccessToken(uri, accessToken);
+    }
 }

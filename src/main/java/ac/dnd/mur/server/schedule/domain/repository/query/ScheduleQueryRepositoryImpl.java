@@ -3,7 +3,9 @@ package ac.dnd.mur.server.schedule.domain.repository.query;
 import ac.dnd.mur.server.global.annotation.MurReadOnlyTransactional;
 import ac.dnd.mur.server.schedule.domain.repository.query.response.CalendarSchedule;
 import ac.dnd.mur.server.schedule.domain.repository.query.response.QCalendarSchedule;
+import ac.dnd.mur.server.schedule.domain.repository.query.response.QScheduleForAlarm;
 import ac.dnd.mur.server.schedule.domain.repository.query.response.QUnrecordedSchedule;
+import ac.dnd.mur.server.schedule.domain.repository.query.response.ScheduleForAlarm;
 import ac.dnd.mur.server.schedule.domain.repository.query.response.UnrecordedSchedule;
 import ac.dnd.mur.server.schedule.domain.repository.query.spec.SearchCalendarScheduleCondition;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -78,5 +80,31 @@ public class ScheduleQueryRepositoryImpl implements ScheduleQueryRepository {
         final LocalDate end = start.plusMonths(1);
 
         return schedule.day.goe(start).and(schedule.day.lt(end));
+    }
+
+    @Override
+    public List<ScheduleForAlarm> fetchSchedulesForAlarm(final long memberId) {
+        return query
+                .select(new QScheduleForAlarm(
+                        schedule.id,
+                        relation.id,
+                        relation.name,
+                        group.id,
+                        group.name,
+                        schedule.day,
+                        schedule.event,
+                        schedule.repeat,
+                        schedule.alarm,
+                        schedule.time,
+                        schedule.link,
+                        schedule.location,
+                        schedule.memo
+                ))
+                .from(schedule)
+                .innerJoin(relation).on(relation.id.eq(schedule.relationId))
+                .innerJoin(group).on(group.id.eq(relation.groupId))
+                .where(schedule.memberId.eq(memberId))
+                .orderBy(schedule.id.asc())
+                .fetch();
     }
 }

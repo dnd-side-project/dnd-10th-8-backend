@@ -67,3 +67,14 @@ include::{snippets}/ScheduleApi/Calendar/query-parameters.adoc[]
 
 include::{snippets}/ScheduleApi/Calendar/http-response.adoc[]
 include::{snippets}/ScheduleApi/Calendar/response-fields.adoc[]
+
+=== 알람 동기화
+
+*HTTP Request*
+
+include::{snippets}/ScheduleApi/ForAlarm/http-request.adoc[]
+
+*HTTP Response*
+
+include::{snippets}/ScheduleApi/ForAlarm/http-response.adoc[]
+include::{snippets}/ScheduleApi/ForAlarm/response-fields.adoc[]
