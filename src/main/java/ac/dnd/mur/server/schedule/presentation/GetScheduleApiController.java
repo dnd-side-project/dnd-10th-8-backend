@@ -4,9 +4,11 @@ import ac.dnd.mur.server.auth.domain.model.Authenticated;
 import ac.dnd.mur.server.global.annotation.Auth;
 import ac.dnd.mur.server.global.dto.ResponseWrapper;
 import ac.dnd.mur.server.schedule.application.usecase.GetCalendarScheduleUseCase;
+import ac.dnd.mur.server.schedule.application.usecase.GetSchedulesForAlarmUseCase;
 import ac.dnd.mur.server.schedule.application.usecase.GetUnrecordedScheduleUseCase;
 import ac.dnd.mur.server.schedule.application.usecase.query.GetCalendarSchedule;
 import ac.dnd.mur.server.schedule.application.usecase.query.response.CalendarScheduleResponse;
+import ac.dnd.mur.server.schedule.application.usecase.query.response.SchedulesForAlarmResponse;
 import ac.dnd.mur.server.schedule.application.usecase.query.response.UnrecordedScheduleResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -26,6 +28,7 @@ import java.util.List;
 public class GetScheduleApiController {
     private final GetUnrecordedScheduleUseCase getUnrecordedScheduleUseCase;
     private final GetCalendarScheduleUseCase getCalendarScheduleUseCase;
+    private final GetSchedulesForAlarmUseCase getSchedulesForAlarmUseCase;
 
     @Operation(summary = "지출(보낸 마음)이 기록되지 않은 일정 조회 Endpoint")
     @GetMapping("/v1/schedules/unrecorded")
@@ -38,7 +41,7 @@ public class GetScheduleApiController {
 
     @Operation(summary = "캘린더 Year/Month 일정 조회 Endpoint")
     @GetMapping("/v1/schedules/me")
-    public ResponseEntity<ResponseWrapper<List<CalendarScheduleResponse>>> getUnrecordedSchedule(
+    public ResponseEntity<ResponseWrapper<List<CalendarScheduleResponse>>> getCalendarSchedules(
             @Auth final Authenticated authenticated,
             @RequestParam(name = "year") final int year,
             @RequestParam(name = "month") final int month
@@ -48,6 +51,15 @@ public class GetScheduleApiController {
                 year,
                 month
         ));
+        return ResponseEntity.ok(ResponseWrapper.from(result));
+    }
+
+    @Operation(summary = "알람 동기화를 위한 일정 조회 Endpoint")
+    @GetMapping("/v1/schedules/me/alarm")
+    public ResponseEntity<ResponseWrapper<List<SchedulesForAlarmResponse>>> getSchedulesForAlarm(
+            @Auth final Authenticated authenticated
+    ) {
+        final List<SchedulesForAlarmResponse> result = getSchedulesForAlarmUseCase.invoke(authenticated.id());
         return ResponseEntity.ok(ResponseWrapper.from(result));
     }
 }
