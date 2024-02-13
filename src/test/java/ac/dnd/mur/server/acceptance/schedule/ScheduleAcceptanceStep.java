@@ -43,6 +43,34 @@ public class ScheduleAcceptanceStep {
 
     public static ValidatableResponse 일정을_생성한다(
             final long relationId,
+            final ScheduleFixture fixture,
+            final LocalDate day,
+            final String accessToken
+    ) {
+        final String uri = UriComponentsBuilder
+                .fromPath("/api/v1/schedules")
+                .build()
+                .toUri()
+                .getPath();
+
+        final CreateScheduleRequest request = new CreateScheduleRequest(
+                relationId,
+                day,
+                fixture.getEvent(),
+                (fixture.getRepeat() != null) ? fixture.getRepeat().getType().getValue() : null,
+                (fixture.getRepeat() != null) ? fixture.getRepeat().getFinish() : null,
+                fixture.getAlarm(),
+                fixture.getTime(),
+                fixture.getLink(),
+                fixture.getLocation(),
+                fixture.getMemo()
+        );
+
+        return postRequestWithAccessToken(uri, request, accessToken);
+    }
+
+    public static ValidatableResponse 일정을_생성한다(
+            final long relationId,
             final LocalDate day,
             final String event,
             final ScheduleFixture fixture,
@@ -72,12 +100,10 @@ public class ScheduleAcceptanceStep {
 
     public static long 일정을_생성하고_ID를_추출한다(
             final long relationId,
-            final LocalDate day,
-            final String event,
             final ScheduleFixture fixture,
             final String accessToken
     ) {
-        return 일정을_생성한다(relationId, day, event, fixture, accessToken)
+        return 일정을_생성한다(relationId, fixture, accessToken)
                 .extract()
                 .jsonPath()
                 .getLong("result");
@@ -86,9 +112,23 @@ public class ScheduleAcceptanceStep {
     public static long 일정을_생성하고_ID를_추출한다(
             final long relationId,
             final ScheduleFixture fixture,
+            final LocalDate day,
             final String accessToken
     ) {
-        return 일정을_생성한다(relationId, fixture, accessToken)
+        return 일정을_생성한다(relationId, fixture, day, accessToken)
+                .extract()
+                .jsonPath()
+                .getLong("result");
+    }
+
+    public static long 일정을_생성하고_ID를_추출한다(
+            final long relationId,
+            final LocalDate day,
+            final String event,
+            final ScheduleFixture fixture,
+            final String accessToken
+    ) {
+        return 일정을_생성한다(relationId, day, event, fixture, accessToken)
                 .extract()
                 .jsonPath()
                 .getLong("result");

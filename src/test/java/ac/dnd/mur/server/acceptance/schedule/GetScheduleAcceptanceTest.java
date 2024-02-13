@@ -92,9 +92,9 @@ public class GetScheduleAcceptanceTest extends AcceptanceTest {
             final long relationId2 = 관계를_생성하고_ID를_추출한다(groupId, "관계-친구XXX-2", null, null, member.accessToken());
             final long relationId3 = 관계를_생성하고_ID를_추출한다(groupId, "관계-친구XXX-3", null, null, member.accessToken());
 
-            final long scheduleId1 = 일정을_생성하고_ID를_추출한다(relationId1, LocalDate.of(2024, 1, 1), "일정1", 특별한_일정_XXX, member.accessToken());
-            final long scheduleId2 = 일정을_생성하고_ID를_추출한다(relationId2, LocalDate.of(2024, 1, 15), "일정2", 특별한_일정_XXX, member.accessToken());
-            final long scheduleId3 = 일정을_생성하고_ID를_추출한다(relationId3, LocalDate.of(2024, 2, 1), "일정3", 특별한_일정_XXX, member.accessToken());
+            final long scheduleId1 = 일정을_생성하고_ID를_추출한다(relationId1, 결혼식, LocalDate.of(2024, 1, 1), member.accessToken());
+            final long scheduleId2 = 일정을_생성하고_ID를_추출한다(relationId2, 특별한_일정_XXX, LocalDate.of(2024, 1, 15), member.accessToken());
+            final long scheduleId3 = 일정을_생성하고_ID를_추출한다(relationId3, 친구_XXX_생일, LocalDate.of(2024, 2, 1), member.accessToken());
 
             final ValidatableResponse response1 = 캘린더_Year_Month에_해당하는_일정을_조회한다(2024, 1, member.accessToken());
             assertCalendarSchedulesMatch(
@@ -103,8 +103,8 @@ public class GetScheduleAcceptanceTest extends AcceptanceTest {
                     List.of(relationId1, relationId2),
                     List.of("관계-친구XXX-1", "관계-친구XXX-2"),
                     List.of(new GroupResponse(groupId, "친구"), new GroupResponse(groupId, "친구")),
-                    List.of(LocalDate.of(2024, 1, 1), LocalDate.of(2024, 1, 15)),
-                    List.of("일정1", "일정2")
+                    List.of(결혼식, 특별한_일정_XXX),
+                    List.of(LocalDate.of(2024, 1, 1), LocalDate.of(2024, 1, 15))
             );
 
             final ValidatableResponse response2 = 캘린더_Year_Month에_해당하는_일정을_조회한다(2024, 2, member.accessToken());
@@ -114,8 +114,8 @@ public class GetScheduleAcceptanceTest extends AcceptanceTest {
                     List.of(relationId3),
                     List.of("관계-친구XXX-3"),
                     List.of(new GroupResponse(groupId, "친구")),
-                    List.of(LocalDate.of(2024, 2, 1)),
-                    List.of("일정3")
+                    List.of(친구_XXX_생일),
+                    List.of(LocalDate.of(2024, 2, 1))
             );
 
             final ValidatableResponse response3 = 캘린더_Year_Month에_해당하는_일정을_조회한다(2024, 3, member.accessToken());
@@ -203,8 +203,8 @@ public class GetScheduleAcceptanceTest extends AcceptanceTest {
             final List<Long> relationIds,
             final List<String> relationNames,
             final List<GroupResponse> groups,
-            final List<LocalDate> days,
-            final List<String> events
+            final List<ScheduleFixture> fixtures,
+            final List<LocalDate> days
     ) {
         final int totalSize = ids.size();
         response.body("result", hasSize(totalSize));
@@ -215,8 +215,8 @@ public class GetScheduleAcceptanceTest extends AcceptanceTest {
             final Long relationId = relationIds.get(i);
             final String relationName = relationNames.get(i);
             final GroupResponse group = groups.get(i);
+            final ScheduleFixture fixture = fixtures.get(i);
             final LocalDate day = days.get(i);
-            final String event = events.get(i);
 
             response
                     .body(index + ".id", is(id.intValue()))
@@ -225,10 +225,11 @@ public class GetScheduleAcceptanceTest extends AcceptanceTest {
                     .body(index + ".relation.group.id", is((int) group.id()))
                     .body(index + ".relation.group.name", is(group.name()))
                     .body(index + ".day", is(day.format(DateTimeFormatter.ISO_LOCAL_DATE)))
-                    .body(index + ".event", is(event))
-                    .body(index + ".time", nullValue())
-                    .body(index + ".link", nullValue())
-                    .body(index + ".location", nullValue());
+                    .body(index + ".event", is(fixture.getEvent()))
+                    .body(index + ".time", is((fixture.getTime() != null) ? fixture.getTime().format(DateTimeFormatter.ISO_LOCAL_TIME) : null))
+                    .body(index + ".link", is(fixture.getLink()))
+                    .body(index + ".location", is(fixture.getLocation()))
+                    .body(index + ".memo", is(fixture.getMemo()));
         }
     }
 
