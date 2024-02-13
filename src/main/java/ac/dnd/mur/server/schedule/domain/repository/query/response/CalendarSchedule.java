@@ -15,7 +15,8 @@ public record CalendarSchedule(
         String event,
         LocalTime time,
         String link,
-        String location
+        String location,
+        String memo
 ) {
     @QueryProjection
     public CalendarSchedule {

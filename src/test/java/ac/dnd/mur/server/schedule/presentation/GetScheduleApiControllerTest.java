@@ -116,7 +116,8 @@ class GetScheduleApiControllerTest extends ControllerTest {
                             친구_XXX_생일.getEvent(),
                             친구_XXX_생일.getTime(),
                             친구_XXX_생일.getLink(),
-                            친구_XXX_생일.getLocation()
+                            친구_XXX_생일.getLocation(),
+                            친구_XXX_생일.getMemo()
                     )
             ));
 
@@ -142,7 +143,8 @@ class GetScheduleApiControllerTest extends ControllerTest {
                                     body("result[].event", "행사 종류"),
                                     body("result[].time", "시간", "Nullable"),
                                     body("result[].link", "링크", "Nullable"),
-                                    body("result[].location", "위치", "Nullable")
+                                    body("result[].location", "위치", "Nullable"),
+                                    body("result[].memo", "메모", "Nullable")
                             )
                     ))
             );

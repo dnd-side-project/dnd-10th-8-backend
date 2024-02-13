@@ -62,7 +62,8 @@ public class ScheduleQueryRepositoryImpl implements ScheduleQueryRepository {
                         schedule.event,
                         schedule.time,
                         schedule.link,
-                        schedule.location
+                        schedule.location,
+                        schedule.memo
                 ))
                 .from(schedule)
                 .innerJoin(relation).on(relation.id.eq(schedule.relationId))

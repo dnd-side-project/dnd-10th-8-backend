@@ -14,7 +14,8 @@ public record CalendarScheduleResponse(
         String event,
         LocalTime time,
         String link,
-        String location
+        String location,
+        String memo
 ) {
     public static CalendarScheduleResponse from(final CalendarSchedule schedule) {
         return new CalendarScheduleResponse(
@@ -28,7 +29,8 @@ public record CalendarScheduleResponse(
                 schedule.event(),
                 schedule.time(),
                 schedule.link(),
-                schedule.location()
+                schedule.location(),
+                schedule.memo()
         );
     }
 }
