@@ -230,4 +230,13 @@ public class ScheduleAcceptanceStep {
 
         return getRequestWithAccessToken(uri, accessToken);
     }
+
+    public static ValidatableResponse 일정_상세_정보를_조회한다(final long scheduleId, final String accessToken) {
+        final String uri = UriComponentsBuilder
+                .fromPath("/api/v1/schedules/me/{scheduleId}")
+                .build(scheduleId)
+                .getPath();
+
+        return getRequestWithAccessToken(uri, accessToken);
+    }
 }

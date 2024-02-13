@@ -1,6 +1,7 @@
 package ac.dnd.mour.server.schedule.domain.repository.query;
 
 import ac.dnd.mour.server.schedule.domain.repository.query.response.CalendarSchedule;
+import ac.dnd.mour.server.schedule.domain.repository.query.response.ScheduleDetails;
 import ac.dnd.mour.server.schedule.domain.repository.query.response.ScheduleForAlarm;
 import ac.dnd.mour.server.schedule.domain.repository.query.response.UnrecordedSchedule;
 import ac.dnd.mour.server.schedule.domain.repository.query.spec.SearchCalendarScheduleCondition;
@@ -13,4 +14,6 @@ public interface ScheduleQueryRepository {
     List<CalendarSchedule> fetchCalendarSchedules(final SearchCalendarScheduleCondition condition);
 
     List<ScheduleForAlarm> fetchSchedulesForAlarm(final long memberId);
+
+    ScheduleDetails fetchScheduleDetails(final long scheduleId, final long memberId);
 }

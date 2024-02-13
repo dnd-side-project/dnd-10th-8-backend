@@ -3,8 +3,10 @@ package ac.dnd.mour.server.schedule.domain.repository.query;
 import ac.dnd.mour.server.global.annotation.MourReadOnlyTransactional;
 import ac.dnd.mour.server.schedule.domain.repository.query.response.CalendarSchedule;
 import ac.dnd.mour.server.schedule.domain.repository.query.response.QCalendarSchedule;
+import ac.dnd.mour.server.schedule.domain.repository.query.response.QScheduleDetails;
 import ac.dnd.mour.server.schedule.domain.repository.query.response.QScheduleForAlarm;
 import ac.dnd.mour.server.schedule.domain.repository.query.response.QUnrecordedSchedule;
+import ac.dnd.mour.server.schedule.domain.repository.query.response.ScheduleDetails;
 import ac.dnd.mour.server.schedule.domain.repository.query.response.ScheduleForAlarm;
 import ac.dnd.mour.server.schedule.domain.repository.query.response.UnrecordedSchedule;
 import ac.dnd.mour.server.schedule.domain.repository.query.spec.SearchCalendarScheduleCondition;
@@ -107,5 +109,34 @@ public class ScheduleQueryRepositoryImpl implements ScheduleQueryRepository {
                 .where(schedule.memberId.eq(memberId))
                 .orderBy(schedule.id.asc())
                 .fetch();
+    }
+
+    @Override
+    public ScheduleDetails fetchScheduleDetails(final long scheduleId, final long memberId) {
+        return query
+                .select(new QScheduleDetails(
+                        schedule.id,
+                        relation.id,
+                        relation.name,
+                        group.id,
+                        group.name,
+                        schedule.day,
+                        schedule.event,
+                        schedule.repeat,
+                        schedule.alarm,
+                        schedule.time,
+                        schedule.link,
+                        schedule.location,
+                        schedule.memo
+                ))
+                .from(schedule)
+                .innerJoin(relation).on(relation.id.eq(schedule.relationId))
+                .innerJoin(group).on(group.id.eq(relation.groupId))
+                .where(
+                        schedule.id.eq(scheduleId),
+                        schedule.memberId.eq(memberId)
+                )
+                .orderBy(schedule.id.asc())
+                .fetchOne();
     }
 }

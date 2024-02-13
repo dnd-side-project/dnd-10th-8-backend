@@ -19,6 +19,7 @@ import static ac.dnd.mour.server.acceptance.group.GroupAcceptanceStep.관리하�
 import static ac.dnd.mour.server.acceptance.heart.HeartAcceptanceStep.지출이_기록되지_않는_일정에_대한_마음을_생성한다;
 import static ac.dnd.mour.server.acceptance.relation.RelationAcceptanceStep.관계를_생성하고_ID를_추출한다;
 import static ac.dnd.mour.server.acceptance.schedule.ScheduleAcceptanceStep.알람_동기화를_위한_일정을_조회한다;
+import static ac.dnd.mour.server.acceptance.schedule.ScheduleAcceptanceStep.일정_상세_정보를_조회한다;
 import static ac.dnd.mour.server.acceptance.schedule.ScheduleAcceptanceStep.일정을_삭제한다;
 import static ac.dnd.mour.server.acceptance.schedule.ScheduleAcceptanceStep.일정을_생성하고_ID를_추출한다;
 import static ac.dnd.mour.server.acceptance.schedule.ScheduleAcceptanceStep.지출이_기록되지_않은_일정을_조회한다;
@@ -35,6 +36,36 @@ import static org.springframework.http.HttpStatus.OK;
 @ExtendWith(DatabaseCleanerEachCallbackExtension.class)
 @DisplayName("[Acceptance Test] 등록한 일정 관련 조회")
 public class GetScheduleAcceptanceTest extends AcceptanceTest {
+    @Nested
+    @DisplayName("일정 상세 조회 API")
+    class GetScheduleDetails {
+        @Test
+        @DisplayName("일정 상세 정보를 조회한다")
+        void success() {
+            final AuthMember member = MEMBER_1.회원가입과_로그인을_진행한다();
+            final long groupId = 관리하고_있는_특정_그룹의_ID를_조회한다("친구", member.accessToken());
+            final long relationId = 관계를_생성하고_ID를_추출한다(groupId, "관계-친구XXX-1", null, null, member.accessToken());
+            final long scheduleId = 일정을_생성하고_ID를_추출한다(relationId, 결혼식, member.accessToken());
+
+            일정_상세_정보를_조회한다(scheduleId, member.accessToken())
+                    .statusCode(OK.value())
+                    .body("id", is((int) scheduleId))
+                    .body("relation.id", is((int) relationId))
+                    .body("relation.name", is("관계-친구XXX-1"))
+                    .body("relation.group.id", is((int) groupId))
+                    .body("relation.group.name", is("친구"))
+                    .body("day", is(결혼식.getDay().format(DateTimeFormatter.ISO_LOCAL_DATE)))
+                    .body("event", is(결혼식.getEvent()))
+                    .body("repeatType", (결혼식.getRepeat() != null) ? is(결혼식.getRepeat().getType().getValue()) : nullValue())
+                    .body("repeatFinish", (결혼식.getRepeat() != null && 결혼식.getRepeat().getFinish() != null) ? is(결혼식.getRepeat().getFinish().format(DateTimeFormatter.ISO_LOCAL_DATE)) : nullValue())
+                    .body("alarm", (결혼식.getAlarm() != null) ? is(결혼식.getAlarm().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)) : nullValue())
+                    .body("time", (결혼식.getTime() != null) ? is(결혼식.getTime().format(DateTimeFormatter.ISO_LOCAL_TIME)) : nullValue())
+                    .body("link", is(결혼식.getLink()))
+                    .body("location", is(결혼식.getLocation()))
+                    .body("memo", is(결혼식.getMemo()));
+        }
+    }
+
     @Nested
     @DisplayName("지출(보낸 마음)이 기록되지 않은 일정 조회 API")
     class GetUnrecordedSchedule {
