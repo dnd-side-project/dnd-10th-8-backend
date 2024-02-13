@@ -42,6 +42,3 @@ decorator:
 slack:
   webhook:
     url: slack-webhook-url
-
-sentry:
-  dsn:

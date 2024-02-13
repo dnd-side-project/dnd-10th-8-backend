@@ -4,7 +4,6 @@ import ac.dnd.mur.server.global.base.BaseException;
 import ac.dnd.mur.server.global.base.BaseExceptionCode;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.sentry.Sentry;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -145,7 +144,6 @@ public class ApiGlobalExceptionHandler {
 
     private void sendErrorAlert(final HttpServletRequest request, final Exception exception) {
         slackAlertManager.sendErrorLog(request, exception);
-        Sentry.captureException(exception);
     }
 
     private ResponseEntity<ExceptionResponse> createExceptionResponse(final BaseExceptionCode code) {
