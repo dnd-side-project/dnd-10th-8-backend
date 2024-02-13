@@ -51,7 +51,6 @@ dependencies {
     implementation("io.awspring.cloud:spring-cloud-aws-starter-s3:${property("awspringVersion")}")
 
     // Log & Monitoring
-    implementation("io.sentry:sentry-spring-boot-starter-jakarta:${property("sentryVersion")}")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     runtimeOnly("io.micrometer:micrometer-registry-prometheus")
 
@@ -161,6 +160,6 @@ tasks.named<Jar>("jar") {
 }
 
 tasks.named<BootJar>("bootJar") {
-    archiveBaseName = "Mur"
-    archiveFileName = "Mur.jar"
+    archiveBaseName = "Mour"
+    archiveFileName = "Mour.jar"
 }

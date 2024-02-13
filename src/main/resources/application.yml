@@ -15,7 +15,7 @@ management:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:13306/mur?autoReconnect=true&characterEncoding=UTF8&serverTimeZone=Asia/Seoul
+    url: jdbc:mysql://localhost:13306/mour?autoReconnect=true&characterEncoding=UTF8&serverTimeZone=Asia/Seoul
     username: root
     password: 1234
 
@@ -40,14 +40,14 @@ spring:
     redis:
       host: localhost
       port: 6379
-      password: mur
+      password: mour
 
   cloud:
     aws:
       region:
         static: ap-northeast-2
       s3:
-        bucket: mur-upload
+        bucket: mour-upload
       credentials:
         profile:
           name: dnd
@@ -81,12 +81,6 @@ decorator:
 slack:
   webhook:
     url: ${SLACK_WEBHOOK_URL:slack-webhook-url}
-
-sentry:
-  dsn: ${SENTRY_DSN:sentry-dsn}
-  enable-tracing: true
-  traces-sample-rate: 1.0
-  exception-resolver-order: -2147483647
 
 logging:
   config: classpath:logback/logback-local.xml

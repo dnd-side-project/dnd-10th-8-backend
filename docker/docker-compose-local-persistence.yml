@@ -8,7 +8,7 @@ services:
       - "13306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: "1234"
-      MYSQL_DATABASE: "mur"
+      MYSQL_DATABASE: "mour"
       TZ: "Asia/Seoul"
       LANG: "C.UTF_8"
     command:
@@ -23,4 +23,4 @@ services:
       - "6379:6379"
     volumes:
       - "./redis_data/data:/data"
-    command: redis-server --requirepass mur --port 6379
+    command: redis-server --requirepass mour --port 6379

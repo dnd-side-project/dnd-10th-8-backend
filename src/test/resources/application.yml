@@ -23,7 +23,7 @@ spring:
         access-key: access-key
         secret-key: secret-key
       s3:
-        bucket: mur-upload
+        bucket: mour-upload
 
 jwt:
   secret-key: 0aad1b3d890f6f4fb89555708462aa50b1a4f5808fe453602beec25ecadf297f
@@ -42,6 +42,3 @@ decorator:
 slack:
   webhook:
     url: slack-webhook-url
-
-sentry:
-  dsn:
