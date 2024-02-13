@@ -1,4 +1,4 @@
-= DND 10th-8 Mur BE API 문서
+= DND 10th-8 Mour BE API 문서
 :doctype: book
 :icons: font
 :source-highlighter: highlightjs

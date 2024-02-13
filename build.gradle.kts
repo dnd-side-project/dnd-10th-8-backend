@@ -160,6 +160,6 @@ tasks.named<Jar>("jar") {
 }
 
 tasks.named<BootJar>("bootJar") {
-    archiveBaseName = "Mur"
-    archiveFileName = "Mur.jar"
+    archiveBaseName = "Mour"
+    archiveFileName = "Mour.jar"
 }
