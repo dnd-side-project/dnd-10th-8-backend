@@ -10,6 +10,7 @@ import ac.dnd.mour.server.statistics.application.usecase.query.GetTrendHeartAver
 import ac.dnd.mour.server.statistics.application.usecase.query.response.TrendHeartAverageSummary;
 import lombok.RequiredArgsConstructor;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @UseCase
@@ -29,7 +30,7 @@ public class GetTrendHeartAverageStatisticsUseCase {
 
     private List<TrendHeartAverageSummary> toSummary(final List<TrendHeartStatistics> result) {
         return result.stream()
-                .map(it -> new TrendHeartAverageSummary(it.event(), it.average()))
+                .map(it -> new TrendHeartAverageSummary(it.event(), BigDecimal.valueOf(it.average())))
                 .toList();
     }
 
