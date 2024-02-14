@@ -44,7 +44,6 @@ import static ac.dnd.mour.server.common.fixture.RelationFixture.친구_7;
 import static ac.dnd.mour.server.common.fixture.RelationFixture.친구_8;
 import static ac.dnd.mour.server.member.domain.model.Gender.FEMALE;
 import static ac.dnd.mour.server.member.domain.model.Gender.MALE;
-import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.http.HttpStatus.OK;
 
@@ -135,18 +134,18 @@ public class HeartStatisticsAcceptanceTest extends AcceptanceTest {
                 final List<Integer> giveCounts,
                 final List<Integer> takeCounts
         ) {
-            response.body("give.find { it.keySet().contains('결혼') }['결혼']", hasSize(giveCounts.get(0)))
-                    .body("give.find { it.keySet().contains('생일') }['생일']", hasSize(giveCounts.get(1)))
-                    .body("give.find { it.keySet().contains('출산') }['출산']", hasSize(giveCounts.get(2)))
-                    .body("give.find { it.keySet().contains('돌잔치') }['돌잔치']", hasSize(giveCounts.get(3)))
-                    .body("give.find { it.keySet().contains('개업') }['개업']", hasSize(giveCounts.get(4)))
-                    .body("give.find { it.keySet().contains('기타') }['기타']", hasSize(giveCounts.get(5)))
-                    .body("take.find { it.keySet().contains('결혼') }['결혼']", hasSize(takeCounts.get(0)))
-                    .body("take.find { it.keySet().contains('생일') }['생일']", hasSize(takeCounts.get(1)))
-                    .body("take.find { it.keySet().contains('출산') }['출산']", hasSize(takeCounts.get(2)))
-                    .body("take.find { it.keySet().contains('돌잔치') }['돌잔치']", hasSize(takeCounts.get(3)))
-                    .body("take.find { it.keySet().contains('개업') }['개업']", hasSize(takeCounts.get(4)))
-                    .body("take.find { it.keySet().contains('기타') }['기타']", hasSize(takeCounts.get(5)));
+            response.body("give.findAll { it.event == '결혼' }.size()", is(giveCounts.get(0)))
+                    .body("give.findAll { it.event == '생일' }.size()", is(giveCounts.get(1)))
+                    .body("give.findAll { it.event == '출산' }.size()", is(giveCounts.get(2)))
+                    .body("give.findAll { it.event == '돌잔치' }.size()", is(giveCounts.get(3)))
+                    .body("give.findAll { it.event == '개업' }.size()", is(giveCounts.get(4)))
+                    .body("give.findAll { it.event !in ['결혼', '생일', '출산', '돌잔치', '개업'] }.size()", is(giveCounts.get(5)))
+                    .body("take.findAll { it.event == '결혼' }.size()", is(takeCounts.get(0)))
+                    .body("take.findAll { it.event == '생일' }.size()", is(takeCounts.get(1)))
+                    .body("take.findAll { it.event == '출산' }.size()", is(takeCounts.get(2)))
+                    .body("take.findAll { it.event == '돌잔치' }.size()", is(takeCounts.get(3)))
+                    .body("take.findAll { it.event == '개업' }.size()", is(takeCounts.get(4)))
+                    .body("take.findAll { it.event !in ['결혼', '생일', '출산', '돌잔치', '개업'] }.size()", is(takeCounts.get(5)));
         }
     }
 

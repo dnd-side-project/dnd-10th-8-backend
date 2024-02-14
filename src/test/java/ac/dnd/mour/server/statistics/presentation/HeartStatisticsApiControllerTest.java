@@ -50,25 +50,42 @@ class HeartStatisticsApiControllerTest extends ControllerTest {
             applyToken(true, member);
             given(getPersonalHeartStatisticsUseCase.invoke(any())).willReturn(new PersonalHeartStatisticsResponse(
                     List.of(
-                            Map.of(
-                                    "결혼", List.of(new PersonalHeartSummary("관계-이름-XXX", "친구", 100_000, LocalDate.of(2024, 6, 1), "메모..")),
-                                    "생일", List.of(new PersonalHeartSummary("관계-이름-XXX", "친구", 100_000, LocalDate.of(2024, 5, 1), "메모..")),
-                                    "출산", List.of(new PersonalHeartSummary("관계-이름-XXX", "친구", 100_000, LocalDate.of(2024, 4, 1), "메모..")),
-                                    "돌잔치", List.of(new PersonalHeartSummary("관계-이름-XXX", "친구", 100_000, LocalDate.of(2024, 3, 1), "메모..")),
-                                    "개업", List.of(new PersonalHeartSummary("관계-이름-XXX", "친구", 100_000, LocalDate.of(2024, 2, 1), "메모..")),
-                                    "기타", List.of(new PersonalHeartSummary("관계-이름-XXX", "친구", 100_000, LocalDate.of(2024, 1, 1), "메모.."))
-                            )
+                            new PersonalHeartSummary("결혼", "관계-이름-XXX", "친구", 100_000, LocalDate.of(2024, 6, 1), "메모.."),
+                            new PersonalHeartSummary("생일", "관계-이름-XXX", "친구", 100_000, LocalDate.of(2024, 5, 1), "메모.."),
+                            new PersonalHeartSummary("출산", "관계-이름-XXX", "친구", 100_000, LocalDate.of(2024, 4, 1), "메모.."),
+                            new PersonalHeartSummary("돌잔치", "관계-이름-XXX", "친구", 100_000, LocalDate.of(2024, 3, 1), "메모.."),
+                            new PersonalHeartSummary("개업", "관계-이름-XXX", "친구", 100_000, LocalDate.of(2024, 2, 1), "메모.."),
+                            new PersonalHeartSummary("기타", "관계-이름-XXX", "친구", 100_000, LocalDate.of(2024, 1, 1), "메모..")
                     ),
                     List.of(
-                            Map.of(
-                                    "결혼", List.of(new PersonalHeartSummary("관계-이름-XXX", "친구", 100_000, LocalDate.of(2024, 6, 1), "메모..")),
-                                    "생일", List.of(new PersonalHeartSummary("관계-이름-XXX", "친구", 100_000, LocalDate.of(2024, 5, 1), "메모..")),
-                                    "출산", List.of(new PersonalHeartSummary("관계-이름-XXX", "친구", 100_000, LocalDate.of(2024, 4, 1), "메모..")),
-                                    "돌잔치", List.of(new PersonalHeartSummary("관계-이름-XXX", "친구", 100_000, LocalDate.of(2024, 3, 1), "메모..")),
-                                    "개업", List.of(new PersonalHeartSummary("관계-이름-XXX", "친구", 100_000, LocalDate.of(2024, 2, 1), "메모..")),
-                                    "기타", List.of(new PersonalHeartSummary("관계-이름-XXX", "친구", 100_000, LocalDate.of(2024, 1, 1), "메모.."))
-                            )
+                            new PersonalHeartSummary("결혼", "관계-이름-XXX", "친구", 100_000, LocalDate.of(2024, 6, 1), "메모.."),
+                            new PersonalHeartSummary("생일", "관계-이름-XXX", "친구", 100_000, LocalDate.of(2024, 5, 1), "메모.."),
+                            new PersonalHeartSummary("출산", "관계-이름-XXX", "친구", 100_000, LocalDate.of(2024, 4, 1), "메모.."),
+                            new PersonalHeartSummary("돌잔치", "관계-이름-XXX", "친구", 100_000, LocalDate.of(2024, 3, 1), "메모.."),
+                            new PersonalHeartSummary("개업", "관계-이름-XXX", "친구", 100_000, LocalDate.of(2024, 2, 1), "메모.."),
+                            new PersonalHeartSummary("기타", "관계-이름-XXX", "친구", 100_000, LocalDate.of(2024, 1, 1), "메모..")
                     )
+
+//                    List.of(
+//                            Map.of(
+//                                    "결혼", List.of(new PersonalHeartSummary("관계-이름-XXX", "친구", 100_000, LocalDate.of(2024, 6, 1), "메모..")),
+//                                    "생일", List.of(new PersonalHeartSummary("관계-이름-XXX", "친구", 100_000, LocalDate.of(2024, 5, 1), "메모..")),
+//                                    "출산", List.of(new PersonalHeartSummary("관계-이름-XXX", "친구", 100_000, LocalDate.of(2024, 4, 1), "메모..")),
+//                                    "돌잔치", List.of(new PersonalHeartSummary("관계-이름-XXX", "친구", 100_000, LocalDate.of(2024, 3, 1), "메모..")),
+//                                    "개업", List.of(new PersonalHeartSummary("관계-이름-XXX", "친구", 100_000, LocalDate.of(2024, 2, 1), "메모..")),
+//                                    "기타", List.of(new PersonalHeartSummary("관계-이름-XXX", "친구", 100_000, LocalDate.of(2024, 1, 1), "메모.."))
+//                            )
+//                    ),
+//                    List.of(
+//                            Map.of(
+//                                    "결혼", List.of(new PersonalHeartSummary("관계-이름-XXX", "친구", 100_000, LocalDate.of(2024, 6, 1), "메모..")),
+//                                    "생일", List.of(new PersonalHeartSummary("관계-이름-XXX", "친구", 100_000, LocalDate.of(2024, 5, 1), "메모..")),
+//                                    "출산", List.of(new PersonalHeartSummary("관계-이름-XXX", "친구", 100_000, LocalDate.of(2024, 4, 1), "메모..")),
+//                                    "돌잔치", List.of(new PersonalHeartSummary("관계-이름-XXX", "친구", 100_000, LocalDate.of(2024, 3, 1), "메모..")),
+//                                    "개업", List.of(new PersonalHeartSummary("관계-이름-XXX", "친구", 100_000, LocalDate.of(2024, 2, 1), "메모..")),
+//                                    "기타", List.of(new PersonalHeartSummary("관계-이름-XXX", "친구", 100_000, LocalDate.of(2024, 1, 1), "메모.."))
+//                            )
+//                    )
             ));
 
             // when - then
