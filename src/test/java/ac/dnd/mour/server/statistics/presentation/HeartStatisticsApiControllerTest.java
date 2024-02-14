@@ -6,13 +6,12 @@ import ac.dnd.mour.server.statistics.application.usecase.GetPersonalHeartStatist
 import ac.dnd.mour.server.statistics.application.usecase.GetTrendHeartAverageStatisticsUseCase;
 import ac.dnd.mour.server.statistics.application.usecase.query.response.PersonalHeartStatisticsResponse;
 import ac.dnd.mour.server.statistics.application.usecase.query.response.PersonalHeartSummary;
-import ac.dnd.mour.server.statistics.application.usecase.query.response.TrendHeartAverageStatisticsResponse;
+import ac.dnd.mour.server.statistics.application.usecase.query.response.TrendHeartAverageSummary;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -55,7 +54,8 @@ class HeartStatisticsApiControllerTest extends ControllerTest {
                             new PersonalHeartSummary("출산", "관계-이름-XXX", "친구", 100_000, LocalDate.of(2024, 4, 1), "메모.."),
                             new PersonalHeartSummary("돌잔치", "관계-이름-XXX", "친구", 100_000, LocalDate.of(2024, 3, 1), "메모.."),
                             new PersonalHeartSummary("개업", "관계-이름-XXX", "친구", 100_000, LocalDate.of(2024, 2, 1), "메모.."),
-                            new PersonalHeartSummary("기타", "관계-이름-XXX", "친구", 100_000, LocalDate.of(2024, 1, 1), "메모..")
+                            new PersonalHeartSummary("승진", "관계-이름-XXX", "친구", 100_000, LocalDate.of(2024, 1, 1), "메모.."),
+                            new PersonalHeartSummary("졸업", "관계-이름-XXX", "친구", 100_000, LocalDate.of(2024, 1, 1), "메모..")
                     ),
                     List.of(
                             new PersonalHeartSummary("결혼", "관계-이름-XXX", "친구", 100_000, LocalDate.of(2024, 6, 1), "메모.."),
@@ -63,7 +63,8 @@ class HeartStatisticsApiControllerTest extends ControllerTest {
                             new PersonalHeartSummary("출산", "관계-이름-XXX", "친구", 100_000, LocalDate.of(2024, 4, 1), "메모.."),
                             new PersonalHeartSummary("돌잔치", "관계-이름-XXX", "친구", 100_000, LocalDate.of(2024, 3, 1), "메모.."),
                             new PersonalHeartSummary("개업", "관계-이름-XXX", "친구", 100_000, LocalDate.of(2024, 2, 1), "메모.."),
-                            new PersonalHeartSummary("기타", "관계-이름-XXX", "친구", 100_000, LocalDate.of(2024, 1, 1), "메모..")
+                            new PersonalHeartSummary("승진", "관계-이름-XXX", "친구", 100_000, LocalDate.of(2024, 1, 1), "메모.."),
+                            new PersonalHeartSummary("졸업", "관계-이름-XXX", "친구", 100_000, LocalDate.of(2024, 1, 1), "메모..")
                     )
 
 //                    List.of(
@@ -120,14 +121,24 @@ class HeartStatisticsApiControllerTest extends ControllerTest {
         void success() {
             // given
             applyToken(true, member);
-            given(getTrendHeartAverageStatisticsUseCase.invoke(any())).willReturn(new TrendHeartAverageStatisticsResponse(Map.of(
-                    "결혼", BigDecimal.valueOf(100_000.3333D),
-                    "생일", BigDecimal.valueOf(200_000.3333D),
-                    "출산", BigDecimal.valueOf(300_000.3333D),
-                    "돌잔치", BigDecimal.valueOf(400_000.3333D),
-                    "개업", BigDecimal.valueOf(500_000.3333D),
-                    "기타", BigDecimal.valueOf(600_000.3333D)
-            )));
+            given(getTrendHeartAverageStatisticsUseCase.invoke(any())).willReturn(List.of(
+                    new TrendHeartAverageSummary("결혼", 100_000),
+                    new TrendHeartAverageSummary("생일", 200_000),
+                    new TrendHeartAverageSummary("출산", 300_000_333),
+                    new TrendHeartAverageSummary("돌잔치", 400_000),
+                    new TrendHeartAverageSummary("개업", 500_000),
+                    new TrendHeartAverageSummary("승진", 600_000),
+                    new TrendHeartAverageSummary("졸업", 700_000)
+            ));
+//                    new TrendHeartAverageStatisticsResponse(Map.of(
+//                            "결혼", BigDecimal.valueOf(100_000.3333D),
+//                            "생일", BigDecimal.valueOf(200_000.3333D),
+//                            "출산", BigDecimal.valueOf(300_000.3333D),
+//                            "돌잔치", BigDecimal.valueOf(400_000.3333D),
+//                            "개업", BigDecimal.valueOf(500_000.3333D),
+//                            "기타", BigDecimal.valueOf(600_000.3333D)
+//                    ))
+//            );
 
             // when - then
             successfulExecute(
@@ -150,12 +161,7 @@ class HeartStatisticsApiControllerTest extends ControllerTest {
                                     )
                             ),
                             responseFields(
-                                    subsection("result.결혼", "결혼 통계"),
-                                    subsection("result.생일", "생일 통계"),
-                                    subsection("result.출산", "출산 통계"),
-                                    subsection("result.돌잔치", "돌잔치 통계"),
-                                    subsection("result.개업", "개업 통계"),
-                                    subsection("result.기타", "기타 행사 통계")
+                                    subsection("result", "트렌드 통계")
                             )
                     ))
             );

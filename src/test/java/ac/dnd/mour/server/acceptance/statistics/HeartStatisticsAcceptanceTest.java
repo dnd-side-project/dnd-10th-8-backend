@@ -45,6 +45,7 @@ import static ac.dnd.mour.server.common.fixture.RelationFixture.친구_8;
 import static ac.dnd.mour.server.member.domain.model.Gender.FEMALE;
 import static ac.dnd.mour.server.member.domain.model.Gender.MALE;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
 import static org.springframework.http.HttpStatus.OK;
 
 @ExtendWith(DatabaseCleanerEachCallbackExtension.class)
@@ -188,77 +189,29 @@ public class HeartStatisticsAcceptanceTest extends AcceptanceTest {
             createHeart(relationId7, member7.accessToken(), List.of(49_000L, 5_500_000L, 938_000L, 958_000L, 3_293_000L));
             createHeart(relationId8, member8.accessToken(), List.of(1_382_000L, 3_293_000L, 1_828_000L, 358_000L, 39_281_000L));
 
-            사용자_트렌드별_평균_행사비_통계를_조회한다(MALE.getValue(), 20, member1.accessToken())
-                    .statusCode(OK.value())
-                    .body("result.결혼", is(2_200_000F))
-                    .body("result.생일", is(2_150_000F))
-                    .body("result.출산", is(0))
-                    .body("result.돌잔치", is(388_000F))
-                    .body("result.개업", is(330_000F))
-                    .body("result.기타", is(258_000F));
+            final ValidatableResponse response1 = 사용자_트렌드별_평균_행사비_통계를_조회한다(MALE.getValue(), 20, member1.accessToken()).statusCode(OK.value());
+            assertTrendHeartAverageStatisticsMatch(response1, List.of(2_200_000F, 2_150_000F, 0F, 388_000F, 330_000F, 258_000F));
 
-            사용자_트렌드별_평균_행사비_통계를_조회한다(FEMALE.getValue(), 20, member1.accessToken())
-                    .statusCode(OK.value())
-                    .body("result.결혼", is(0))
-                    .body("result.생일", is(0))
-                    .body("result.출산", is(0))
-                    .body("result.돌잔치", is(0))
-                    .body("result.개업", is(0))
-                    .body("result.기타", is(0));
+            final ValidatableResponse response2 = 사용자_트렌드별_평균_행사비_통계를_조회한다(FEMALE.getValue(), 20, member1.accessToken()).statusCode(OK.value());
+            assertTrendHeartAverageStatisticsMatch(response2, List.of(0F, 0F, 0F, 0F, 0F, 0F));
 
-            사용자_트렌드별_평균_행사비_통계를_조회한다(MALE.getValue(), 30, member1.accessToken())
-                    .statusCode(OK.value())
-                    .body("result.결혼", is(560_000F))
-                    .body("result.생일", is(23_500_000F))
-                    .body("result.출산", is(0))
-                    .body("result.돌잔치", is(1_734_000F))
-                    .body("result.개업", is(1_320_000F))
-                    .body("result.기타", is(1_558_000F));
+            final ValidatableResponse response3 = 사용자_트렌드별_평균_행사비_통계를_조회한다(MALE.getValue(), 30, member1.accessToken()).statusCode(OK.value());
+            assertTrendHeartAverageStatisticsMatch(response3, List.of(560_000F, 23_500_000F, 0F, 1_734_000F, 1_320_000F, 1_558_000F));
 
-            사용자_트렌드별_평균_행사비_통계를_조회한다(FEMALE.getValue(), 30, member1.accessToken())
-                    .statusCode(OK.value())
-                    .body("result.결혼", is(0))
-                    .body("result.생일", is(0))
-                    .body("result.출산", is(0))
-                    .body("result.돌잔치", is(0))
-                    .body("result.개업", is(0))
-                    .body("result.기타", is(0));
+            final ValidatableResponse response4 = 사용자_트렌드별_평균_행사비_통계를_조회한다(FEMALE.getValue(), 30, member1.accessToken()).statusCode(OK.value());
+            assertTrendHeartAverageStatisticsMatch(response4, List.of(0F, 0F, 0F, 0F, 0F, 0F));
 
-            사용자_트렌드별_평균_행사비_통계를_조회한다(MALE.getValue(), 40, member1.accessToken())
-                    .statusCode(OK.value())
-                    .body("result.결혼", is(0))
-                    .body("result.생일", is(0))
-                    .body("result.출산", is(0))
-                    .body("result.돌잔치", is(0))
-                    .body("result.개업", is(0))
-                    .body("result.기타", is(0));
+            final ValidatableResponse response5 = 사용자_트렌드별_평균_행사비_통계를_조회한다(MALE.getValue(), 40, member1.accessToken()).statusCode(OK.value());
+            assertTrendHeartAverageStatisticsMatch(response5, List.of(0F, 0F, 0F, 0F, 0F, 0F));
 
-            사용자_트렌드별_평균_행사비_통계를_조회한다(FEMALE.getValue(), 40, member1.accessToken())
-                    .statusCode(OK.value())
-                    .body("result.결혼", is(1_593_000F))
-                    .body("result.생일", is(980_000F))
-                    .body("result.출산", is(0))
-                    .body("result.돌잔치", is(2_123_000F))
-                    .body("result.개업", is(5_430_000F))
-                    .body("result.기타", is(10_258_000F));
+            final ValidatableResponse response6 = 사용자_트렌드별_평균_행사비_통계를_조회한다(FEMALE.getValue(), 40, member1.accessToken()).statusCode(OK.value());
+            assertTrendHeartAverageStatisticsMatch(response6, List.of(1_593_000F, 980_000F, 0F, 2_123_000F, 5_430_000F, 10_258_000F));
 
-            사용자_트렌드별_평균_행사비_통계를_조회한다(MALE.getValue(), 50, member1.accessToken())
-                    .statusCode(OK.value())
-                    .body("result.결혼", is(1_310_333.3333F))
-                    .body("result.생일", is(3_113_666.6667F))
-                    .body("result.출산", is(0))
-                    .body("result.돌잔치", is(1_963_000F))
-                    .body("result.개업", is(582_000F))
-                    .body("result.기타", is(47_592_333.3333F));
+            final ValidatableResponse response7 = 사용자_트렌드별_평균_행사비_통계를_조회한다(MALE.getValue(), 50, member1.accessToken()).statusCode(OK.value());
+            assertTrendHeartAverageStatisticsMatch(response7, List.of(1_310_333.3333F, 3_113_666.6667F, 0F, 1_963_000F, 582_000F, 47_592_333.3333F));
 
-            사용자_트렌드별_평균_행사비_통계를_조회한다(FEMALE.getValue(), 50, member1.accessToken())
-                    .statusCode(OK.value())
-                    .body("result.결혼", is(3_600_000F))
-                    .body("result.생일", is(1_430_000F))
-                    .body("result.출산", is(0))
-                    .body("result.돌잔치", is(127_000F))
-                    .body("result.개업", is(293_000F))
-                    .body("result.기타", is(102_392_000F));
+            final ValidatableResponse response8 = 사용자_트렌드별_평균_행사비_통계를_조회한다(FEMALE.getValue(), 50, member1.accessToken()).statusCode(OK.value());
+            assertTrendHeartAverageStatisticsMatch(response8, List.of(3_600_000F, 1_430_000F, 0F, 127_000F, 293_000F, 102_392_000F));
         }
 
         private void createHeart(
@@ -287,6 +240,18 @@ public class HeartStatisticsAcceptanceTest extends AcceptanceTest {
                         accessToken
                 );
             }
+        }
+
+        private void assertTrendHeartAverageStatisticsMatch(
+                final ValidatableResponse response,
+                final List<Float> amounts
+        ) {
+            response.body("result.find { it.event == '결혼' }.amount", (amounts.get(0) != 0) ? is(amounts.get(0)) : nullValue())
+                    .body("result.find { it.event == '생일' }.amount", (amounts.get(1) != 0) ? is(amounts.get(1)) : nullValue())
+                    .body("result.find { it.event == '출산' }.amount", (amounts.get(2) != 0) ? is(amounts.get(2)) : nullValue())
+                    .body("result.find { it.event == '돌잔치' }.amount", (amounts.get(3) != 0) ? is(amounts.get(3)) : nullValue())
+                    .body("result.find { it.event == '개업' }.amount", (amounts.get(4) != 0) ? is(amounts.get(4)) : nullValue())
+                    .body("result.find { it.event !in ['결혼', '생일', '출산', '돌잔치', '개업'] }.amount", (amounts.get(5) != 0) ? is(amounts.get(5)) : nullValue());
         }
     }
 }
