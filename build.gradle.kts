@@ -49,6 +49,7 @@ dependencies {
     // Cloud Infra
     implementation("io.awspring.cloud:spring-cloud-aws-starter:${property("awspringVersion")}")
     implementation("io.awspring.cloud:spring-cloud-aws-starter-s3:${property("awspringVersion")}")
+    implementation("io.awspring.cloud:spring-cloud-aws-starter-parameter-store:${property("awspringVersion")}")
 
     // JWT
     implementation("io.jsonwebtoken:jjwt-api:${property("jwtTokenVersion")}")
