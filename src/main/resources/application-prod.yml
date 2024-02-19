@@ -4,11 +4,15 @@ server:
       enabled: false
 
 spring:
+  config:
+    import:
+      - aws-parameterstore:/mour/secret_prod/
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:13306/mour?autoReconnect=true&characterEncoding=UTF8&serverTimeZone=Asia/Seoul
-    username: root
-    password: 1234
+    url: ${RDS_URL}
+    username: ${RDS_USERNAME}
+    password: ${RDS_PASSWORD}
 
   jpa:
     open-in-view: false
@@ -29,49 +33,39 @@ spring:
 
   data:
     redis:
-      host: localhost
-      port: 6379
-      password: mour
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
 
   cloud:
     aws:
       region:
         static: ap-northeast-2
       s3:
-        bucket: mour-upload
-      credentials:
-        profile:
-          name: dnd
+        bucket: ${S3_BUCKET}
 
   web:
     resources:
       add-mappings: false
 
 jwt:
-  secret-key: 5765a2b9c7cb01f6d1225d8d597c16b35278ff621ab77353b6633b9bc2237834
+  secret-key: ${JWT_SECRET_KEY}
   access-token-validity-seconds: 3600
   refresh-token-validity-seconds: 604800
 
 springdoc:
   server:
-    url: http://localhost:8080
+    url: https://dnd.ac
   swagger-ui:
-    path: /api/swagger
-    operations-sorter: alpha
-    tags-sorter: alpha
-    disable-swagger-default-url: true
-    display-request-duration: true
-  api-docs:
-    path: /api-docs
+    enabled: false
 
 decorator:
   datasource:
     p6spy:
-      enable-logging: true
+      enable-logging: false
 
 slack:
   webhook:
-    url: ${SLACK_WEBHOOK_URL:slack-webhook-url}
+    url: ${SLACK_WEBHOOK_URL}
 
 logging:
-  config: classpath:logback/logback-local.xml
+  config: classpath:logback/logback-prod.xml
