@@ -1,16 +1,7 @@
 server:
-  tomcat:
-    mbeanregistry:
-      enabled: true
   error:
     whitelabel:
       enabled: false
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: [ "health", "prometheus" ]
 
 spring:
   datasource:

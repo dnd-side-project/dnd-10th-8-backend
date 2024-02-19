@@ -50,10 +50,6 @@ dependencies {
     implementation("io.awspring.cloud:spring-cloud-aws-starter:${property("awspringVersion")}")
     implementation("io.awspring.cloud:spring-cloud-aws-starter-s3:${property("awspringVersion")}")
 
-    // Log & Monitoring
-    implementation("org.springframework.boot:spring-boot-starter-actuator")
-    runtimeOnly("io.micrometer:micrometer-registry-prometheus")
-
     // JWT
     implementation("io.jsonwebtoken:jjwt-api:${property("jwtTokenVersion")}")
     runtimeOnly("io.jsonwebtoken:jjwt-impl:${property("jwtTokenVersion")}")
