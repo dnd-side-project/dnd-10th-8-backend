@@ -6,7 +6,6 @@ import ac.dnd.mour.server.heart.domain.repository.query.response.QPersonalHeartH
 import ac.dnd.mour.server.heart.domain.repository.query.response.QTrendHeartStatistics;
 import ac.dnd.mour.server.heart.domain.repository.query.response.TrendHeartStatistics;
 import ac.dnd.mour.server.heart.domain.repository.query.spec.PersonalHeartStatisticsCondition;
-import ac.dnd.mour.server.heart.domain.repository.query.spec.StatisticsStandard;
 import ac.dnd.mour.server.heart.domain.repository.query.spec.TrendHeartStatisticsCondition;
 import ac.dnd.mour.server.heart.domain.repository.query.spec.TrendRange;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -45,7 +44,7 @@ public class HeartStatisticsRepositoryImpl implements HeartStatisticsRepository 
                 .where(
                         heart.memberId.eq(condition.memberId()),
                         isGive(condition.give()),
-                        byYearOrMonth(condition.standard(), condition.year(), condition.month())
+                        byYearOrMonth(condition.year(), condition.month())
                 )
                 .orderBy(heart.day.desc(), heart.id.desc())
                 .fetch();
@@ -55,8 +54,8 @@ public class HeartStatisticsRepositoryImpl implements HeartStatisticsRepository 
         return give ? heart.give.isTrue() : heart.give.isFalse();
     }
 
-    private BooleanExpression byYearOrMonth(final StatisticsStandard standard, final int year, final int month) {
-        if (standard == StatisticsStandard.YEAR) {
+    private BooleanExpression byYearOrMonth(final int year, final int month) {
+        if (month == 0) {
             final LocalDate start = LocalDate.of(year, 1, 1);
             final LocalDate end = start.plusYears(1);
             return heart.day.goe(start).and(heart.day.lt(end));

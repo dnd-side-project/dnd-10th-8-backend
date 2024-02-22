@@ -33,13 +33,11 @@ public class HeartStatisticsApiController {
     @GetMapping("/v1/statistics/me")
     public ResponseEntity<PersonalHeartStatisticsResponse> getPersonalHeartStatistics(
             @Auth final Authenticated authenticated,
-            @RequestParam(name = "standard") final String standard,
             @RequestParam(name = "year") final int year,
             @RequestParam(name = "month", defaultValue = "0") final int month
     ) {
         final PersonalHeartStatisticsResponse result = getPersonalHeartStatisticsUseCase.invoke(new GetPersonalHeartStatistics(
                 authenticated.id(),
-                standard,
                 year,
                 month
         ));

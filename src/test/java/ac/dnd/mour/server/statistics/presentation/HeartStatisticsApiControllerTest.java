@@ -92,16 +92,12 @@ class HeartStatisticsApiControllerTest extends ControllerTest {
 
             // when - then
             successfulExecute(
-                    getRequestWithAccessToken(BASE_URL, Map.of(
-                            "standard", "year",
-                            "year", "2024"
-                    )),
+                    getRequestWithAccessToken(BASE_URL, Map.of("year", "2024")),
                     status().isOk(),
                     successDocsWithAccessToken("StatisticsApi/PersonalHeartHistories", createHttpSpecSnippets(
                             queryParameters(
-                                    query("standard", "연도별 or 월별", "year / month", true),
                                     query("year", "Year", true),
-                                    query("month", "Month", false)
+                                    query("month", "Month", "안보내거나 0으로 보내면 연도별 조회", false)
                             ),
                             responseFields(
                                     subsection("give", "보낸 마음 내역"),
