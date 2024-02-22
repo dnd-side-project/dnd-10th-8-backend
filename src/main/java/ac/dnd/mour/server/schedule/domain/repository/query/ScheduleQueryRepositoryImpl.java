@@ -108,7 +108,10 @@ public class ScheduleQueryRepositoryImpl implements ScheduleQueryRepository {
                 .from(schedule)
                 .innerJoin(relation).on(relation.id.eq(schedule.relationId))
                 .innerJoin(group).on(group.id.eq(relation.groupId))
-                .where(schedule.memberId.eq(memberId))
+                .where(
+                        schedule.memberId.eq(memberId),
+                        schedule.alarm.isNotNull()
+                )
                 .orderBy(schedule.id.asc())
                 .fetch();
     }
