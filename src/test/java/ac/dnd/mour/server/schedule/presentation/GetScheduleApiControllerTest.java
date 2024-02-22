@@ -260,7 +260,7 @@ class GetScheduleApiControllerTest extends ControllerTest {
                                     body("result[].event", "행사 종류"),
                                     body("result[].repeatType", "반복 타입", "Nullable"),
                                     body("result[].repeatFinish", "반복 종료 날짜", "Nullable"),
-                                    body("result[].alarm", "알람", "Nullable"),
+                                    body("result[].alarm", "알람"),
                                     body("result[].time", "시간", "Nullable"),
                                     body("result[].link", "링크", "Nullable"),
                                     body("result[].location", "위치", "Nullable"),
