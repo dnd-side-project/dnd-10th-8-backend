@@ -10,7 +10,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 @Getter
 @RequiredArgsConstructor
 public enum RelationExceptionCode implements BaseExceptionCode {
-     RELATION_NOT_FOUND(NOT_FOUND, "RELATION_001", "관계 정보가 존재하지 않습니다."),
+    RELATION_NOT_FOUND(NOT_FOUND, "RELATION_001", "관계 정보가 존재하지 않습니다."),
     ;
 
     private final HttpStatus status;
