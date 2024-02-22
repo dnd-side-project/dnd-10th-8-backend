@@ -22,8 +22,8 @@ public class GetRelationDetailsUseCase {
     public SingleRelationDetails getRelation(final GetSingleRelationDetails query) {
         return SingleRelationDetails.of(
                 relationDetailsQueryRepository.fetchRelation(query.relationId(), query.memberId()),
-                heartRepository.fetchInteractionMoney(query.memberId(), query.relationId(), true),
-                heartRepository.fetchInteractionMoney(query.memberId(), query.relationId(), false)
+                heartRepository.fetchGivenMoney(query.memberId(), query.relationId()),
+                heartRepository.fetchTakenMoney(query.memberId(), query.relationId())
         );
     }
 

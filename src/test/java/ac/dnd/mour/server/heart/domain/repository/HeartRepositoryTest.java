@@ -50,22 +50,40 @@ class HeartRepositoryTest extends RepositoryTest {
     @Test
     @DisplayName("주고 받은 마음에 대한 금액을 조회한다")
     void fetchInteractionMoney() {
-        // given
+        // none
+        assertAll(
+                () -> assertThat(sut.fetchGivenMoney(member.getId(), relation.getId())).isEqualTo(0),
+                () -> assertThat(sut.fetchTakenMoney(member.getId(), relation.getId())).isEqualTo(0)
+        );
+
+        // give 3
         sut.save(생일_선물을_보냈다.toDomain(member, relation));
         sut.save(결혼_축의금을_보냈다.toDomain(member, relation));
         sut.save(승진_선물을_보냈다.toDomain(member, relation));
 
+        assertAll(
+                () -> assertThat(sut.fetchGivenMoney(member.getId(), relation.getId())).isEqualTo(
+                        생일_선물을_보냈다.getMoney()
+                                + 결혼_축의금을_보냈다.getMoney()
+                                + 승진_선물을_보냈다.getMoney()
+                ),
+                () -> assertThat(sut.fetchTakenMoney(member.getId(), relation.getId())).isEqualTo(0)
+        );
+
+        // take 2
         sut.save(생일_선물을_받았다.toDomain(member, relation));
         sut.save(결혼_축의금을_받았다.toDomain(member, relation));
 
-        // when
-        final long giveMoney = sut.fetchInteractionMoney(member.getId(), relation.getId(), true);
-        final long takeMoney = sut.fetchInteractionMoney(member.getId(), relation.getId(), false);
-
-        // then
         assertAll(
-                () -> assertThat(giveMoney).isEqualTo(생일_선물을_보냈다.getMoney() + 결혼_축의금을_보냈다.getMoney() + 승진_선물을_보냈다.getMoney()),
-                () -> assertThat(takeMoney).isEqualTo(생일_선물을_받았다.getMoney() + 결혼_축의금을_받았다.getMoney())
+                () -> assertThat(sut.fetchGivenMoney(member.getId(), relation.getId())).isEqualTo(
+                        생일_선물을_보냈다.getMoney()
+                                + 결혼_축의금을_보냈다.getMoney()
+                                + 승진_선물을_보냈다.getMoney()
+                ),
+                () -> assertThat(sut.fetchTakenMoney(member.getId(), relation.getId())).isEqualTo(
+                        생일_선물을_받았다.getMoney()
+                                + 결혼_축의금을_받았다.getMoney()
+                )
         );
     }
 }

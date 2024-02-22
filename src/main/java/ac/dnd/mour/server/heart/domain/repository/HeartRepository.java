@@ -42,11 +42,21 @@ public interface HeartRepository extends JpaRepository<Heart, Long> {
             FROM Heart h
             WHERE h.memberId = :memberId AND h.relationId = :relationId AND h.give = :give
             """)
-    long fetchInteractionMoney(
+    Long fetchInteractionMoney(
             @Param("memberId") final long memberId,
             @Param("relationId") final long relationId,
             @Param("give") final boolean give
     );
+
+    default long fetchGivenMoney(final long memberId, final long relationId) {
+        final Long result = fetchInteractionMoney(memberId, relationId, true);
+        return (result == null) ? 0 : result;
+    }
+
+    default long fetchTakenMoney(final long memberId, final long relationId) {
+        final Long result = fetchInteractionMoney(memberId, relationId, false);
+        return (result == null) ? 0 : result;
+    }
 
     // Query Method
     Optional<Heart> findByIdAndMemberId(final long id, final long memberId);
