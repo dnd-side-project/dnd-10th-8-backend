@@ -39,9 +39,6 @@ spring:
         static: ap-northeast-2
       s3:
         bucket: mour-upload
-      credentials:
-        profile:
-          name: dnd
 
   web:
     resources:
