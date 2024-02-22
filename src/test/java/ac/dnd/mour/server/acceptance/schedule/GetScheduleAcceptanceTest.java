@@ -169,28 +169,28 @@ public class GetScheduleAcceptanceTest extends AcceptanceTest {
             final long relationId3 = 관계를_생성하고_ID를_추출한다(groupId, "관계-친구XXX-3", null, null, member.accessToken());
 
             final long scheduleId1 = 일정을_생성하고_ID를_추출한다(relationId1, 결혼식, member.accessToken());
-            final long scheduleId2 = 일정을_생성하고_ID를_추출한다(relationId2, 특별한_일정_XXX, member.accessToken());
+            final long scheduleId2 = 일정을_생성하고_ID를_추출한다(relationId2, 특별한_일정_XXX, member.accessToken()); // alarm null
             final long scheduleId3 = 일정을_생성하고_ID를_추출한다(relationId3, 친구_XXX_생일, member.accessToken());
 
             final ValidatableResponse response1 = 알람_동기화를_위한_일정을_조회한다(member.accessToken());
             assertSchedulesForAlarmMatch(
                     response1,
-                    List.of(scheduleId1, scheduleId2, scheduleId3),
-                    List.of(relationId1, relationId2, relationId3),
-                    List.of("관계-친구XXX-1", "관계-친구XXX-2", "관계-친구XXX-3"),
-                    List.of(new GroupResponse(groupId, "친구"), new GroupResponse(groupId, "친구"), new GroupResponse(groupId, "친구")),
-                    List.of(결혼식, 특별한_일정_XXX, 친구_XXX_생일)
-            );
-
-            일정을_삭제한다(scheduleId2, member.accessToken());
-            final ValidatableResponse response2 = 알람_동기화를_위한_일정을_조회한다(member.accessToken());
-            assertSchedulesForAlarmMatch(
-                    response2,
                     List.of(scheduleId1, scheduleId3),
                     List.of(relationId1, relationId3),
                     List.of("관계-친구XXX-1", "관계-친구XXX-3"),
                     List.of(new GroupResponse(groupId, "친구"), new GroupResponse(groupId, "친구")),
                     List.of(결혼식, 친구_XXX_생일)
+            );
+
+            일정을_삭제한다(scheduleId3, member.accessToken());
+            final ValidatableResponse response2 = 알람_동기화를_위한_일정을_조회한다(member.accessToken());
+            assertSchedulesForAlarmMatch(
+                    response2,
+                    List.of(scheduleId1),
+                    List.of(relationId1),
+                    List.of("관계-친구XXX-1"),
+                    List.of(new GroupResponse(groupId, "친구")),
+                    List.of(결혼식)
             );
         }
     }

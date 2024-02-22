@@ -4,18 +4,19 @@ import ac.dnd.mour.server.auth.domain.model.Authenticated;
 import ac.dnd.mour.server.global.annotation.Auth;
 import ac.dnd.mour.server.global.dto.ResponseWrapper;
 import ac.dnd.mour.server.heart.application.usecase.GetHeartHistoryUseCase;
-import ac.dnd.mour.server.heart.application.usecase.query.GetHeartHistory;
-import ac.dnd.mour.server.heart.application.usecase.query.GetHeartHistoryWithRelation;
 import ac.dnd.mour.server.heart.application.usecase.query.response.HeartHistoryDetails;
 import ac.dnd.mour.server.heart.application.usecase.query.response.SpecificRelationHeartHistoryDetails;
+import ac.dnd.mour.server.heart.presentation.dto.request.GetHeartHistoriesRequest;
+import ac.dnd.mour.server.heart.presentation.dto.request.GetHeartHistoriesWithRelationRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -31,14 +32,9 @@ public class GetHeartHistoryApiController {
     @GetMapping("/v1/hearts/me")
     public ResponseEntity<ResponseWrapper<List<HeartHistoryDetails>>> getHeartHistories(
             @Auth final Authenticated authenticated,
-            @RequestParam(name = "sort") final String sort,
-            @RequestParam(name = "name", required = false) final String name
+            @ModelAttribute @Valid final GetHeartHistoriesRequest request
     ) {
-        final List<HeartHistoryDetails> result = getHeartHistoryUseCase.getHeartHistories(new GetHeartHistory(
-                authenticated.id(),
-                sort,
-                name
-        ));
+        final List<HeartHistoryDetails> result = getHeartHistoryUseCase.getHeartHistories(request.toQuery(authenticated.id()));
         return ResponseEntity.ok(ResponseWrapper.from(result));
     }
 
@@ -47,12 +43,11 @@ public class GetHeartHistoryApiController {
     public ResponseEntity<ResponseWrapper<List<SpecificRelationHeartHistoryDetails>>> getHeartHistoriesWithRelation(
             @Auth final Authenticated authenticated,
             @PathVariable(name = "relationId") final Long relationId,
-            @RequestParam(name = "sort") final String sort
+            @ModelAttribute @Valid final GetHeartHistoriesWithRelationRequest request
     ) {
-        final List<SpecificRelationHeartHistoryDetails> result = getHeartHistoryUseCase.getHeartHistoriesWithRelation(new GetHeartHistoryWithRelation(
+        final List<SpecificRelationHeartHistoryDetails> result = getHeartHistoryUseCase.getHeartHistoriesWithRelation(request.toQuery(
                 authenticated.id(),
-                relationId,
-                sort
+                relationId
         ));
         return ResponseEntity.ok(ResponseWrapper.from(result));
     }

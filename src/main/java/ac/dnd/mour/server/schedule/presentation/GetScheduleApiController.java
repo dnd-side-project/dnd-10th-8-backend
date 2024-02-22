@@ -7,20 +7,21 @@ import ac.dnd.mour.server.schedule.application.usecase.GetCalendarScheduleUseCas
 import ac.dnd.mour.server.schedule.application.usecase.GetScheduleDetailsUseCase;
 import ac.dnd.mour.server.schedule.application.usecase.GetSchedulesForAlarmUseCase;
 import ac.dnd.mour.server.schedule.application.usecase.GetUnrecordedScheduleUseCase;
-import ac.dnd.mour.server.schedule.application.usecase.query.GetCalendarSchedule;
 import ac.dnd.mour.server.schedule.application.usecase.query.GetScheduleDetails;
 import ac.dnd.mour.server.schedule.application.usecase.query.response.CalendarScheduleResponse;
 import ac.dnd.mour.server.schedule.application.usecase.query.response.ScheduleDetailsResponse;
 import ac.dnd.mour.server.schedule.application.usecase.query.response.SchedulesForAlarmResponse;
 import ac.dnd.mour.server.schedule.application.usecase.query.response.UnrecordedScheduleResponse;
+import ac.dnd.mour.server.schedule.presentation.dto.request.GetCalendarSchedulesRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -61,14 +62,9 @@ public class GetScheduleApiController {
     @GetMapping("/v1/schedules/me")
     public ResponseEntity<ResponseWrapper<List<CalendarScheduleResponse>>> getCalendarSchedules(
             @Auth final Authenticated authenticated,
-            @RequestParam(name = "year") final int year,
-            @RequestParam(name = "month") final int month
+            @ModelAttribute @Valid final GetCalendarSchedulesRequest request
     ) {
-        final List<CalendarScheduleResponse> result = getCalendarScheduleUseCase.invoke(new GetCalendarSchedule(
-                authenticated.id(),
-                year,
-                month
-        ));
+        final List<CalendarScheduleResponse> result = getCalendarScheduleUseCase.invoke(request.toQuery(authenticated.id()));
         return ResponseEntity.ok(ResponseWrapper.from(result));
     }
 
