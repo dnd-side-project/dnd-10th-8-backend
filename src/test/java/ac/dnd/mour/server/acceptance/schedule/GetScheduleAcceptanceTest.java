@@ -36,6 +36,8 @@ import static org.springframework.http.HttpStatus.OK;
 @ExtendWith(DatabaseCleanerEachCallbackExtension.class)
 @DisplayName("[Acceptance Test] 등록한 일정 관련 조회")
 public class GetScheduleAcceptanceTest extends AcceptanceTest {
+    private final LocalDate now = LocalDate.now();
+
     @Nested
     @DisplayName("일정 상세 조회 API")
     class GetScheduleDetails {
@@ -78,9 +80,9 @@ public class GetScheduleAcceptanceTest extends AcceptanceTest {
             final long relationId2 = 관계를_생성하고_ID를_추출한다(groupId, "관계-친구XXX-2", null, null, member.accessToken());
             final long relationId3 = 관계를_생성하고_ID를_추출한다(groupId, "관계-친구XXX-3", null, null, member.accessToken());
 
-            final long scheduleId1 = 일정을_생성하고_ID를_추출한다(relationId1, LocalDate.of(2024, 1, 1), "일정1", 특별한_일정_XXX, member.accessToken());
-            final long scheduleId2 = 일정을_생성하고_ID를_추출한다(relationId2, LocalDate.of(2024, 1, 15), "일정2", 특별한_일정_XXX, member.accessToken());
-            final long scheduleId3 = 일정을_생성하고_ID를_추출한다(relationId3, LocalDate.of(2024, 1, 22), "일정3", 특별한_일정_XXX, member.accessToken());
+            final long scheduleId1 = 일정을_생성하고_ID를_추출한다(relationId1, LocalDate.of(now.getYear() + 1, 1, 1), "일정1", 특별한_일정_XXX, member.accessToken());
+            final long scheduleId2 = 일정을_생성하고_ID를_추출한다(relationId2, LocalDate.of(now.getYear() + 1, 1, 15), "일정2", 특별한_일정_XXX, member.accessToken());
+            final long scheduleId3 = 일정을_생성하고_ID를_추출한다(relationId3, LocalDate.of(now.getYear() + 1, 1, 22), "일정3", 특별한_일정_XXX, member.accessToken());
 
             final ValidatableResponse response1 = 지출이_기록되지_않은_일정을_조회한다(member.accessToken()).statusCode(OK.value());
             assertUnrecordedSchedulesMatch(
@@ -89,7 +91,7 @@ public class GetScheduleAcceptanceTest extends AcceptanceTest {
                     List.of(relationId1, relationId2),
                     List.of("관계-친구XXX-1", "관계-친구XXX-2"),
                     List.of(new GroupResponse(groupId, "친구"), new GroupResponse(groupId, "친구")),
-                    List.of(LocalDate.of(2024, 1, 1), LocalDate.of(2024, 1, 15)),
+                    List.of(LocalDate.of(now.getYear() + 1, 1, 1), LocalDate.of(now.getYear() + 1, 1, 15)),
                     List.of("일정1", "일정2")
             );
 
@@ -101,7 +103,7 @@ public class GetScheduleAcceptanceTest extends AcceptanceTest {
                     List.of(relationId1),
                     List.of("관계-친구XXX-1"),
                     List.of(new GroupResponse(groupId, "친구")),
-                    List.of(LocalDate.of(2024, 1, 1)),
+                    List.of(LocalDate.of(now.getYear() + 1, 1, 1)),
                     List.of("일정1")
             );
 
@@ -123,11 +125,11 @@ public class GetScheduleAcceptanceTest extends AcceptanceTest {
             final long relationId2 = 관계를_생성하고_ID를_추출한다(groupId, "관계-친구XXX-2", null, null, member.accessToken());
             final long relationId3 = 관계를_생성하고_ID를_추출한다(groupId, "관계-친구XXX-3", null, null, member.accessToken());
 
-            final long scheduleId1 = 일정을_생성하고_ID를_추출한다(relationId1, 결혼식, LocalDate.of(2024, 1, 1), member.accessToken());
-            final long scheduleId2 = 일정을_생성하고_ID를_추출한다(relationId2, 특별한_일정_XXX, LocalDate.of(2024, 1, 15), member.accessToken());
-            final long scheduleId3 = 일정을_생성하고_ID를_추출한다(relationId3, 친구_XXX_생일, LocalDate.of(2024, 2, 1), member.accessToken());
+            final long scheduleId1 = 일정을_생성하고_ID를_추출한다(relationId1, 결혼식, LocalDate.of(now.getYear() + 1, 1, 1), member.accessToken());
+            final long scheduleId2 = 일정을_생성하고_ID를_추출한다(relationId2, 특별한_일정_XXX, LocalDate.of(now.getYear() + 1, 1, 15), member.accessToken());
+            final long scheduleId3 = 일정을_생성하고_ID를_추출한다(relationId3, 친구_XXX_생일, LocalDate.of(now.getYear() + 1, 2, 1), member.accessToken());
 
-            final ValidatableResponse response1 = 캘린더_Year_Month에_해당하는_일정을_조회한다(2024, 1, member.accessToken());
+            final ValidatableResponse response1 = 캘린더_Year_Month에_해당하는_일정을_조회한다(now.getYear() + 1, 1, member.accessToken());
             assertCalendarSchedulesMatch(
                     response1,
                     List.of(scheduleId1, scheduleId2),
@@ -135,10 +137,10 @@ public class GetScheduleAcceptanceTest extends AcceptanceTest {
                     List.of("관계-친구XXX-1", "관계-친구XXX-2"),
                     List.of(new GroupResponse(groupId, "친구"), new GroupResponse(groupId, "친구")),
                     List.of(결혼식, 특별한_일정_XXX),
-                    List.of(LocalDate.of(2024, 1, 1), LocalDate.of(2024, 1, 15))
+                    List.of(LocalDate.of(now.getYear() + 1, 1, 1), LocalDate.of(now.getYear() + 1, 1, 15))
             );
 
-            final ValidatableResponse response2 = 캘린더_Year_Month에_해당하는_일정을_조회한다(2024, 2, member.accessToken());
+            final ValidatableResponse response2 = 캘린더_Year_Month에_해당하는_일정을_조회한다(now.getYear() + 1, 2, member.accessToken());
             assertCalendarSchedulesMatch(
                     response2,
                     List.of(scheduleId3),
@@ -146,10 +148,10 @@ public class GetScheduleAcceptanceTest extends AcceptanceTest {
                     List.of("관계-친구XXX-3"),
                     List.of(new GroupResponse(groupId, "친구")),
                     List.of(친구_XXX_생일),
-                    List.of(LocalDate.of(2024, 2, 1))
+                    List.of(LocalDate.of(now.getYear() + 1, 2, 1))
             );
 
-            final ValidatableResponse response3 = 캘린더_Year_Month에_해당하는_일정을_조회한다(2024, 3, member.accessToken());
+            final ValidatableResponse response3 = 캘린더_Year_Month에_해당하는_일정을_조회한다(now.getYear() + 1, 3, member.accessToken());
             assertCalendarSchedulesMatch(response3, List.of(), List.of(), List.of(), List.of(), List.of(), List.of());
         }
     }
