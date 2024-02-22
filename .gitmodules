@@ -1,0 +1,3 @@
+[submodule "mour-secret"]
+	path = mour-secret
+	url = https://github.com/sjiwon/mour-secret.git
