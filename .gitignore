@@ -27,6 +27,7 @@ out/
 
 **/src/main/generated/
 **/src/main/resources/security/
+**/src/main/resources/application-prod.yml
 
 ### RestDocs index.html ###
 src/docs/asciidoc/**/*.html

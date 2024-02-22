@@ -49,7 +49,6 @@ dependencies {
     // Cloud Infra
     implementation("io.awspring.cloud:spring-cloud-aws-starter:${property("awspringVersion")}")
     implementation("io.awspring.cloud:spring-cloud-aws-starter-s3:${property("awspringVersion")}")
-    implementation("io.awspring.cloud:spring-cloud-aws-starter-parameter-store:${property("awspringVersion")}")
 
     // JWT
     implementation("io.jsonwebtoken:jjwt-api:${property("jwtTokenVersion")}")
@@ -149,6 +148,21 @@ tasks {
     build {
         dependsOn(asciidoctor)
     }
+}
+
+// Copy Submodule
+tasks.register<Copy>("copySecret") {
+    from("./mour-secret")
+    include("application*.yml")
+    into("./src/main/resources")
+}
+
+tasks.named("processResources") {
+    dependsOn("copySecret")
+}
+
+tasks.named<JavaCompile>("compileJava") {
+    inputs.files(tasks.named("processResources"))
 }
 
 // jar & bootJar

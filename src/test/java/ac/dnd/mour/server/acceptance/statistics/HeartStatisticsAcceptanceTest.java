@@ -101,28 +101,28 @@ public class HeartStatisticsAcceptanceTest extends AcceptanceTest {
                     member.accessToken()
             );
 
-            final ValidatableResponse response1 = 자신의_행사별_주고_받은_마음_내역을_조회한다("year", 2024, 0, member.accessToken()).statusCode(OK.value());
+            final ValidatableResponse response1 = 자신의_행사별_주고_받은_마음_내역을_조회한다(2024, 0, member.accessToken()).statusCode(OK.value());
             assertPersonalHeartStatisticsMatch(
                     response1,
                     List.of(0, 0, 0, 0, 0, 2),
                     List.of(1, 1, 0, 0, 0, 0)
             );
 
-            final ValidatableResponse response2 = 자신의_행사별_주고_받은_마음_내역을_조회한다("month", 2024, 1, member.accessToken()).statusCode(OK.value());
+            final ValidatableResponse response2 = 자신의_행사별_주고_받은_마음_내역을_조회한다(2024, 1, member.accessToken()).statusCode(OK.value());
             assertPersonalHeartStatisticsMatch(
                     response2,
                     List.of(0, 0, 0, 0, 0, 0),
                     List.of(0, 0, 0, 0, 0, 0)
             );
 
-            final ValidatableResponse response3 = 자신의_행사별_주고_받은_마음_내역을_조회한다("month", 2024, 2, member.accessToken()).statusCode(OK.value());
+            final ValidatableResponse response3 = 자신의_행사별_주고_받은_마음_내역을_조회한다(2024, 2, member.accessToken()).statusCode(OK.value());
             assertPersonalHeartStatisticsMatch(
                     response3,
                     List.of(0, 0, 0, 0, 0, 2),
                     List.of(1, 0, 0, 0, 0, 0)
             );
 
-            final ValidatableResponse response4 = 자신의_행사별_주고_받은_마음_내역을_조회한다("month", 2024, 3, member.accessToken()).statusCode(OK.value());
+            final ValidatableResponse response4 = 자신의_행사별_주고_받은_마음_내역을_조회한다(2024, 3, member.accessToken()).statusCode(OK.value());
             assertPersonalHeartStatisticsMatch(
                     response4,
                     List.of(0, 0, 0, 0, 0, 0),

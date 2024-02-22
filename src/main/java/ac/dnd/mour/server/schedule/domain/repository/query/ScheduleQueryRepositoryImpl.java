@@ -10,6 +10,7 @@ import ac.dnd.mour.server.schedule.domain.repository.query.response.ScheduleDeta
 import ac.dnd.mour.server.schedule.domain.repository.query.response.ScheduleForAlarm;
 import ac.dnd.mour.server.schedule.domain.repository.query.response.UnrecordedSchedule;
 import ac.dnd.mour.server.schedule.domain.repository.query.spec.SearchCalendarScheduleCondition;
+import ac.dnd.mour.server.schedule.exception.ScheduleException;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ import java.util.List;
 import static ac.dnd.mour.server.group.domain.model.QGroup.group;
 import static ac.dnd.mour.server.relation.domain.model.QRelation.relation;
 import static ac.dnd.mour.server.schedule.domain.model.QSchedule.schedule;
+import static ac.dnd.mour.server.schedule.exception.ScheduleExceptionCode.SCHEDULE_NOT_FOUND;
 
 @Repository
 @MourReadOnlyTransactional
@@ -113,7 +115,7 @@ public class ScheduleQueryRepositoryImpl implements ScheduleQueryRepository {
 
     @Override
     public ScheduleDetails fetchScheduleDetails(final long scheduleId, final long memberId) {
-        return query
+        final ScheduleDetails result = query
                 .select(new QScheduleDetails(
                         schedule.id,
                         relation.id,
@@ -138,5 +140,10 @@ public class ScheduleQueryRepositoryImpl implements ScheduleQueryRepository {
                 )
                 .orderBy(schedule.id.asc())
                 .fetchOne();
+
+        if (result == null) {
+            throw new ScheduleException(SCHEDULE_NOT_FOUND);
+        }
+        return result;
     }
 }

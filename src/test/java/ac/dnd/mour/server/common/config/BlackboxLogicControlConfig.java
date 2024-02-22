@@ -21,6 +21,7 @@ public class BlackboxLogicControlConfig {
     @Bean
     @Primary
     public UnrecordedStandardDefiner unrecordedStandardCreator() {
-        return () -> LocalDate.of(2024, 1, 20);
+        final LocalDate now = LocalDate.now();
+        return () -> LocalDate.of(now.getYear() + 1, 1, 20);
     }
 }

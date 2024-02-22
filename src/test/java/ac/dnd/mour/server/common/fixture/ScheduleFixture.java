@@ -17,17 +17,17 @@ import static ac.dnd.mour.server.schedule.domain.model.Repeat.Type.EVERY_YEAR;
 @RequiredArgsConstructor
 public enum ScheduleFixture {
     결혼식(
-            LocalDate.of(2024, 1, 10), "결혼", null,
+            LocalDate.now().plusMonths(1), "결혼", null,
             LocalDateTime.of(2024, 1, 10, 9, 0), LocalTime.of(16, 0),
             null, "신라호텔", "~~~ 결혼식..."
     ),
     친구_XXX_생일(
-            LocalDate.of(2024, 2, 10), "친구 생일", new Repeat(EVERY_YEAR, null),
+            LocalDate.now().plusMonths(2), "친구 생일", new Repeat(EVERY_YEAR, null),
             LocalDateTime.of(2024, 2, 10, 9, 0), null,
             null, null, "~~~ 생일"
     ),
     특별한_일정_XXX(
-            LocalDate.of(2024, 1, 1), "특별한 일정 XXX",
+            LocalDate.now().plusMonths(3), "특별한 일정 XXX",
             null, null, null, null, null, null
     ),
     ;

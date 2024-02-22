@@ -7,14 +7,13 @@ import static ac.dnd.mour.server.acceptance.CommonRequestFixture.getRequestWithA
 
 public class StatisticsAcceptanceStep {
     public static ValidatableResponse 자신의_행사별_주고_받은_마음_내역을_조회한다(
-            final String standard,
             final int year,
             final int month,
             final String accessToken
     ) {
         final String uri = UriComponentsBuilder
-                .fromPath("/api/v1/statistics/me?standard={standard}&year={year}&month={month}")
-                .build(standard, year, month)
+                .fromPath("/api/v1/statistics/me?year={year}&month={month}")
+                .build(year, month)
                 .getPath();
 
         return getRequestWithAccessToken(uri, accessToken);
