@@ -16,7 +16,10 @@ import static ac.dnd.mour.server.acceptance.group.GroupAcceptanceStep.그룹을_
 import static ac.dnd.mour.server.acceptance.group.GroupAcceptanceStep.그룹을_수정한다;
 import static ac.dnd.mour.server.acceptance.group.GroupAcceptanceStep.그룹을_추가하고_ID를_추출한다;
 import static ac.dnd.mour.server.acceptance.group.GroupAcceptanceStep.그룹을_추가한다;
+import static ac.dnd.mour.server.acceptance.relation.RelationAcceptanceStep.관계를_생성하고_ID를_추출한다;
 import static ac.dnd.mour.server.common.fixture.MemberFixture.MEMBER_1;
+import static ac.dnd.mour.server.common.fixture.RelationFixture.친구_1;
+import static ac.dnd.mour.server.group.exception.GroupExceptionCode.CANNOT_DELETE_FROM_REGISTERED_RELATIONSHIP_EXISTS;
 import static ac.dnd.mour.server.group.exception.GroupExceptionCode.GROUP_ALREADY_EXISTS;
 import static ac.dnd.mour.server.group.exception.GroupExceptionCode.GROUP_NOT_FOUND;
 import static org.hamcrest.Matchers.contains;
@@ -108,6 +111,20 @@ public class ManageGroupAcceptanceTest extends AcceptanceTest {
                     .statusCode(NOT_FOUND.value())
                     .body("code", is(GROUP_NOT_FOUND.getCode()))
                     .body("message", is(GROUP_NOT_FOUND.getMessage()));
+        }
+
+        @Test
+        @DisplayName("삭제하려는 그룹에 대해서 등록된 관계가 존재하면 삭제할 수 없다")
+        void throwExceptionByCannotDeleteFromRegisteredRelationshipExists() {
+            final AuthMember member = MEMBER_1.회원가입과_로그인을_진행한다();
+            final long groupId = 관리하고_있는_특정_그룹의_ID를_조회한다("친구", member.accessToken());
+            관계를_생성하고_ID를_추출한다(groupId, 친구_1.getName(), 친구_1.getImageUrl(), 친구_1.getMemo(), member.accessToken());
+
+
+            그룹을_삭제한다(groupId, member.accessToken())
+                    .statusCode(CONFLICT.value())
+                    .body("code", is(CANNOT_DELETE_FROM_REGISTERED_RELATIONSHIP_EXISTS.getCode()))
+                    .body("message", is(CANNOT_DELETE_FROM_REGISTERED_RELATIONSHIP_EXISTS.getMessage()));
         }
 
         @Test

@@ -34,4 +34,6 @@ public interface RelationRepository extends JpaRepository<Relation, Long> {
         return findByIdAndMemberId(id, memberId)
                 .orElseThrow(() -> new RelationException(RELATION_NOT_FOUND));
     }
+
+    boolean existsByMemberIdAndGroupId(final long memberId, final long groupId);
 }
