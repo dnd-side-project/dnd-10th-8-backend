@@ -26,10 +26,10 @@ public class DeleteMemberRelatedResourceProcessor {
     @MourWritableTransactional
     public void invoke(final long memberId) {
         tokenStore.deleteRefreshToken(memberId);
-        groupRepository.deleteMemberGroups(memberId);
-        relationRepository.deleteMemberRelations(memberId);
-        deleteMemberHearts(memberId);
         scheduleRepository.deleteMemberSchedules(memberId);
+        deleteMemberHearts(memberId);
+        relationRepository.deleteMemberRelations(memberId);
+        groupRepository.deleteMemberGroups(memberId);
     }
 
     private void deleteMemberHearts(final long memberId) {
