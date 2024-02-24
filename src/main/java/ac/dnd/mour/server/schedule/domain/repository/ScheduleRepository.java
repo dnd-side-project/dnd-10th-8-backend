@@ -31,6 +31,14 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
     @Query("DELETE FROM Schedule s WHERE s.memberId = :memberId")
     void deleteMemberSchedules(@Param("memberId") final long memberId);
 
+    @MourWritableTransactional
+    @Modifying(flushAutomatically = true, clearAutomatically = true)
+    @Query("DELETE FROM Schedule s WHERE s.memberId = :memberId AND s.relationId = :relationId")
+    void deleteWithMemberRelations(
+            @Param("memberId") final long memberId,
+            @Param("relationId") final long relationId
+    );
+
     // Query Method
     List<Schedule> findByMemberIdAndDayBefore(final long memberId, final LocalDate day);
 

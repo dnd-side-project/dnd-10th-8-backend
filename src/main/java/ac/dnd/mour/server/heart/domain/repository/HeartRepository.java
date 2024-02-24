@@ -27,6 +27,21 @@ public interface HeartRepository extends JpaRepository<Heart, Long> {
             """)
     List<Long> findIdsByMemberId(@Param("memberId") final Long memberId);
 
+    @Query("""
+            SELECT h.id
+            FROM Heart h
+            WHERE h.memberId = :memberId AND h.relationId = :relationId
+            """)
+    List<Long> findIdsByMemberIdAndRelationId(
+            @Param("memberId") final Long memberId,
+            @Param("relationId") final Long relationId
+    );
+
+    @MourWritableTransactional
+    @Modifying(flushAutomatically = true, clearAutomatically = true)
+    @Query("DELETE FROM Heart h WHERE h.id IN :heartIds")
+    void deleteByIds(@Param("heartIds") final List<Long> heartIds);
+
     @MourWritableTransactional
     @Modifying(flushAutomatically = true, clearAutomatically = true)
     @Query("DELETE FROM Heart h WHERE h.id = :id AND h.memberId = :memberId")
