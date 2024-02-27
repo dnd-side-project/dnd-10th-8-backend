@@ -23,6 +23,8 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     boolean existsByNickname(final Nickname nickname);
 
+    boolean existsByIdNotAndNickname(final Long id, final Nickname nickname);
+
     // TODO 추후 Soft Delete or Hard Delete 판단 (일단 현재는 Soft Delete)
     @MourWritableTransactional
     @Modifying(flushAutomatically = true, clearAutomatically = true)
