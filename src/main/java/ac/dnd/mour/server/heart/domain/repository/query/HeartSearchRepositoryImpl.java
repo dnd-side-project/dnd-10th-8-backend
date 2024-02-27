@@ -59,11 +59,11 @@ public class HeartSearchRepositoryImpl implements HeartSearchRepository {
                         group.id,
                         group.name
                 ))
-                .from(heart)
-                .innerJoin(relation).on(relation.id.eq(heart.relationId))
+                .from(relation)
                 .innerJoin(group).on(group.id.eq(relation.groupId))
+                .leftJoin(heart).on(heart.relationId.eq(relation.id))
                 .where(
-                        heart.memberId.eq(condition.memberId()),
+                        relation.memberId.eq(condition.memberId()),
                         relationNameEq(condition.name())
                 )
                 .orderBy(heart.id.desc())
@@ -77,7 +77,6 @@ public class HeartSearchRepositoryImpl implements HeartSearchRepository {
         }
 
         final List<HeartHistory> result = conbineMoneyHistories(relations);
-
         if (condition.sort() == INTIMACY) {
             return sortWithIntimacy(result);
         }
@@ -92,14 +91,14 @@ public class HeartSearchRepositoryImpl implements HeartSearchRepository {
         final List<HeartHistory.MoneySummary> takeMoneySummaries = fetchMoneySummaries(relationIds, false);
 
         final List<HeartHistory> result = new ArrayList<>();
-        relations.forEach(relationInfo -> {
-            final List<Long> giveHistories = extractMoneyHistories(giveMoneySummaries, relationInfo.relationId());
-            final List<Long> takeHistories = extractMoneyHistories(takeMoneySummaries, relationInfo.relationId());
+        relations.forEach(it -> {
+            final List<Long> giveHistories = extractMoneyHistories(giveMoneySummaries, it.relationId());
+            final List<Long> takeHistories = extractMoneyHistories(takeMoneySummaries, it.relationId());
             result.add(new HeartHistory(
-                    relationInfo.relationId(),
-                    relationInfo.relationName(),
-                    relationInfo.groupid(),
-                    relationInfo.groupName(),
+                    it.relationId(),
+                    it.relationName(),
+                    it.groupid(),
+                    it.groupName(),
                     giveHistories,
                     takeHistories
             ));
