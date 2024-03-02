@@ -52,7 +52,7 @@ public class HeartSearchRepositoryImpl implements HeartSearchRepository {
 
     @Override
     public List<HeartHistory> fetchHeartsByCondition(final SearchHeartCondition condition) {
-        final List<HeartHistory.RelationInfo> relations = query
+        final List<HeartHistory.RelationInfo> memberRelations = query
                 .select(new QHeartHistory_RelationInfo(
                         relation.id,
                         relation.name,
@@ -61,7 +61,27 @@ public class HeartSearchRepositoryImpl implements HeartSearchRepository {
                 ))
                 .from(relation)
                 .innerJoin(group).on(group.id.eq(relation.groupId))
-                .leftJoin(heart).on(heart.relationId.eq(relation.id))
+                .where(
+                        relation.memberId.eq(condition.memberId()),
+                        relationNameEq(condition.name())
+                )
+                .orderBy(relation.id.desc())
+                .fetch();
+
+        if (memberRelations.isEmpty()) {
+            return List.of();
+        }
+
+        final List<HeartHistory.RelationInfo> hearts = query
+                .select(new QHeartHistory_RelationInfo(
+                        relation.id,
+                        relation.name,
+                        group.id,
+                        group.name
+                ))
+                .from(heart)
+                .innerJoin(relation).on(relation.id.eq(heart.relationId))
+                .innerJoin(group).on(group.id.eq(relation.groupId))
                 .where(
                         relation.memberId.eq(condition.memberId()),
                         relationNameEq(condition.name())
@@ -72,26 +92,23 @@ public class HeartSearchRepositoryImpl implements HeartSearchRepository {
                 .distinct()
                 .toList();
 
-        if (relations.isEmpty()) {
-            return List.of();
+        List<HeartHistory> result = conbineMoneyHistories(hearts);
+        if (condition.sort() == INTIMACY) {
+            result = sortWithIntimacy(result);
         }
 
-        final List<HeartHistory> result = conbineMoneyHistories(relations);
-        if (condition.sort() == INTIMACY) {
-            return sortWithIntimacy(result);
-        }
-        return result;
+        return fillNonInteractionRelations(result, memberRelations);
     }
 
-    private List<HeartHistory> conbineMoneyHistories(final List<HeartHistory.RelationInfo> relations) {
-        final List<Long> relationIds = relations.stream()
+    private List<HeartHistory> conbineMoneyHistories(final List<HeartHistory.RelationInfo> hearts) {
+        final List<Long> relationIds = hearts.stream()
                 .map(HeartHistory.RelationInfo::relationId)
                 .toList();
         final List<HeartHistory.MoneySummary> giveMoneySummaries = fetchMoneySummaries(relationIds, true);
         final List<HeartHistory.MoneySummary> takeMoneySummaries = fetchMoneySummaries(relationIds, false);
 
         final List<HeartHistory> result = new ArrayList<>();
-        relations.forEach(it -> {
+        hearts.forEach(it -> {
             final List<Long> giveHistories = extractMoneyHistories(giveMoneySummaries, it.relationId());
             final List<Long> takeHistories = extractMoneyHistories(takeMoneySummaries, it.relationId());
             result.add(new HeartHistory(
@@ -139,9 +156,32 @@ public class HeartSearchRepositoryImpl implements HeartSearchRepository {
                 .sum();
     }
 
+    private List<HeartHistory> fillNonInteractionRelations(
+            final List<HeartHistory> result,
+            final List<HeartHistory.RelationInfo> memberRelations
+    ) {
+        final List<Long> interactionRelationIds = result.stream()
+                .map(HeartHistory::relationId)
+                .toList();
+
+        final List<HeartHistory.RelationInfo> nonInteractionRelationIds = memberRelations.stream()
+                .filter(it -> !interactionRelationIds.contains(it.relationId()))
+                .toList();
+
+        nonInteractionRelationIds.forEach(it -> result.add(new HeartHistory(
+                it.relationId(),
+                it.relationName(),
+                it.groupid(),
+                it.groupName(),
+                List.of(),
+                List.of()
+        )));
+        return result;
+    }
+
     private BooleanExpression relationNameEq(final String name) {
         if (StringUtils.hasText(name)) {
-            return relation.name.eq(name);
+            return relation.name.contains(name);
         }
         return null;
     }
