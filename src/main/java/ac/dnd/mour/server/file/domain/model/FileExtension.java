@@ -12,9 +12,9 @@ import static ac.dnd.mour.server.file.exception.FileExceptionCode.INVALID_FILE_E
 @RequiredArgsConstructor
 public enum FileExtension {
     // 프로필 사진
-    JPG("jpg"),
-    JPEG("jpeg"),
-    PNG("png"),
+    JPG(".jpg"),
+    JPEG(".jpeg"),
+    PNG(".png"),
     ;
 
     private final String value;
@@ -27,6 +27,6 @@ public enum FileExtension {
     }
 
     private static String extractFileExtension(final String fileName) {
-        return fileName.substring(fileName.lastIndexOf(".") + 1);
+        return fileName.substring(fileName.lastIndexOf("."));
     }
 }
