@@ -53,6 +53,9 @@ public class Schedule extends BaseEntity<Schedule> {
     @Column(name = "memo", columnDefinition = "TEXT")
     private String memo;
 
+    @Column(name = "is_visible", columnDefinition = "TINYINT")
+    private boolean visible;
+
     public Schedule(
             final Member member,
             final Relation relation,
@@ -75,6 +78,7 @@ public class Schedule extends BaseEntity<Schedule> {
         this.link = link;
         this.location = location;
         this.memo = memo;
+        this.visible = true;
     }
 
     public void update(
@@ -95,5 +99,9 @@ public class Schedule extends BaseEntity<Schedule> {
         this.link = link;
         this.location = location;
         this.memo = memo;
+    }
+
+    public void hide() {
+        visible = false;
     }
 }

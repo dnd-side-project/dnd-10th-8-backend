@@ -4,6 +4,7 @@ import ac.dnd.mour.server.common.ControllerTest;
 import ac.dnd.mour.server.member.domain.model.Member;
 import ac.dnd.mour.server.schedule.application.usecase.CreateScheduleUseCase;
 import ac.dnd.mour.server.schedule.application.usecase.DeleteScheduleUseCase;
+import ac.dnd.mour.server.schedule.application.usecase.HideScheduleUseCase;
 import ac.dnd.mour.server.schedule.application.usecase.UpdateScheduleUseCase;
 import ac.dnd.mour.server.schedule.presentation.dto.request.CreateScheduleRequest;
 import ac.dnd.mour.server.schedule.presentation.dto.request.UpdateScheduleRequest;
@@ -36,6 +37,9 @@ class ManageScheduleApiControllerTest extends ControllerTest {
 
     @Autowired
     private DeleteScheduleUseCase deleteScheduleUseCase;
+
+    @Autowired
+    private HideScheduleUseCase hideScheduleUseCase;
 
     private final Member member = MEMBER_1.toDomain().apply(1L);
 
@@ -168,6 +172,33 @@ class ManageScheduleApiControllerTest extends ControllerTest {
                     deleteRequestWithAccessToken(new UrlWithVariables(BASE_URL, 1L)),
                     status().isNoContent(),
                     successDocsWithAccessToken("ScheduleApi/Delete", createHttpSpecSnippets(
+                            pathParameters(
+                                    path("scheduleId", "일정 ID(PK)", true)
+                            )
+                    ))
+            );
+        }
+    }
+
+    @Nested
+    @DisplayName("일정 숨기기 API [PATCH /api/v1/schedules/{scheduleId}/hide]")
+    class Hide {
+        private static final String BASE_URL = "/api/v1/schedules/{scheduleId}/hide";
+
+        @Test
+        @DisplayName("일정을 숨긴다")
+        void success() {
+            // given
+            applyToken(true, member);
+            doNothing()
+                    .when(hideScheduleUseCase)
+                    .invoke(any());
+
+            // when - then
+            successfulExecute(
+                    patchRequestWithAccessToken(new UrlWithVariables(BASE_URL, 1L)),
+                    status().isNoContent(),
+                    successDocsWithAccessToken("ScheduleApi/Hide", createHttpSpecSnippets(
                             pathParameters(
                                     path("scheduleId", "일정 ID(PK)", true)
                             )

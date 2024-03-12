@@ -1,0 +1,2 @@
+ALTER TABLE schedule
+    ADD COLUMN is_visible TINYINT NOT NULL DEFAULT 1 AFTER memo;

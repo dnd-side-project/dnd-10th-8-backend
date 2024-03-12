@@ -22,6 +22,7 @@ import static ac.dnd.mour.server.acceptance.schedule.ScheduleAcceptanceStep.알�
 import static ac.dnd.mour.server.acceptance.schedule.ScheduleAcceptanceStep.일정_상세_정보를_조회한다;
 import static ac.dnd.mour.server.acceptance.schedule.ScheduleAcceptanceStep.일정을_삭제한다;
 import static ac.dnd.mour.server.acceptance.schedule.ScheduleAcceptanceStep.일정을_생성하고_ID를_추출한다;
+import static ac.dnd.mour.server.acceptance.schedule.ScheduleAcceptanceStep.일정을_숨긴다;
 import static ac.dnd.mour.server.acceptance.schedule.ScheduleAcceptanceStep.지출이_기록되지_않은_일정을_조회한다;
 import static ac.dnd.mour.server.acceptance.schedule.ScheduleAcceptanceStep.캘린더_Year_Month에_해당하는_일정을_조회한다;
 import static ac.dnd.mour.server.common.fixture.MemberFixture.MEMBER_1;
@@ -79,37 +80,58 @@ public class GetScheduleAcceptanceTest extends AcceptanceTest {
             final long relationId1 = 관계를_생성하고_ID를_추출한다(groupId, "관계-친구XXX-1", null, null, member.accessToken());
             final long relationId2 = 관계를_생성하고_ID를_추출한다(groupId, "관계-친구XXX-2", null, null, member.accessToken());
             final long relationId3 = 관계를_생성하고_ID를_추출한다(groupId, "관계-친구XXX-3", null, null, member.accessToken());
+            final long relationId4 = 관계를_생성하고_ID를_추출한다(groupId, "관계-친구XXX-4", null, null, member.accessToken());
 
             final long scheduleId1 = 일정을_생성하고_ID를_추출한다(relationId1, LocalDate.of(now.getYear() + 1, 1, 1), "일정1", 특별한_일정_XXX, member.accessToken());
             final long scheduleId2 = 일정을_생성하고_ID를_추출한다(relationId2, LocalDate.of(now.getYear() + 1, 1, 15), "일정2", 특별한_일정_XXX, member.accessToken());
-            final long scheduleId3 = 일정을_생성하고_ID를_추출한다(relationId3, LocalDate.of(now.getYear() + 1, 1, 22), "일정3", 특별한_일정_XXX, member.accessToken());
+            final long scheduleId3 = 일정을_생성하고_ID를_추출한다(relationId3, LocalDate.of(now.getYear() + 1, 1, 18), "일정3", 특별한_일정_XXX, member.accessToken());
+            final long scheduleId4 = 일정을_생성하고_ID를_추출한다(relationId4, LocalDate.of(now.getYear() + 1, 1, 22), "일정4", 특별한_일정_XXX, member.accessToken());
 
             final ValidatableResponse response1 = 지출이_기록되지_않은_일정을_조회한다(member.accessToken()).statusCode(OK.value());
             assertUnrecordedSchedulesMatch(
                     response1,
-                    List.of(scheduleId1, scheduleId2),
-                    List.of(relationId1, relationId2),
-                    List.of("관계-친구XXX-1", "관계-친구XXX-2"),
-                    List.of(new GroupResponse(groupId, "친구"), new GroupResponse(groupId, "친구")),
-                    List.of(LocalDate.of(now.getYear() + 1, 1, 1), LocalDate.of(now.getYear() + 1, 1, 15)),
-                    List.of("일정1", "일정2")
+                    List.of(scheduleId1, scheduleId2, scheduleId3),
+                    List.of(relationId1, relationId2, relationId3),
+                    List.of("관계-친구XXX-1", "관계-친구XXX-2", "관계-친구XXX-3"),
+                    List.of(new GroupResponse(groupId, "친구"), new GroupResponse(groupId, "친구"), new GroupResponse(groupId, "친구")),
+                    List.of(
+                            LocalDate.of(now.getYear() + 1, 1, 1),
+                            LocalDate.of(now.getYear() + 1, 1, 15),
+                            LocalDate.of(now.getYear() + 1, 1, 18)
+                    ),
+                    List.of("일정1", "일정2", "일정3")
             );
 
             지출이_기록되지_않는_일정에_대한_마음을_생성한다(scheduleId2, 100_000_000, List.of("특별한 일정", "이제 기록", "2"), member.accessToken());
             final ValidatableResponse response2 = 지출이_기록되지_않은_일정을_조회한다(member.accessToken()).statusCode(OK.value());
             assertUnrecordedSchedulesMatch(
                     response2,
-                    List.of(scheduleId1),
-                    List.of(relationId1),
-                    List.of("관계-친구XXX-1"),
-                    List.of(new GroupResponse(groupId, "친구")),
-                    List.of(LocalDate.of(now.getYear() + 1, 1, 1)),
-                    List.of("일정1")
+                    List.of(scheduleId1, scheduleId3),
+                    List.of(relationId1, relationId3),
+                    List.of("관계-친구XXX-1", "관계-친구XXX-3"),
+                    List.of(new GroupResponse(groupId, "친구"), new GroupResponse(groupId, "친구")),
+                    List.of(
+                            LocalDate.of(now.getYear() + 1, 1, 1),
+                            LocalDate.of(now.getYear() + 1, 1, 18)
+                    ),
+                    List.of("일정1", "일정3")
             );
 
-            지출이_기록되지_않는_일정에_대한_마음을_생성한다(scheduleId1, 300_000_000, List.of("특별한 일정", "이제 기록", "1"), member.accessToken());
+            일정을_숨긴다(scheduleId1, member.accessToken());
             final ValidatableResponse response3 = 지출이_기록되지_않은_일정을_조회한다(member.accessToken()).statusCode(OK.value());
-            assertUnrecordedSchedulesMatch(response3, List.of(), List.of(), List.of(), List.of(), List.of(), List.of());
+            assertUnrecordedSchedulesMatch(
+                    response3,
+                    List.of(scheduleId3),
+                    List.of(relationId3),
+                    List.of("관계-친구XXX-3"),
+                    List.of(new GroupResponse(groupId, "친구")),
+                    List.of(LocalDate.of(now.getYear() + 1, 1, 18)),
+                    List.of("일정3")
+            );
+
+            지출이_기록되지_않는_일정에_대한_마음을_생성한다(scheduleId3, 300_000_000, List.of("특별한 일정", "이제 기록", "1"), member.accessToken());
+            final ValidatableResponse response4 = 지출이_기록되지_않은_일정을_조회한다(member.accessToken()).statusCode(OK.value());
+            assertUnrecordedSchedulesMatch(response4, List.of(), List.of(), List.of(), List.of(), List.of(), List.of());
         }
     }
 

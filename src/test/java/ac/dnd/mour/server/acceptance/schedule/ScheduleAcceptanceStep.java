@@ -198,6 +198,18 @@ public class ScheduleAcceptanceStep {
         return deleteRequestWithAccessToken(uri, accessToken);
     }
 
+    public static ValidatableResponse 일정을_숨긴다(
+            final long scheduleId,
+            final String accessToken
+    ) {
+        final String uri = UriComponentsBuilder
+                .fromPath("/api/v1/schedules/{scheduleId}/hide")
+                .build(scheduleId)
+                .getPath();
+
+        return patchRequestWithAccessToken(uri, accessToken);
+    }
+
     public static ValidatableResponse 지출이_기록되지_않은_일정을_조회한다(final String accessToken) {
         final String uri = UriComponentsBuilder
                 .fromPath("/api/v1/schedules/unrecorded")
