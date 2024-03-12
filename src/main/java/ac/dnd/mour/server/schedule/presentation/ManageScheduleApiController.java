@@ -5,9 +5,11 @@ import ac.dnd.mour.server.global.annotation.Auth;
 import ac.dnd.mour.server.global.dto.ResponseWrapper;
 import ac.dnd.mour.server.schedule.application.usecase.CreateScheduleUseCase;
 import ac.dnd.mour.server.schedule.application.usecase.DeleteScheduleUseCase;
+import ac.dnd.mour.server.schedule.application.usecase.HideScheduleUseCase;
 import ac.dnd.mour.server.schedule.application.usecase.UpdateScheduleUseCase;
 import ac.dnd.mour.server.schedule.application.usecase.command.CreateScheduleCommand;
 import ac.dnd.mour.server.schedule.application.usecase.command.DeleteScheduleCommand;
+import ac.dnd.mour.server.schedule.application.usecase.command.HideScheduleCommand;
 import ac.dnd.mour.server.schedule.application.usecase.command.UpdateScheduleCommand;
 import ac.dnd.mour.server.schedule.presentation.dto.request.CreateScheduleRequest;
 import ac.dnd.mour.server.schedule.presentation.dto.request.UpdateScheduleRequest;
@@ -32,6 +34,7 @@ public class ManageScheduleApiController {
     private final CreateScheduleUseCase createScheduleUseCase;
     private final UpdateScheduleUseCase updateScheduleUseCase;
     private final DeleteScheduleUseCase deleteScheduleUseCase;
+    private final HideScheduleUseCase hideScheduleUseCase;
 
     @Operation(summary = "일정 생성 Endpoint")
     @PostMapping("/v1/schedules")
@@ -83,6 +86,19 @@ public class ManageScheduleApiController {
             @PathVariable(name = "scheduleId") final Long scheduleId
     ) {
         deleteScheduleUseCase.invoke(new DeleteScheduleCommand(
+                authenticated.id(),
+                scheduleId
+        ));
+        return ResponseEntity.noContent().build();
+    }
+
+    @Operation(summary = "일정 숨기기 Endpoint")
+    @PatchMapping("/v1/schedules/{scheduleId}/hide")
+    public ResponseEntity<Void> hideSchedule(
+            @Auth final Authenticated authenticated,
+            @PathVariable(name = "scheduleId") final Long scheduleId
+    ) {
+        hideScheduleUseCase.invoke(new HideScheduleCommand(
                 authenticated.id(),
                 scheduleId
         ));

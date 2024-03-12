@@ -428,6 +428,16 @@ public abstract class ControllerTest {
     /**
      * PATCH
      */
+    protected RequestBuilder patchRequest(final String url) {
+        return MockMvcRequestBuilders
+                .patch(url);
+    }
+
+    protected RequestBuilder patchRequest(final UrlWithVariables path) {
+        return RestDocumentationRequestBuilders
+                .patch(path.url, path.variables);
+    }
+
     protected RequestBuilder patchRequest(final String url, final Object data) {
         return MockMvcRequestBuilders
                 .patch(url)
@@ -440,6 +450,18 @@ public abstract class ControllerTest {
                 .patch(path.url, path.variables)
                 .contentType(APPLICATION_JSON)
                 .content(toBody(data));
+    }
+
+    protected RequestBuilder patchRequestWithAccessToken(final String url) {
+        return MockMvcRequestBuilders
+                .patch(url)
+                .header(ACCESS_TOKEN_HEADER, TokenUtils.applyAccessToken());
+    }
+
+    protected RequestBuilder patchRequestWithAccessToken(final UrlWithVariables path) {
+        return RestDocumentationRequestBuilders
+                .patch(path.url, path.variables)
+                .header(ACCESS_TOKEN_HEADER, TokenUtils.applyAccessToken());
     }
 
     protected RequestBuilder patchRequestWithAccessToken(final String url, final Object data) {
