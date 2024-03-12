@@ -6,7 +6,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import static ac.dnd.mour.server.acceptance.CommonRequestFixture.getRequestWithAccessToken;
 
 public class FileAcceptanceStep {
-    public static ValidatableResponse 이미지_업로드에_대한_Presigned_Url을_응답받는다(
+    public static ValidatableResponse 이미지_업로드에_대한_Presigned_Url을_응답받는다_V1(
             final String fileName,
             final String accessToken
     ) {

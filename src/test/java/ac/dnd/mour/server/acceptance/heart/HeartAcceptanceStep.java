@@ -1,8 +1,8 @@
 package ac.dnd.mour.server.acceptance.heart;
 
-import ac.dnd.mour.server.heart.presentation.dto.request.ApplyUnrecordedHeartRequest;
-import ac.dnd.mour.server.heart.presentation.dto.request.CreateHeartRequest;
-import ac.dnd.mour.server.heart.presentation.dto.request.UpdateHeartRequest;
+import ac.dnd.mour.server.heart.presentation.v1.request.ApplyUnrecordedHeartRequest;
+import ac.dnd.mour.server.heart.presentation.v1.request.CreateHeartRequest;
+import ac.dnd.mour.server.heart.presentation.v1.request.UpdateHeartRequest;
 import io.restassured.response.ValidatableResponse;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -14,7 +14,7 @@ import static ac.dnd.mour.server.acceptance.CommonRequestFixture.patchRequestWit
 import static ac.dnd.mour.server.acceptance.CommonRequestFixture.postRequestWithAccessToken;
 
 public class HeartAcceptanceStep {
-    public static ValidatableResponse 마음을_생성한다(
+    public static ValidatableResponse 마음을_생성한다_V1(
             final long relationId,
             final boolean give,
             final long money,
@@ -35,7 +35,7 @@ public class HeartAcceptanceStep {
         return postRequestWithAccessToken(uri, request, accessToken);
     }
 
-    public static long 마음을_생성하고_ID를_추출한다(
+    public static long 마음을_생성하고_ID를_추출한다_V1(
             final long relationId,
             final boolean give,
             final long money,
@@ -45,13 +45,13 @@ public class HeartAcceptanceStep {
             final List<String> tags,
             final String accessToken
     ) {
-        return 마음을_생성한다(relationId, give, money, day, event, memo, tags, accessToken)
+        return 마음을_생성한다_V1(relationId, give, money, day, event, memo, tags, accessToken)
                 .extract()
                 .jsonPath()
                 .getLong("result");
     }
 
-    public static ValidatableResponse 지출이_기록되지_않는_일정에_대한_마음을_생성한다(
+    public static ValidatableResponse 지출이_기록되지_않는_일정에_대한_마음을_생성한다_V1(
             final long scheduleId,
             final long money,
             final List<String> tags,
@@ -68,19 +68,19 @@ public class HeartAcceptanceStep {
         return postRequestWithAccessToken(uri, request, accessToken);
     }
 
-    public static long 지출이_기록되지_않는_일정에_대한_마음을_생성하고_ID를_추출한다(
+    public static long 지출이_기록되지_않는_일정에_대한_마음을_생성하고_ID를_추출한다_V1(
             final long scheduleId,
             final long money,
             final List<String> tags,
             final String accessToken
     ) {
-        return 지출이_기록되지_않는_일정에_대한_마음을_생성한다(scheduleId, money, tags, accessToken)
+        return 지출이_기록되지_않는_일정에_대한_마음을_생성한다_V1(scheduleId, money, tags, accessToken)
                 .extract()
                 .jsonPath()
                 .getLong("result");
     }
 
-    public static ValidatableResponse 마음을_수정한다(
+    public static ValidatableResponse 마음을_수정한다_V1(
             final long heartId,
             final long money,
             final LocalDate day,
@@ -99,7 +99,7 @@ public class HeartAcceptanceStep {
         return patchRequestWithAccessToken(uri, request, accessToken);
     }
 
-    public static ValidatableResponse 마음을_삭제한다(
+    public static ValidatableResponse 마음을_삭제한다_V1(
             final long heartId,
             final String accessToken
     ) {

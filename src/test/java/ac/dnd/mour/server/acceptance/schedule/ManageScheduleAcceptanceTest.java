@@ -9,12 +9,9 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import static ac.dnd.mour.server.acceptance.group.GroupAcceptanceStep.관리하고_있는_특정_그룹의_ID를_조회한다;
-import static ac.dnd.mour.server.acceptance.relation.RelationAcceptanceStep.관계를_생성하고_ID를_추출한다;
-import static ac.dnd.mour.server.acceptance.schedule.ScheduleAcceptanceStep.일정을_삭제한다;
-import static ac.dnd.mour.server.acceptance.schedule.ScheduleAcceptanceStep.일정을_생성하고_ID를_추출한다;
-import static ac.dnd.mour.server.acceptance.schedule.ScheduleAcceptanceStep.일정을_생성한다;
-import static ac.dnd.mour.server.acceptance.schedule.ScheduleAcceptanceStep.일정을_수정한다;
+import static ac.dnd.mour.server.acceptance.group.GroupAcceptanceStep.관리하고_있는_특정_그룹의_ID를_조회한다_V1;
+import static ac.dnd.mour.server.acceptance.relation.RelationAcceptanceStep.관계를_생성하고_ID를_추출한다_V1;
+import static ac.dnd.mour.server.acceptance.schedule.ScheduleAcceptanceStep.일정을_삭제한다_V1;
 import static ac.dnd.mour.server.common.fixture.MemberFixture.MEMBER_1;
 import static ac.dnd.mour.server.common.fixture.RelationFixture.친구_1;
 import static org.hamcrest.Matchers.notNullValue;
@@ -31,10 +28,10 @@ public class ManageScheduleAcceptanceTest extends AcceptanceTest {
         @DisplayName("일정을 생성한다")
         void success() {
             final AuthMember member = MEMBER_1.회원가입과_로그인을_진행한다();
-            final long groupId = 관리하고_있는_특정_그룹의_ID를_조회한다("친구", member.accessToken());
-            final long relationId = 관계를_생성하고_ID를_추출한다(groupId, 친구_1.getName(), 친구_1.getImageUrl(), 친구_1.getMemo(), member.accessToken());
+            final long groupId = 관리하고_있는_특정_그룹의_ID를_조회한다_V1("친구", member.accessToken());
+            final long relationId = 관계를_생성하고_ID를_추출한다_V1(groupId, 친구_1.getName(), 친구_1.getImageUrl(), 친구_1.getMemo(), member.accessToken());
 
-            일정을_생성한다(relationId, ScheduleFixture.결혼식, member.accessToken())
+            ScheduleAcceptanceStep.일정을_생성한다_V1(relationId, ScheduleFixture.결혼식, member.accessToken())
                     .statusCode(OK.value())
                     .body("result", notNullValue(Long.class));
         }
@@ -47,11 +44,11 @@ public class ManageScheduleAcceptanceTest extends AcceptanceTest {
         @DisplayName("일정을 수정한다")
         void success() {
             final AuthMember member = MEMBER_1.회원가입과_로그인을_진행한다();
-            final long groupId = 관리하고_있는_특정_그룹의_ID를_조회한다("친구", member.accessToken());
-            final long relationId = 관계를_생성하고_ID를_추출한다(groupId, 친구_1.getName(), 친구_1.getImageUrl(), 친구_1.getMemo(), member.accessToken());
+            final long groupId = 관리하고_있는_특정_그룹의_ID를_조회한다_V1("친구", member.accessToken());
+            final long relationId = 관계를_생성하고_ID를_추출한다_V1(groupId, 친구_1.getName(), 친구_1.getImageUrl(), 친구_1.getMemo(), member.accessToken());
 
-            final long scheduleId = 일정을_생성하고_ID를_추출한다(relationId, ScheduleFixture.결혼식, member.accessToken());
-            일정을_수정한다(scheduleId, ScheduleFixture.친구_XXX_생일, member.accessToken())
+            final long scheduleId = ScheduleAcceptanceStep.일정을_생성하고_ID를_추출한다_V1(relationId, ScheduleFixture.결혼식, member.accessToken());
+            ScheduleAcceptanceStep.일정을_수정한다_V1(scheduleId, ScheduleFixture.친구_XXX_생일, member.accessToken())
                     .statusCode(NO_CONTENT.value());
         }
     }
@@ -63,11 +60,11 @@ public class ManageScheduleAcceptanceTest extends AcceptanceTest {
         @DisplayName("일정을 삭제한다")
         void success() {
             final AuthMember member = MEMBER_1.회원가입과_로그인을_진행한다();
-            final long groupId = 관리하고_있는_특정_그룹의_ID를_조회한다("친구", member.accessToken());
-            final long relationId = 관계를_생성하고_ID를_추출한다(groupId, 친구_1.getName(), 친구_1.getImageUrl(), 친구_1.getMemo(), member.accessToken());
+            final long groupId = 관리하고_있는_특정_그룹의_ID를_조회한다_V1("친구", member.accessToken());
+            final long relationId = 관계를_생성하고_ID를_추출한다_V1(groupId, 친구_1.getName(), 친구_1.getImageUrl(), 친구_1.getMemo(), member.accessToken());
 
-            final long scheduleId = 일정을_생성하고_ID를_추출한다(relationId, ScheduleFixture.결혼식, member.accessToken());
-            일정을_삭제한다(scheduleId, member.accessToken())
+            final long scheduleId = ScheduleAcceptanceStep.일정을_생성하고_ID를_추출한다_V1(relationId, ScheduleFixture.결혼식, member.accessToken());
+            일정을_삭제한다_V1(scheduleId, member.accessToken())
                     .statusCode(NO_CONTENT.value());
         }
     }

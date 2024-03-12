@@ -12,11 +12,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.List;
 
-import static ac.dnd.mour.server.acceptance.group.GroupAcceptanceStep.관리하고_있는_특정_그룹의_ID를_조회한다;
-import static ac.dnd.mour.server.acceptance.heart.HeartAcceptanceStep.마음을_생성한다;
-import static ac.dnd.mour.server.acceptance.relation.RelationAcceptanceStep.관계_N건_정보를_조회한다;
-import static ac.dnd.mour.server.acceptance.relation.RelationAcceptanceStep.관계_단건_정보를_조회한다;
-import static ac.dnd.mour.server.acceptance.relation.RelationAcceptanceStep.관계를_생성하고_ID를_추출한다;
+import static ac.dnd.mour.server.acceptance.group.GroupAcceptanceStep.관리하고_있는_특정_그룹의_ID를_조회한다_V1;
+import static ac.dnd.mour.server.acceptance.heart.HeartAcceptanceStep.마음을_생성한다_V1;
+import static ac.dnd.mour.server.acceptance.relation.RelationAcceptanceStep.관계_N건_정보를_조회한다_V1;
+import static ac.dnd.mour.server.acceptance.relation.RelationAcceptanceStep.관계_단건_정보를_조회한다_V1;
+import static ac.dnd.mour.server.acceptance.relation.RelationAcceptanceStep.관계를_생성하고_ID를_추출한다_V1;
 import static ac.dnd.mour.server.common.fixture.HeartFixture.결혼_축의금을_받았다;
 import static ac.dnd.mour.server.common.fixture.HeartFixture.생일_선물을_받았다;
 import static ac.dnd.mour.server.common.fixture.HeartFixture.승진_선물을_보냈다;
@@ -36,9 +36,9 @@ public class GetRelationDetailsAcceptanceTest extends AcceptanceTest {
         @DisplayName("등록한 관계에 대한 단건 정보를 조회한다")
         void success() {
             final AuthMember member = MEMBER_1.회원가입과_로그인을_진행한다();
-            final long groupId = 관리하고_있는_특정_그룹의_ID를_조회한다("친구", member.accessToken());
-            final long relationId = 관계를_생성하고_ID를_추출한다(groupId, 친구_1.getName(), 친구_1.getImageUrl(), 친구_1.getMemo(), member.accessToken());
-            마음을_생성한다(
+            final long groupId = 관리하고_있는_특정_그룹의_ID를_조회한다_V1("친구", member.accessToken());
+            final long relationId = 관계를_생성하고_ID를_추출한다_V1(groupId, 친구_1.getName(), 친구_1.getImageUrl(), 친구_1.getMemo(), member.accessToken());
+            마음을_생성한다_V1(
                     relationId,
                     결혼_축의금을_받았다.isGive(),
                     결혼_축의금을_받았다.getMoney(),
@@ -48,7 +48,7 @@ public class GetRelationDetailsAcceptanceTest extends AcceptanceTest {
                     결혼_축의금을_받았다.getTags(),
                     member.accessToken()
             );
-            마음을_생성한다(
+            마음을_생성한다_V1(
                     relationId,
                     승진_선물을_보냈다.isGive(),
                     승진_선물을_보냈다.getMoney(),
@@ -58,7 +58,7 @@ public class GetRelationDetailsAcceptanceTest extends AcceptanceTest {
                     승진_선물을_보냈다.getTags(),
                     member.accessToken()
             );
-            마음을_생성한다(
+            마음을_생성한다_V1(
                     relationId,
                     생일_선물을_받았다.isGive(),
                     생일_선물을_받았다.getMoney(),
@@ -69,7 +69,7 @@ public class GetRelationDetailsAcceptanceTest extends AcceptanceTest {
                     member.accessToken()
             );
 
-            관계_단건_정보를_조회한다(relationId, member.accessToken())
+            관계_단건_정보를_조회한다_V1(relationId, member.accessToken())
                     .statusCode(OK.value())
                     .body("id", is((int) relationId))
                     .body("name", is(친구_1.getName()))
@@ -89,15 +89,15 @@ public class GetRelationDetailsAcceptanceTest extends AcceptanceTest {
         @DisplayName("등록한 관계에 대한 N건 정보를 조회한다")
         void success() {
             final AuthMember member = MEMBER_1.회원가입과_로그인을_진행한다();
-            final long groupId1 = 관리하고_있는_특정_그룹의_ID를_조회한다("친구", member.accessToken());
-            final long groupId2 = 관리하고_있는_특정_그룹의_ID를_조회한다("가족", member.accessToken());
-            final long groupId3 = 관리하고_있는_특정_그룹의_ID를_조회한다("직장", member.accessToken());
-            final long relationId1 = 관계를_생성하고_ID를_추출한다(groupId1, "관계이름1", null, "이름1-메모..", member.accessToken());
-            final long relationId2 = 관계를_생성하고_ID를_추출한다(groupId1, "관계이름2", null, "이름2-메모..", member.accessToken());
-            final long relationId3 = 관계를_생성하고_ID를_추출한다(groupId2, "관계이름1", null, "이름1-메모..", member.accessToken());
-            final long relationId4 = 관계를_생성하고_ID를_추출한다(groupId3, "관계이름1", null, "이름1-메모..", member.accessToken());
+            final long groupId1 = 관리하고_있는_특정_그룹의_ID를_조회한다_V1("친구", member.accessToken());
+            final long groupId2 = 관리하고_있는_특정_그룹의_ID를_조회한다_V1("가족", member.accessToken());
+            final long groupId3 = 관리하고_있는_특정_그룹의_ID를_조회한다_V1("직장", member.accessToken());
+            final long relationId1 = 관계를_생성하고_ID를_추출한다_V1(groupId1, "관계이름1", null, "이름1-메모..", member.accessToken());
+            final long relationId2 = 관계를_생성하고_ID를_추출한다_V1(groupId1, "관계이름2", null, "이름2-메모..", member.accessToken());
+            final long relationId3 = 관계를_생성하고_ID를_추출한다_V1(groupId2, "관계이름1", null, "이름1-메모..", member.accessToken());
+            final long relationId4 = 관계를_생성하고_ID를_추출한다_V1(groupId3, "관계이름1", null, "이름1-메모..", member.accessToken());
 
-            final ValidatableResponse response1 = 관계_N건_정보를_조회한다(null, member.accessToken()).statusCode(OK.value());
+            final ValidatableResponse response1 = 관계_N건_정보를_조회한다_V1(null, member.accessToken()).statusCode(OK.value());
             assertRelationsMatch(
                     response1,
                     List.of(relationId4, relationId3, relationId2, relationId1),
@@ -110,7 +110,7 @@ public class GetRelationDetailsAcceptanceTest extends AcceptanceTest {
                     )
             );
 
-            final ValidatableResponse response2 = 관계_N건_정보를_조회한다("관계이름1", member.accessToken()).statusCode(OK.value());
+            final ValidatableResponse response2 = 관계_N건_정보를_조회한다_V1("관계이름1", member.accessToken()).statusCode(OK.value());
             assertRelationsMatch(
                     response2,
                     List.of(relationId4, relationId3, relationId1),
@@ -122,7 +122,7 @@ public class GetRelationDetailsAcceptanceTest extends AcceptanceTest {
                     )
             );
 
-            final ValidatableResponse response3 = 관계_N건_정보를_조회한다("관계이름2", member.accessToken()).statusCode(OK.value());
+            final ValidatableResponse response3 = 관계_N건_정보를_조회한다_V1("관계이름2", member.accessToken()).statusCode(OK.value());
             assertRelationsMatch(
                     response3,
                     List.of(relationId2),

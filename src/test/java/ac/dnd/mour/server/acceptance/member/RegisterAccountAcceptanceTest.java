@@ -7,8 +7,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import static ac.dnd.mour.server.acceptance.member.MemberAcceptanceStep.닉네임_중복_체크를_진행한다;
-import static ac.dnd.mour.server.acceptance.member.MemberAcceptanceStep.회원가입을_진행한다;
+import static ac.dnd.mour.server.acceptance.member.MemberAcceptanceStep.닉네임_중복_체크를_진행한다_V1;
 import static ac.dnd.mour.server.common.fixture.MemberFixture.MEMBER_1;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
@@ -23,7 +22,7 @@ public class RegisterAccountAcceptanceTest extends AcceptanceTest {
         @Test
         @DisplayName("사용할 수 있는 닉네임인지 확인한다 [True]")
         void resultTrue() {
-            닉네임_중복_체크를_진행한다("test")
+            닉네임_중복_체크를_진행한다_V1("test")
                     .statusCode(OK.value())
                     .body("result", is(true));
         }
@@ -32,7 +31,7 @@ public class RegisterAccountAcceptanceTest extends AcceptanceTest {
         @DisplayName("사용할 수 있는 닉네임인지 확인한다 [False]")
         void resultFalse() {
             MEMBER_1.회원가입과_로그인을_진행한다();
-            닉네임_중복_체크를_진행한다(MEMBER_1.getNickname().getValue())
+            닉네임_중복_체크를_진행한다_V1(MEMBER_1.getNickname().getValue())
                     .statusCode(OK.value())
                     .body("result", is(false));
         }
@@ -44,7 +43,7 @@ public class RegisterAccountAcceptanceTest extends AcceptanceTest {
         @Test
         @DisplayName("회원가입을 진행한다")
         void success() {
-            회원가입을_진행한다(MEMBER_1)
+            MemberAcceptanceStep.회원가입을_진행한다_V1(MEMBER_1)
                     .statusCode(OK.value())
                     .body("id", notNullValue(Long.class))
                     .body("accessToken", notNullValue(String.class))

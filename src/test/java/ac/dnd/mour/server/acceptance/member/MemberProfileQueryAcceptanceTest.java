@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import static ac.dnd.mour.server.acceptance.member.MemberAcceptanceStep.마이페이지_내_정보를_조회한다;
+import static ac.dnd.mour.server.acceptance.member.MemberAcceptanceStep.마이페이지_내_정보를_조회한다_V1;
 import static ac.dnd.mour.server.common.fixture.MemberFixture.MEMBER_1;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
@@ -24,7 +24,7 @@ public class MemberProfileQueryAcceptanceTest extends AcceptanceTest {
         @DisplayName("마이페이지 내 정보 조회를 진행한다")
         void success() {
             final AuthMember member = MEMBER_1.회원가입과_로그인을_진행한다();
-            마이페이지_내_정보를_조회한다(member.accessToken())
+            마이페이지_내_정보를_조회한다_V1(member.accessToken())
                     .statusCode(OK.value())
                     .body("id", notNullValue(Long.class))
                     .body("email", is(MEMBER_1.getPlatform().getEmail().getValue()))

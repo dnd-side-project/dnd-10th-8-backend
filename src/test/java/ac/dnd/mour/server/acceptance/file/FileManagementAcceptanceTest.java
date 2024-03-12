@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import static ac.dnd.mour.server.acceptance.file.FileAcceptanceStep.이미지_업로드에_대한_Presigned_Url을_응답받는다;
+import static ac.dnd.mour.server.acceptance.file.FileAcceptanceStep.이미지_업로드에_대한_Presigned_Url을_응답받는다_V1;
 import static ac.dnd.mour.server.common.config.BlackboxLogicControlConfig.BUCKET_UPLOAD_PREFIX;
 import static ac.dnd.mour.server.common.fixture.MemberFixture.MEMBER_1;
 import static org.hamcrest.Matchers.is;
@@ -27,7 +27,7 @@ public class FileManagementAcceptanceTest extends AcceptanceTest {
         @DisplayName("이미지 업로드에 대한 PresignedUrl을 응답받는다")
         void success() {
             final AuthMember member = MEMBER_1.회원가입과_로그인을_진행한다();
-            이미지_업로드에_대한_Presigned_Url을_응답받는다("cat.png", member.accessToken())
+            이미지_업로드에_대한_Presigned_Url을_응답받는다_V1("cat.png", member.accessToken())
                     .statusCode(OK.value())
                     .body("preSignedUrl", startsWith(BUCKET_URL_PREFIX + BUCKET_UPLOAD_PREFIX + "cat.png"))
                     .body("uploadFileUrl", is(BUCKET_URL_PREFIX + BUCKET_UPLOAD_PREFIX + "cat.png"));
