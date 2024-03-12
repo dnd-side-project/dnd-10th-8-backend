@@ -40,13 +40,13 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
     );
 
     // Query Method
-    List<Schedule> findByMemberIdAndDayBefore(final long memberId, final LocalDate day);
+    List<Schedule> findByMemberIdAndDayBeforeAndVisibleTrue(final long memberId, final LocalDate day);
 
     /**
      * 현재 날짜 기준 1일
      */
     default List<Schedule> getPassedSchedules(final long memberId, final LocalDate currentDay) {
-        return findByMemberIdAndDayBefore(memberId, currentDay);
+        return findByMemberIdAndDayBeforeAndVisibleTrue(memberId, currentDay);
     }
 
     Optional<Schedule> findByIdAndMemberId(final long id, final long memberId);
