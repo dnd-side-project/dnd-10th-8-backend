@@ -1,7 +1,7 @@
 package ac.dnd.mour.server.acceptance.relation;
 
-import ac.dnd.mour.server.relation.presentation.dto.request.CreateRelationRequest;
-import ac.dnd.mour.server.relation.presentation.dto.request.UpdateRelationRequest;
+import ac.dnd.mour.server.relation.presentation.v1.request.CreateRelationRequest;
+import ac.dnd.mour.server.relation.presentation.v1.request.UpdateRelationRequest;
 import io.restassured.response.ValidatableResponse;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -11,7 +11,7 @@ import static ac.dnd.mour.server.acceptance.CommonRequestFixture.patchRequestWit
 import static ac.dnd.mour.server.acceptance.CommonRequestFixture.postRequestWithAccessToken;
 
 public class RelationAcceptanceStep {
-    public static ValidatableResponse 관계를_생성한다(
+    public static ValidatableResponse 관계를_생성한다_V1(
             final long groupId,
             final String name,
             final String phone,
@@ -29,20 +29,20 @@ public class RelationAcceptanceStep {
         return postRequestWithAccessToken(uri, request, accessToken);
     }
 
-    public static long 관계를_생성하고_ID를_추출한다(
+    public static long 관계를_생성하고_ID를_추출한다_V1(
             final long groupId,
             final String name,
             final String phone,
             final String memo,
             final String accessToken
     ) {
-        return 관계를_생성한다(groupId, name, phone, memo, accessToken)
+        return 관계를_생성한다_V1(groupId, name, phone, memo, accessToken)
                 .extract()
                 .jsonPath()
                 .getLong("result");
     }
 
-    public static ValidatableResponse 관계를_수정한다(
+    public static ValidatableResponse 관계를_수정한다_V1(
             final long relationId,
             final long groupId,
             final String name,
@@ -60,7 +60,7 @@ public class RelationAcceptanceStep {
         return patchRequestWithAccessToken(uri, request, accessToken);
     }
 
-    public static ValidatableResponse 관계를_삭제한다(
+    public static ValidatableResponse 관계를_삭제한다_V1(
             final long relationId,
             final String accessToken
     ) {
@@ -72,7 +72,7 @@ public class RelationAcceptanceStep {
         return deleteRequestWithAccessToken(uri, accessToken);
     }
 
-    public static ValidatableResponse 관계_단건_정보를_조회한다(
+    public static ValidatableResponse 관계_단건_정보를_조회한다_V1(
             final long relationId,
             final String accessToken
     ) {
@@ -84,7 +84,7 @@ public class RelationAcceptanceStep {
         return getRequestWithAccessToken(uri, accessToken);
     }
 
-    public static ValidatableResponse 관계_N건_정보를_조회한다(
+    public static ValidatableResponse 관계_N건_정보를_조회한다_V1(
             final String name,
             final String accessToken
     ) {

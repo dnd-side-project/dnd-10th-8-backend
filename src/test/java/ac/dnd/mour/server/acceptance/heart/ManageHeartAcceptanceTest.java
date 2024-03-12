@@ -11,14 +11,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import java.time.LocalDate;
 import java.util.List;
 
-import static ac.dnd.mour.server.acceptance.group.GroupAcceptanceStep.관리하고_있는_특정_그룹의_ID를_조회한다;
-import static ac.dnd.mour.server.acceptance.heart.HeartAcceptanceStep.마음을_삭제한다;
-import static ac.dnd.mour.server.acceptance.heart.HeartAcceptanceStep.마음을_생성하고_ID를_추출한다;
-import static ac.dnd.mour.server.acceptance.heart.HeartAcceptanceStep.마음을_생성한다;
-import static ac.dnd.mour.server.acceptance.heart.HeartAcceptanceStep.마음을_수정한다;
-import static ac.dnd.mour.server.acceptance.heart.HeartAcceptanceStep.지출이_기록되지_않는_일정에_대한_마음을_생성한다;
-import static ac.dnd.mour.server.acceptance.relation.RelationAcceptanceStep.관계를_생성하고_ID를_추출한다;
-import static ac.dnd.mour.server.acceptance.schedule.ScheduleAcceptanceStep.일정을_생성하고_ID를_추출한다;
+import static ac.dnd.mour.server.acceptance.group.GroupAcceptanceStep.관리하고_있는_특정_그룹의_ID를_조회한다_V1;
+import static ac.dnd.mour.server.acceptance.heart.HeartAcceptanceStep.마음을_삭제한다_V1;
+import static ac.dnd.mour.server.acceptance.heart.HeartAcceptanceStep.마음을_생성하고_ID를_추출한다_V1;
+import static ac.dnd.mour.server.acceptance.heart.HeartAcceptanceStep.마음을_생성한다_V1;
+import static ac.dnd.mour.server.acceptance.heart.HeartAcceptanceStep.마음을_수정한다_V1;
+import static ac.dnd.mour.server.acceptance.heart.HeartAcceptanceStep.지출이_기록되지_않는_일정에_대한_마음을_생성한다_V1;
+import static ac.dnd.mour.server.acceptance.relation.RelationAcceptanceStep.관계를_생성하고_ID를_추출한다_V1;
+import static ac.dnd.mour.server.acceptance.schedule.ScheduleAcceptanceStep.일정을_생성하고_ID를_추출한다_V1;
 import static ac.dnd.mour.server.common.fixture.HeartFixture.결혼_축의금을_받았다;
 import static ac.dnd.mour.server.common.fixture.HeartFixture.승진_선물을_보냈다;
 import static ac.dnd.mour.server.common.fixture.MemberFixture.MEMBER_1;
@@ -40,10 +40,10 @@ public class ManageHeartAcceptanceTest extends AcceptanceTest {
         @DisplayName("마음을 생성한다")
         void success() {
             final AuthMember member = MEMBER_1.회원가입과_로그인을_진행한다();
-            final long groupId = 관리하고_있는_특정_그룹의_ID를_조회한다("친구", member.accessToken());
-            final long relationId = 관계를_생성하고_ID를_추출한다(groupId, 친구_1.getName(), 친구_1.getImageUrl(), 친구_1.getMemo(), member.accessToken());
+            final long groupId = 관리하고_있는_특정_그룹의_ID를_조회한다_V1("친구", member.accessToken());
+            final long relationId = 관계를_생성하고_ID를_추출한다_V1(groupId, 친구_1.getName(), 친구_1.getImageUrl(), 친구_1.getMemo(), member.accessToken());
 
-            마음을_생성한다(
+            마음을_생성한다_V1(
                     relationId,
                     결혼_축의금을_받았다.isGive(),
                     결혼_축의금을_받았다.getMoney(),
@@ -64,11 +64,11 @@ public class ManageHeartAcceptanceTest extends AcceptanceTest {
         @DisplayName("지출이 기록되지 않는 일정에 대한 마음을 생성한다")
         void success() {
             final AuthMember member = MEMBER_1.회원가입과_로그인을_진행한다();
-            final long groupId = 관리하고_있는_특정_그룹의_ID를_조회한다("친구", member.accessToken());
-            final long relationId = 관계를_생성하고_ID를_추출한다(groupId, "관계-친구XXX-1", null, null, member.accessToken());
-            final long scheduleId = 일정을_생성하고_ID를_추출한다(relationId, LocalDate.of(now.getYear() + 1, 1, 1), "일정1", 특별한_일정_XXX, member.accessToken());
+            final long groupId = 관리하고_있는_특정_그룹의_ID를_조회한다_V1("친구", member.accessToken());
+            final long relationId = 관계를_생성하고_ID를_추출한다_V1(groupId, "관계-친구XXX-1", null, null, member.accessToken());
+            final long scheduleId = 일정을_생성하고_ID를_추출한다_V1(relationId, LocalDate.of(now.getYear() + 1, 1, 1), "일정1", 특별한_일정_XXX, member.accessToken());
 
-            지출이_기록되지_않는_일정에_대한_마음을_생성한다(scheduleId, 100_000_000, List.of("일정", "지금 기록"), member.accessToken())
+            지출이_기록되지_않는_일정에_대한_마음을_생성한다_V1(scheduleId, 100_000_000, List.of("일정", "지금 기록"), member.accessToken())
                     .statusCode(OK.value())
                     .body("result", notNullValue(Long.class));
         }
@@ -81,9 +81,9 @@ public class ManageHeartAcceptanceTest extends AcceptanceTest {
         @DisplayName("마음을 수정한다")
         void success() {
             final AuthMember member = MEMBER_1.회원가입과_로그인을_진행한다();
-            final long groupId = 관리하고_있는_특정_그룹의_ID를_조회한다("친구", member.accessToken());
-            final long relationId = 관계를_생성하고_ID를_추출한다(groupId, 친구_1.getName(), 친구_1.getImageUrl(), 친구_1.getMemo(), member.accessToken());
-            final long heartId = 마음을_생성하고_ID를_추출한다(
+            final long groupId = 관리하고_있는_특정_그룹의_ID를_조회한다_V1("친구", member.accessToken());
+            final long relationId = 관계를_생성하고_ID를_추출한다_V1(groupId, 친구_1.getName(), 친구_1.getImageUrl(), 친구_1.getMemo(), member.accessToken());
+            final long heartId = 마음을_생성하고_ID를_추출한다_V1(
                     relationId,
                     결혼_축의금을_받았다.isGive(),
                     결혼_축의금을_받았다.getMoney(),
@@ -94,7 +94,7 @@ public class ManageHeartAcceptanceTest extends AcceptanceTest {
                     member.accessToken()
             );
 
-            마음을_수정한다(
+            마음을_수정한다_V1(
                     heartId,
                     승진_선물을_보냈다.getMoney(),
                     승진_선물을_보냈다.getDay(),
@@ -113,9 +113,9 @@ public class ManageHeartAcceptanceTest extends AcceptanceTest {
         @DisplayName("마음을 삭제한다")
         void success() {
             final AuthMember member = MEMBER_1.회원가입과_로그인을_진행한다();
-            final long groupId = 관리하고_있는_특정_그룹의_ID를_조회한다("친구", member.accessToken());
-            final long relationId = 관계를_생성하고_ID를_추출한다(groupId, 친구_1.getName(), 친구_1.getImageUrl(), 친구_1.getMemo(), member.accessToken());
-            final long heartId = 마음을_생성하고_ID를_추출한다(
+            final long groupId = 관리하고_있는_특정_그룹의_ID를_조회한다_V1("친구", member.accessToken());
+            final long relationId = 관계를_생성하고_ID를_추출한다_V1(groupId, 친구_1.getName(), 친구_1.getImageUrl(), 친구_1.getMemo(), member.accessToken());
+            final long heartId = 마음을_생성하고_ID를_추출한다_V1(
                     relationId,
                     결혼_축의금을_받았다.isGive(),
                     결혼_축의금을_받았다.getMoney(),
@@ -126,7 +126,7 @@ public class ManageHeartAcceptanceTest extends AcceptanceTest {
                     member.accessToken()
             );
 
-            마음을_삭제한다(heartId, member.accessToken())
+            마음을_삭제한다_V1(heartId, member.accessToken())
                     .statusCode(NO_CONTENT.value());
         }
     }

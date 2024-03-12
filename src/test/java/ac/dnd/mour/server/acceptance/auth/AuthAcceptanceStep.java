@@ -1,6 +1,6 @@
 package ac.dnd.mour.server.acceptance.auth;
 
-import ac.dnd.mour.server.auth.presentation.dto.request.LoginRequest;
+import ac.dnd.mour.server.auth.presentation.v1.request.LoginRequest;
 import io.restassured.response.ValidatableResponse;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -9,7 +9,7 @@ import static ac.dnd.mour.server.acceptance.CommonRequestFixture.postRequestWith
 import static ac.dnd.mour.server.acceptance.CommonRequestFixture.postRequestWithRefreshToken;
 
 public class AuthAcceptanceStep {
-    public static ValidatableResponse 로그인을_진행한다(final String socialId, final String email) {
+    public static ValidatableResponse 로그인을_진행한다_V1(final String socialId, final String email) {
         final String uri = UriComponentsBuilder
                 .fromPath("/api/v1/auth/login")
                 .build()
@@ -21,7 +21,7 @@ public class AuthAcceptanceStep {
         return postRequest(uri, request);
     }
 
-    public static ValidatableResponse 로그아웃을_진행한다(final String accessToken) {
+    public static ValidatableResponse 로그아웃을_진행한다_V1(final String accessToken) {
         final String uri = UriComponentsBuilder
                 .fromPath("/api/v1/auth/logout")
                 .build()
@@ -31,7 +31,7 @@ public class AuthAcceptanceStep {
         return postRequestWithAccessToken(uri, accessToken);
     }
 
-    public static ValidatableResponse 토큰을_재발급받는다(final String refreshToken) {
+    public static ValidatableResponse 토큰을_재발급받는다_V1(final String refreshToken) {
         final String uri = UriComponentsBuilder
                 .fromPath("/api/v1/token/reissue")
                 .build()

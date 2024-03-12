@@ -10,13 +10,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.List;
 
-import static ac.dnd.mour.server.acceptance.group.GroupAcceptanceStep.관리하고_있는_그룹을_조회한다;
-import static ac.dnd.mour.server.acceptance.group.GroupAcceptanceStep.관리하고_있는_특정_그룹의_ID를_조회한다;
-import static ac.dnd.mour.server.acceptance.group.GroupAcceptanceStep.그룹을_삭제한다;
-import static ac.dnd.mour.server.acceptance.group.GroupAcceptanceStep.그룹을_수정한다;
-import static ac.dnd.mour.server.acceptance.group.GroupAcceptanceStep.그룹을_추가하고_ID를_추출한다;
-import static ac.dnd.mour.server.acceptance.group.GroupAcceptanceStep.그룹을_추가한다;
-import static ac.dnd.mour.server.acceptance.relation.RelationAcceptanceStep.관계를_생성하고_ID를_추출한다;
+import static ac.dnd.mour.server.acceptance.group.GroupAcceptanceStep.관리하고_있는_그룹을_조회한다_V1;
+import static ac.dnd.mour.server.acceptance.group.GroupAcceptanceStep.관리하고_있는_특정_그룹의_ID를_조회한다_V1;
+import static ac.dnd.mour.server.acceptance.group.GroupAcceptanceStep.그룹을_삭제한다_V1;
+import static ac.dnd.mour.server.acceptance.group.GroupAcceptanceStep.그룹을_수정한다_V1;
+import static ac.dnd.mour.server.acceptance.group.GroupAcceptanceStep.그룹을_추가하고_ID를_추출한다_V1;
+import static ac.dnd.mour.server.acceptance.group.GroupAcceptanceStep.그룹을_추가한다_V1;
+import static ac.dnd.mour.server.acceptance.relation.RelationAcceptanceStep.관계를_생성하고_ID를_추출한다_V1;
 import static ac.dnd.mour.server.common.fixture.MemberFixture.MEMBER_1;
 import static ac.dnd.mour.server.common.fixture.RelationFixture.친구_1;
 import static ac.dnd.mour.server.group.exception.GroupExceptionCode.CANNOT_DELETE_FROM_REGISTERED_RELATIONSHIP_EXISTS;
@@ -40,7 +40,7 @@ public class ManageGroupAcceptanceTest extends AcceptanceTest {
         @DisplayName("중복된 그룹은 추가할 수 없다")
         void throwExceptionByGroupAlreadyExists() {
             final AuthMember member = MEMBER_1.회원가입과_로그인을_진행한다();
-            그룹을_추가한다("친구", member.accessToken())
+            그룹을_추가한다_V1("친구", member.accessToken())
                     .statusCode(CONFLICT.value())
                     .body("code", is(GROUP_ALREADY_EXISTS.getCode()))
                     .body("message", is(GROUP_ALREADY_EXISTS.getMessage()));
@@ -50,7 +50,7 @@ public class ManageGroupAcceptanceTest extends AcceptanceTest {
         @DisplayName("그룹을 추가한다")
         void success() {
             final AuthMember member = MEMBER_1.회원가입과_로그인을_진행한다();
-            그룹을_추가한다("거래처", member.accessToken())
+            그룹을_추가한다_V1("거래처", member.accessToken())
                     .statusCode(OK.value())
                     .body("result", notNullValue(Long.class));
         }
@@ -63,9 +63,9 @@ public class ManageGroupAcceptanceTest extends AcceptanceTest {
         @DisplayName("기존 그룹명과 동일하지 않고 이미 관리하고 있는 그룹으로 그룹명을 수정할 수 없다")
         void throwExceptionByGroupAlreadyExists() {
             final AuthMember member = MEMBER_1.회원가입과_로그인을_진행한다();
-            final long groupId = 관리하고_있는_특정_그룹의_ID를_조회한다("친구", member.accessToken());
+            final long groupId = 관리하고_있는_특정_그룹의_ID를_조회한다_V1("친구", member.accessToken());
 
-            그룹을_수정한다(groupId, "직장", member.accessToken())
+            그룹을_수정한다_V1(groupId, "직장", member.accessToken())
                     .statusCode(CONFLICT.value())
                     .body("code", is(GROUP_ALREADY_EXISTS.getCode()))
                     .body("message", is(GROUP_ALREADY_EXISTS.getMessage()));
@@ -75,12 +75,12 @@ public class ManageGroupAcceptanceTest extends AcceptanceTest {
         @DisplayName("기존 이름과 동일한 이름으로 그룹명을 수정한다")
         void successWithKeep() {
             final AuthMember member = MEMBER_1.회원가입과_로그인을_진행한다();
-            final long groupId = 관리하고_있는_특정_그룹의_ID를_조회한다("친구", member.accessToken());
+            final long groupId = 관리하고_있는_특정_그룹의_ID를_조회한다_V1("친구", member.accessToken());
 
-            그룹을_수정한다(groupId, "친구", member.accessToken())
+            그룹을_수정한다_V1(groupId, "친구", member.accessToken())
                     .statusCode(NO_CONTENT.value());
 
-            관리하고_있는_그룹을_조회한다(member.accessToken())
+            관리하고_있는_그룹을_조회한다_V1(member.accessToken())
                     .statusCode(OK.value())
                     .body("result.name", contains(List.of("친구", "가족", "지인", "직장").toArray()));
         }
@@ -89,12 +89,12 @@ public class ManageGroupAcceptanceTest extends AcceptanceTest {
         @DisplayName("기존 이름과 다른 이름으로 그룹명을 수정한다")
         void success() {
             final AuthMember member = MEMBER_1.회원가입과_로그인을_진행한다();
-            final long groupId = 관리하고_있는_특정_그룹의_ID를_조회한다("친구", member.accessToken());
+            final long groupId = 관리하고_있는_특정_그룹의_ID를_조회한다_V1("친구", member.accessToken());
 
-            그룹을_수정한다(groupId, "테스트", member.accessToken())
+            그룹을_수정한다_V1(groupId, "테스트", member.accessToken())
                     .statusCode(NO_CONTENT.value());
 
-            관리하고_있는_그룹을_조회한다(member.accessToken())
+            관리하고_있는_그룹을_조회한다_V1(member.accessToken())
                     .statusCode(OK.value())
                     .body("result.name", contains(List.of("테스트", "가족", "지인", "직장").toArray()));
         }
@@ -107,7 +107,7 @@ public class ManageGroupAcceptanceTest extends AcceptanceTest {
         @DisplayName("존재하지 않는 그룹은 제거할 수 없다")
         void throwExceptionByGroupNotFound() {
             final AuthMember member = MEMBER_1.회원가입과_로그인을_진행한다();
-            그룹을_삭제한다(99999L, member.accessToken())
+            그룹을_삭제한다_V1(99999L, member.accessToken())
                     .statusCode(NOT_FOUND.value())
                     .body("code", is(GROUP_NOT_FOUND.getCode()))
                     .body("message", is(GROUP_NOT_FOUND.getMessage()));
@@ -117,11 +117,11 @@ public class ManageGroupAcceptanceTest extends AcceptanceTest {
         @DisplayName("삭제하려는 그룹에 대해서 등록된 관계가 존재하면 삭제할 수 없다")
         void throwExceptionByCannotDeleteFromRegisteredRelationshipExists() {
             final AuthMember member = MEMBER_1.회원가입과_로그인을_진행한다();
-            final long groupId = 관리하고_있는_특정_그룹의_ID를_조회한다("친구", member.accessToken());
-            관계를_생성하고_ID를_추출한다(groupId, 친구_1.getName(), 친구_1.getImageUrl(), 친구_1.getMemo(), member.accessToken());
+            final long groupId = 관리하고_있는_특정_그룹의_ID를_조회한다_V1("친구", member.accessToken());
+            관계를_생성하고_ID를_추출한다_V1(groupId, 친구_1.getName(), 친구_1.getImageUrl(), 친구_1.getMemo(), member.accessToken());
 
 
-            그룹을_삭제한다(groupId, member.accessToken())
+            그룹을_삭제한다_V1(groupId, member.accessToken())
                     .statusCode(CONFLICT.value())
                     .body("code", is(CANNOT_DELETE_FROM_REGISTERED_RELATIONSHIP_EXISTS.getCode()))
                     .body("message", is(CANNOT_DELETE_FROM_REGISTERED_RELATIONSHIP_EXISTS.getMessage()));
@@ -131,8 +131,8 @@ public class ManageGroupAcceptanceTest extends AcceptanceTest {
         @DisplayName("그룹을 제거한다")
         void success() {
             final AuthMember member = MEMBER_1.회원가입과_로그인을_진행한다();
-            final long groupId = 그룹을_추가하고_ID를_추출한다("거래처", member.accessToken());
-            그룹을_삭제한다(groupId, member.accessToken())
+            final long groupId = 그룹을_추가하고_ID를_추출한다_V1("거래처", member.accessToken());
+            그룹을_삭제한다_V1(groupId, member.accessToken())
                     .statusCode(NO_CONTENT.value());
         }
     }
@@ -144,13 +144,13 @@ public class ManageGroupAcceptanceTest extends AcceptanceTest {
         @DisplayName("사용자가 관리하고 있는 그룹을 조회한다")
         void success() {
             final AuthMember member = MEMBER_1.회원가입과_로그인을_진행한다();
-            관리하고_있는_그룹을_조회한다(member.accessToken())
+            관리하고_있는_그룹을_조회한다_V1(member.accessToken())
                     .statusCode(OK.value())
                     .body("result.name", contains(List.of("친구", "가족", "지인", "직장").toArray()));
 
-            그룹을_추가한다("거래처", member.accessToken());
+            그룹을_추가한다_V1("거래처", member.accessToken());
 
-            관리하고_있는_그룹을_조회한다(member.accessToken())
+            관리하고_있는_그룹을_조회한다_V1(member.accessToken())
                     .statusCode(OK.value())
                     .body("result.name", contains(List.of("친구", "가족", "지인", "직장", "거래처").toArray()));
         }

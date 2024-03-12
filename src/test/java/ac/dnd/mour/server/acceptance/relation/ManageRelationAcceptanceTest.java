@@ -8,11 +8,11 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import static ac.dnd.mour.server.acceptance.group.GroupAcceptanceStep.관리하고_있는_특정_그룹의_ID를_조회한다;
-import static ac.dnd.mour.server.acceptance.relation.RelationAcceptanceStep.관계를_삭제한다;
-import static ac.dnd.mour.server.acceptance.relation.RelationAcceptanceStep.관계를_생성하고_ID를_추출한다;
-import static ac.dnd.mour.server.acceptance.relation.RelationAcceptanceStep.관계를_생성한다;
-import static ac.dnd.mour.server.acceptance.relation.RelationAcceptanceStep.관계를_수정한다;
+import static ac.dnd.mour.server.acceptance.group.GroupAcceptanceStep.관리하고_있는_특정_그룹의_ID를_조회한다_V1;
+import static ac.dnd.mour.server.acceptance.relation.RelationAcceptanceStep.관계를_삭제한다_V1;
+import static ac.dnd.mour.server.acceptance.relation.RelationAcceptanceStep.관계를_생성하고_ID를_추출한다_V1;
+import static ac.dnd.mour.server.acceptance.relation.RelationAcceptanceStep.관계를_생성한다_V1;
+import static ac.dnd.mour.server.acceptance.relation.RelationAcceptanceStep.관계를_수정한다_V1;
 import static ac.dnd.mour.server.common.fixture.MemberFixture.MEMBER_1;
 import static ac.dnd.mour.server.common.fixture.RelationFixture.직장_1;
 import static ac.dnd.mour.server.common.fixture.RelationFixture.친구_1;
@@ -30,9 +30,9 @@ public class ManageRelationAcceptanceTest extends AcceptanceTest {
         @DisplayName("관계를 생성한다")
         void success() {
             final AuthMember member = MEMBER_1.회원가입과_로그인을_진행한다();
-            final long groupId = 관리하고_있는_특정_그룹의_ID를_조회한다("친구", member.accessToken());
+            final long groupId = 관리하고_있는_특정_그룹의_ID를_조회한다_V1("친구", member.accessToken());
 
-            관계를_생성한다(groupId, 친구_1.getName(), 친구_1.getImageUrl(), 친구_1.getMemo(), member.accessToken())
+            관계를_생성한다_V1(groupId, 친구_1.getName(), 친구_1.getImageUrl(), 친구_1.getMemo(), member.accessToken())
                     .statusCode(OK.value())
                     .body("result", notNullValue(Long.class));
         }
@@ -45,11 +45,11 @@ public class ManageRelationAcceptanceTest extends AcceptanceTest {
         @DisplayName("관계를 수정한다")
         void success() {
             final AuthMember member = MEMBER_1.회원가입과_로그인을_진행한다();
-            final long groupId = 관리하고_있는_특정_그룹의_ID를_조회한다("친구", member.accessToken());
-            final long relationId = 관계를_생성하고_ID를_추출한다(groupId, 친구_1.getName(), 친구_1.getImageUrl(), 친구_1.getMemo(), member.accessToken());
+            final long groupId = 관리하고_있는_특정_그룹의_ID를_조회한다_V1("친구", member.accessToken());
+            final long relationId = 관계를_생성하고_ID를_추출한다_V1(groupId, 친구_1.getName(), 친구_1.getImageUrl(), 친구_1.getMemo(), member.accessToken());
 
-            final long updateGroupId = 관리하고_있는_특정_그룹의_ID를_조회한다("직장", member.accessToken());
-            관계를_수정한다(relationId, updateGroupId, 직장_1.getName(), 직장_1.getImageUrl(), 직장_1.getMemo(), member.accessToken())
+            final long updateGroupId = 관리하고_있는_특정_그룹의_ID를_조회한다_V1("직장", member.accessToken());
+            관계를_수정한다_V1(relationId, updateGroupId, 직장_1.getName(), 직장_1.getImageUrl(), 직장_1.getMemo(), member.accessToken())
                     .statusCode(NO_CONTENT.value());
         }
     }
@@ -61,10 +61,10 @@ public class ManageRelationAcceptanceTest extends AcceptanceTest {
         @DisplayName("관계를 삭제한다")
         void success() {
             final AuthMember member = MEMBER_1.회원가입과_로그인을_진행한다();
-            final long groupId = 관리하고_있는_특정_그룹의_ID를_조회한다("친구", member.accessToken());
-            final long relationId = 관계를_생성하고_ID를_추출한다(groupId, 친구_1.getName(), 친구_1.getImageUrl(), 친구_1.getMemo(), member.accessToken());
+            final long groupId = 관리하고_있는_특정_그룹의_ID를_조회한다_V1("친구", member.accessToken());
+            final long relationId = 관계를_생성하고_ID를_추출한다_V1(groupId, 친구_1.getName(), 친구_1.getImageUrl(), 친구_1.getMemo(), member.accessToken());
 
-            관계를_삭제한다(relationId, member.accessToken())
+            관계를_삭제한다_V1(relationId, member.accessToken())
                     .statusCode(NO_CONTENT.value());
         }
     }

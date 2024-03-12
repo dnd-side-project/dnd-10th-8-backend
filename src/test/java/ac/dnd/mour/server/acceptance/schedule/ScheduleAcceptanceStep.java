@@ -1,8 +1,8 @@
 package ac.dnd.mour.server.acceptance.schedule;
 
 import ac.dnd.mour.server.common.fixture.ScheduleFixture;
-import ac.dnd.mour.server.schedule.presentation.dto.request.CreateScheduleRequest;
-import ac.dnd.mour.server.schedule.presentation.dto.request.UpdateScheduleRequest;
+import ac.dnd.mour.server.schedule.presentation.v1.request.CreateScheduleRequest;
+import ac.dnd.mour.server.schedule.presentation.v1.request.UpdateScheduleRequest;
 import io.restassured.response.ValidatableResponse;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -14,7 +14,7 @@ import static ac.dnd.mour.server.acceptance.CommonRequestFixture.patchRequestWit
 import static ac.dnd.mour.server.acceptance.CommonRequestFixture.postRequestWithAccessToken;
 
 public class ScheduleAcceptanceStep {
-    public static ValidatableResponse 일정을_생성한다(
+    public static ValidatableResponse 일정을_생성한다_V1(
             final long relationId,
             final ScheduleFixture fixture,
             final String accessToken
@@ -41,7 +41,7 @@ public class ScheduleAcceptanceStep {
         return postRequestWithAccessToken(uri, request, accessToken);
     }
 
-    public static ValidatableResponse 일정을_생성한다(
+    public static ValidatableResponse 일정을_생성한다_V1(
             final long relationId,
             final ScheduleFixture fixture,
             final LocalDate day,
@@ -69,7 +69,7 @@ public class ScheduleAcceptanceStep {
         return postRequestWithAccessToken(uri, request, accessToken);
     }
 
-    public static ValidatableResponse 일정을_생성한다(
+    public static ValidatableResponse 일정을_생성한다_V1(
             final long relationId,
             final LocalDate day,
             final String event,
@@ -98,43 +98,43 @@ public class ScheduleAcceptanceStep {
         return postRequestWithAccessToken(uri, request, accessToken);
     }
 
-    public static long 일정을_생성하고_ID를_추출한다(
+    public static long 일정을_생성하고_ID를_추출한다_V1(
             final long relationId,
             final ScheduleFixture fixture,
             final String accessToken
     ) {
-        return 일정을_생성한다(relationId, fixture, accessToken)
+        return 일정을_생성한다_V1(relationId, fixture, accessToken)
                 .extract()
                 .jsonPath()
                 .getLong("result");
     }
 
-    public static long 일정을_생성하고_ID를_추출한다(
+    public static long 일정을_생성하고_ID를_추출한다_V1(
             final long relationId,
             final ScheduleFixture fixture,
             final LocalDate day,
             final String accessToken
     ) {
-        return 일정을_생성한다(relationId, fixture, day, accessToken)
+        return 일정을_생성한다_V1(relationId, fixture, day, accessToken)
                 .extract()
                 .jsonPath()
                 .getLong("result");
     }
 
-    public static long 일정을_생성하고_ID를_추출한다(
+    public static long 일정을_생성하고_ID를_추출한다_V1(
             final long relationId,
             final LocalDate day,
             final String event,
             final ScheduleFixture fixture,
             final String accessToken
     ) {
-        return 일정을_생성한다(relationId, day, event, fixture, accessToken)
+        return 일정을_생성한다_V1(relationId, day, event, fixture, accessToken)
                 .extract()
                 .jsonPath()
                 .getLong("result");
     }
 
-    public static ValidatableResponse 일정을_수정한다(
+    public static ValidatableResponse 일정을_수정한다_V1(
             final long scheduleId,
             final ScheduleFixture fixture,
             final String accessToken
@@ -159,7 +159,7 @@ public class ScheduleAcceptanceStep {
         return patchRequestWithAccessToken(uri, request, accessToken);
     }
 
-    public static ValidatableResponse 일정을_수정한다(
+    public static ValidatableResponse 일정을_수정한다_V1(
             final long scheduleId,
             final LocalDate day,
             final String event,
@@ -186,7 +186,7 @@ public class ScheduleAcceptanceStep {
         return patchRequestWithAccessToken(uri, request, accessToken);
     }
 
-    public static ValidatableResponse 일정을_삭제한다(
+    public static ValidatableResponse 일정을_삭제한다_V1(
             final long scheduleId,
             final String accessToken
     ) {
@@ -198,7 +198,7 @@ public class ScheduleAcceptanceStep {
         return deleteRequestWithAccessToken(uri, accessToken);
     }
 
-    public static ValidatableResponse 일정을_숨긴다(
+    public static ValidatableResponse 일정을_숨긴다_V1(
             final long scheduleId,
             final String accessToken
     ) {
@@ -210,7 +210,7 @@ public class ScheduleAcceptanceStep {
         return patchRequestWithAccessToken(uri, accessToken);
     }
 
-    public static ValidatableResponse 지출이_기록되지_않은_일정을_조회한다(final String accessToken) {
+    public static ValidatableResponse 지출이_기록되지_않은_일정을_조회한다_V1(final String accessToken) {
         final String uri = UriComponentsBuilder
                 .fromPath("/api/v1/schedules/unrecorded")
                 .build()
@@ -220,7 +220,7 @@ public class ScheduleAcceptanceStep {
         return getRequestWithAccessToken(uri, accessToken);
     }
 
-    public static ValidatableResponse 캘린더_Year_Month에_해당하는_일정을_조회한다(
+    public static ValidatableResponse 캘린더_Year_Month에_해당하는_일정을_조회한다_V1(
             final int year,
             final int month,
             final String accessToken
@@ -233,7 +233,7 @@ public class ScheduleAcceptanceStep {
         return getRequestWithAccessToken(uri, accessToken);
     }
 
-    public static ValidatableResponse 알람_동기화를_위한_일정을_조회한다(final String accessToken) {
+    public static ValidatableResponse 알람_동기화를_위한_일정을_조회한다_V1(final String accessToken) {
         final String uri = UriComponentsBuilder
                 .fromPath("/api/v1/schedules/me/alarm")
                 .build()
@@ -243,7 +243,7 @@ public class ScheduleAcceptanceStep {
         return getRequestWithAccessToken(uri, accessToken);
     }
 
-    public static ValidatableResponse 일정_상세_정보를_조회한다(final long scheduleId, final String accessToken) {
+    public static ValidatableResponse 일정_상세_정보를_조회한다_V1(final long scheduleId, final String accessToken) {
         final String uri = UriComponentsBuilder
                 .fromPath("/api/v1/schedules/me/{scheduleId}")
                 .build(scheduleId)
