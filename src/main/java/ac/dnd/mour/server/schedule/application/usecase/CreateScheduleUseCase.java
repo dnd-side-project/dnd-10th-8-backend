@@ -9,21 +9,17 @@ import ac.dnd.mour.server.relation.domain.repository.RelationRepository;
 import ac.dnd.mour.server.schedule.application.usecase.command.CreateScheduleCommand;
 import ac.dnd.mour.server.schedule.domain.model.Schedule;
 import ac.dnd.mour.server.schedule.domain.repository.ScheduleRepository;
-import ac.dnd.mour.server.schedule.domain.service.ScheduleValidator;
 import lombok.RequiredArgsConstructor;
 
 @UseCase
 @RequiredArgsConstructor
 public class CreateScheduleUseCase {
-    private final ScheduleValidator scheduleValidator;
     private final MemberRepository memberRepository;
     private final RelationRepository relationRepository;
     private final ScheduleRepository scheduleRepository;
 
     @MourWritableTransactional
     public long invoke(final CreateScheduleCommand command) {
-        scheduleValidator.validateDay(command.day());
-
         final Member member = memberRepository.getById(command.memberId());
         final Relation relation = relationRepository.getMemberRelation(command.relationId(), member.getId());
 
